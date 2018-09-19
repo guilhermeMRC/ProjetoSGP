@@ -1,4 +1,4 @@
-﻿/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -18,7 +18,6 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Sala {
-    //ALTEREI NESSE PONTO
     @Id
     @GeneratedValue
     private Long id;
@@ -54,6 +53,5 @@ public class Sala {
     public void setPerguntas(List<Pergunta> perguntas) {
         this.perguntas = perguntas;
     }
-    
     
 }
