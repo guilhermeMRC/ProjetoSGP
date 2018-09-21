@@ -7,6 +7,7 @@ package controle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -40,7 +41,7 @@ public class TelaCadastroDisciplinaController implements Initializable {
     private Disciplina disciplina;
     
     @FXML
-    private TextField TFDisciplina;
+    private TextField tfDisciplina;
     
     
     @FXML
@@ -51,42 +52,63 @@ public class TelaCadastroDisciplinaController implements Initializable {
 
     @FXML // fx:id="descricao"
     private TableColumn<Disciplina, String> descricao; // Value injected by FXMLLoader
+    
+    @FXML
+    public void pesquisarDisciplina(ActionEvent event) {
+        
+        carregarTableViewDisciplina(tfDisciplina.getText());
+        
+    }
 
     @FXML
     public void salvarDisciplina(ActionEvent event) {
     
-            //seta valores na classe
-            disciplina.setDescricao(TFDisciplina.getText());
-            //System.out.println(disciplina.getDescricao());
+        //seta valores na classe
+        disciplina.setDescricao(tfDisciplina.getText());
+        //System.out.println(disciplina.getDescricao());
             
-            //chama a classe DAO que tem o método incluir
-            DisciplinaDAO disciplinadao = new DisciplinaDAO();
-            
-            //salva no Banco
+        //chama a classe DAO que tem o método incluir
+        DisciplinaDAO disciplinadao = new DisciplinaDAO();
+
+        //salva no Banco
         try {    
+            
             disciplinadao.incluir(disciplina);
             System.out.println("Cadastrado com Sucesso!");
-            carregarTableViewDisciplina();
             
         }catch(Exception e) {
             
             System.out.println("ERRO: "+e.getMessage());
         }
+        
+        carregarTableViewDisciplina("");
        
     }
     
-    public void carregarTableViewDisciplina() {
+    public void carregarTableViewDisciplina(String filtro) {
+        
         ObservableList<Disciplina> observableListDisciplinas;
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         
         DisciplinaDAO dao = new DisciplinaDAO();
+        List<Disciplina> listaDisciplinas = new ArrayList<>();
         
         try {
-            List<Disciplina> listaDisciplinas = dao.listar();
+            
+            if(filtro.equals("")){
+                
+                listaDisciplinas = dao.listar();
+                
+            }else {
+                
+                listaDisciplinas = dao.listarPorDisciplina(filtro);
+                
+            }
+            
             observableListDisciplinas = FXCollections.observableArrayList(listaDisciplinas);
             tvDisciplina.setItems(observableListDisciplinas);
-                
+            
         } catch (Exception e) {
             System.out.println("\n\n-------------> " + e.getMessage());
             e.printStackTrace();
@@ -97,10 +119,7 @@ public class TelaCadastroDisciplinaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
        
         disciplina = new Disciplina();
-        carregarTableViewDisciplina();
+        carregarTableViewDisciplina("");
     }  
-    
-   
-    
     
 }

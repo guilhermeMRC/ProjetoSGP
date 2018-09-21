@@ -14,17 +14,38 @@ import modelo.Disciplina;
  */
 public class DisciplinaDAO extends GenericDAO<Disciplina>{
     
-    
     public List<Disciplina> listar() throws Exception {
+        
         List<Disciplina> lista = null;
         conectar();
+        
         try {
-            lista = getManager().createQuery("from Disciplina c").getResultList();
+            
+            lista = getManager().createQuery("from Disciplina d").getResultList();
+            
         } finally {
+            
             getManager().close();
+            
         }
         return lista;
     }
+    
+    public List<Disciplina> listarPorDisciplina(String descricao) throws Exception {
+        
+        List<Disciplina> lista = null;
+        conectar();
+        
+        try {
             
+            lista = getManager().createQuery("from Disciplina d where d.descricao like '%" + descricao + "%'").getResultList();
+            
+        } finally {
+            
+            getManager().close();
+            
+        }
+        return lista;
+    }
             
 }

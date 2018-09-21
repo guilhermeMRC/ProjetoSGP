@@ -9,7 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import util.JpaUtil;
+
 
 /**
  *
@@ -17,32 +17,41 @@ import util.JpaUtil;
  */
 public abstract class GenericDAO<T> {
     
-    //private EntityManager em = JpaUtil.getEntityManager();
     private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProjetoSGPPU");
     private final EntityManager manager = factory.createEntityManager();
     
     public void incluir(T c) throws Exception {
         
         try {
+            
             conectar();
             manager.persist(c);
             encerrar();
+            
         } catch (Exception e) {
-           e.printStackTrace();
+            
+            e.printStackTrace();
+           
         }
         
     }
     
     public EntityManager getManager(){
+        
         return manager;
+        
     }
     
     protected void conectar(){
+        
         manager.getTransaction().begin();
+        
     }
     
     protected void encerrar(){
+        
         manager.getTransaction().commit();
         manager.close();
+        
     }
 }

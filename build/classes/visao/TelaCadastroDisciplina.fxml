@@ -7,17 +7,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="392.0" prefWidth="478.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastroDisciplinaController">
+<AnchorPane id="AnchorPane" prefHeight="461.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastroDisciplinaController">
    <children>
       <Label layoutX="24.0" layoutY="92.0" text="Disciplina" />
-      <TextField fx:id="TFDisciplina" layoutX="110.0" layoutY="87.0" prefHeight="31.0" prefWidth="338.0" />
+      <TextField fx:id="tfDisciplina" layoutX="110.0" layoutY="87.0" prefHeight="31.0" prefWidth="400.0" />
       <Button fx:id="BtnSalvar" layoutX="26.0" layoutY="31.0" mnemonicParsing="false" onAction="#salvarDisciplina" text="Salvar" />
-      <TableView fx:id="tvDisciplina" layoutX="26.0" layoutY="135.0" prefHeight="243.0" prefWidth="426.0">
+      <TableView fx:id="tvDisciplina" layoutX="26.0" layoutY="135.0" prefHeight="313.0" prefWidth="486.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="75.0" text="C1" />
-          <TableColumn fx:id="descricao" prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="id" prefWidth="102.0" text="C1" />
+          <TableColumn fx:id="descricao" prefWidth="383.0" text="C2" />
         </columns>
       </TableView>
       <Button layoutX="110.0" layoutY="31.0" mnemonicParsing="false" text="Editar" />
+      <Button layoutX="189.0" layoutY="31.0" mnemonicParsing="false" onAction="#pesquisarDisciplina" text="Pesquisar" />
    </children>
 </AnchorPane>
