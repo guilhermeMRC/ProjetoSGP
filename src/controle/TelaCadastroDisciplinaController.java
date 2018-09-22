@@ -18,12 +18,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.AccessibleAttribute;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Cell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import modelo.Disciplina;
 
@@ -53,6 +57,40 @@ public class TelaCadastroDisciplinaController implements Initializable {
     @FXML // fx:id="descricao"
     private TableColumn<Disciplina, String> descricao; // Value injected by FXMLLoader
     
+    @FXML
+    private Button btnEditar;
+    
+    private ObservableList<Disciplina> observableListDisciplinas;
+    
+    private List<Disciplina> listaDisciplinas = new ArrayList<>();
+    
+    @FXML
+    private void editarDisciplina(ActionEvent event) {
+        
+        try{
+            
+            disciplina = tvDisciplina.getSelectionModel().getSelectedItem();
+            disciplina.setDescricao(tfDisciplina.getText());
+            System.out.println("ID " + disciplina.getId());
+            DisciplinaDAO disciplinadao = new DisciplinaDAO();
+        
+            disciplinadao.editar(disciplina);
+            
+        }catch(NullPointerException n){
+            
+            n.getStackTrace();
+            
+        }finally{
+            
+            tfDisciplina.setText("");
+            carregarTableViewDisciplina("");
+            
+        }
+        
+        
+        
+    }
+
     @FXML
     public void pesquisarDisciplina(ActionEvent event) {
         
@@ -85,14 +123,18 @@ public class TelaCadastroDisciplinaController implements Initializable {
        
     }
     
+    public void selecionarItensTableViewDisciplina(Disciplina disciplina){
+        
+        tfDisciplina.setText(disciplina.getDescricao());
+        
+    }
+    
     public void carregarTableViewDisciplina(String filtro) {
         
-        ObservableList<Disciplina> observableListDisciplinas;
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         descricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         
         DisciplinaDAO dao = new DisciplinaDAO();
-        List<Disciplina> listaDisciplinas = new ArrayList<>();
         
         try {
             
@@ -114,12 +156,17 @@ public class TelaCadastroDisciplinaController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+        
         disciplina = new Disciplina();
         carregarTableViewDisciplina("");
+        
+        tvDisciplina.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> selecionarItensTableViewDisciplina(newValue));
     }  
     
 }

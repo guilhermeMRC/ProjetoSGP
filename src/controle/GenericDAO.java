@@ -54,4 +54,14 @@ public abstract class GenericDAO<T> {
         manager.close();
         
     }
+    
+    public void editar(T c){
+        try {
+            conectar();
+            manager.merge(c);
+            encerrar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
