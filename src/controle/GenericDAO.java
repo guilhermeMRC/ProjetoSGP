@@ -5,7 +5,6 @@
  */
 package controle;
 
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -20,45 +19,43 @@ public abstract class GenericDAO<T> {
     private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProjetoSGPPU");
     private final EntityManager manager = factory.createEntityManager();
     
-    public void incluir(T c) throws Exception {
-        
-        try {
-            
-            conectar();
-            manager.persist(c);
-            encerrar();
-            
-        } catch (Exception e) {
-            
-            e.printStackTrace();
-           
-        }
-        
-    }
-    
     public EntityManager getManager(){
-        
         return manager;
-        
     }
     
     protected void conectar(){
-        
         manager.getTransaction().begin();
-        
     }
     
     protected void encerrar(){
-        
         manager.getTransaction().commit();
         manager.close();
-        
     }
-    
-    public void editar(T c){
+    //AINDA NÃO TESTEI
+    public void atualizar(T c){
         try {
             conectar();
-            manager.merge(c);
+            manager.refresh(c);
+            encerrar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+        public void incluir(T c){
+        try {
+            conectar();
+            manager.persist(c);
+            encerrar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+        
+        public void excluir(T c){
+        try {
+            conectar();
+            manager.remove(c);
             encerrar();
         } catch (Exception e) {
             e.printStackTrace();

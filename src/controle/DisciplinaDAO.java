@@ -14,38 +14,51 @@ import modelo.Disciplina;
  */
 public class DisciplinaDAO extends GenericDAO<Disciplina>{
     
-    public List<Disciplina> listar() throws Exception {
+    public List<Disciplina> listar(){
         
         List<Disciplina> lista = null;
         conectar();
         
         try {
-            
             lista = getManager().createQuery("from Disciplina d").getResultList();
-            
-        } finally {
-            
-            getManager().close();
-            
-        }
+            encerrar();
         return lista;
+        } catch (Exception e) {
+            e.printStackTrace();
+            encerrar();
+            return lista;
+        }
     }
     
-    public List<Disciplina> listarPorDisciplina(String descricao) throws Exception {
+    public List<Disciplina> listarPorDisciplina(String descricao){
         
         List<Disciplina> lista = null;
         conectar();
         
         try {
-            
             lista = getManager().createQuery("from Disciplina d where d.descricao like '%" + descricao + "%'").getResultList();
-            
-        } finally {
-            
-            getManager().close();
-            
+            encerrar();
+            return lista;
+        } catch (Exception e) {
+            e.printStackTrace();
+            encerrar();
+            return lista;
         }
-        return lista;
+    }
+    //VERIFICAR
+    public Disciplina ListarDisciplinaPorID(long id){
+        Disciplina disciplina = new Disciplina();
+        conectar();
+        
+        try {
+            disciplina =  (Disciplina) getManager().createQuery("from Disciplina d where d.id = " + id).getResultList().get(0);
+            encerrar();
+            return disciplina;
+        } catch (Exception e) {
+            System.out.println("\n\n\n ERRO NO BUSCA DISCIPLINA\n"+e);
+            encerrar();
+            return disciplina;
+        }
     }
             
 }
