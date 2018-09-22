@@ -14,11 +14,11 @@
       <Button fx:id="BtnSalvar" layoutX="26.0" layoutY="31.0" mnemonicParsing="false" onAction="#salvarDisciplina" text="Salvar" />
       <TableView fx:id="tvDisciplina" layoutX="26.0" layoutY="135.0" prefHeight="313.0" prefWidth="486.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="102.0" text="C1" />
-          <TableColumn fx:id="descricao" prefWidth="383.0" text="C2" />
+          <TableColumn fx:id="id" prefWidth="102.0" text="ID" />
+          <TableColumn fx:id="descricao" prefWidth="383.0" text="Disciplinas" />
         </columns>
       </TableView>
-      <Button layoutX="110.0" layoutY="31.0" mnemonicParsing="false" text="Editar" />
+      <Button layoutX="110.0" layoutY="31.0" mnemonicParsing="false" onAction="#editarDisciplina" text="Editar" />
       <Button layoutX="189.0" layoutY="31.0" mnemonicParsing="false" onAction="#pesquisarDisciplina" text="Pesquisar" />
    </children>
 </AnchorPane>
