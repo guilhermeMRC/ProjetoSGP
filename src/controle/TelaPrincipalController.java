@@ -38,8 +38,8 @@ public class TelaPrincipalController implements Initializable {
     }
     
     @FXML
-    public void carregarCadastroDisciplina(ActionEvent event) {
-        carregarTela("/visao/TelaCadastroDisciplina.fxml");
+    public void carregarCadastroDisciplinas(ActionEvent event) {
+        carregarTela("/visao/TelaCadastroDisciplinas.fxml");
     }
     
     @Override

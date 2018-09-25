@@ -22,11 +22,11 @@ public class Disciplina {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String descricao;
-
-    public Disciplina(){
-        
-    }
     
+    public Disciplina(){
+    
+    }
+   
     public Long getId() {
         return id;
     }

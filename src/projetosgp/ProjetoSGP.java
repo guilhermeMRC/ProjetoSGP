@@ -20,11 +20,14 @@ public class ProjetoSGP extends Application {
     @Override
     public void start(Stage stage)throws Exception {
         
-        Parent root = FXMLLoader.load(getClass().getResource("/visao/TelaPrincipal.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/visao/TelaInicial.fxml"));
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setTitle("Sistema de Gerenciamento de Perguntas");
+        stage.setWidth(1000);
+        stage.setHeight(700);
         stage.show();
     }
 
