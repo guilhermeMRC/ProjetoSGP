@@ -5,12 +5,12 @@
  */
 package modelo;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
 
 /**
  *
@@ -18,17 +18,14 @@ import javax.persistence.ManyToOne;
  */
 
 @Entity
-public class Alternativa {
+public class Alternativa implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String descricao;
     private boolean correto;
-    
-    @ManyToOne
-    private Pergunta pergunta;
-    
+   
     public Alternativa (){
         
     }
@@ -56,14 +53,4 @@ public class Alternativa {
     public void setCorreto(boolean correto) {
         this.correto = correto;
     }
-
-    public Pergunta getPergunta() {
-        return pergunta;
-    }
-
-    public void setPergunta(Pergunta pergunta) {
-        this.pergunta = pergunta;
-    }
-    
-    
 }

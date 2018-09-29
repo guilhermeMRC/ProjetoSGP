@@ -34,7 +34,7 @@ public class TelaPrincipalController implements Initializable {
     @FXML
     public void carregarCadastroPerguntas(ActionEvent event) {
         
-        carregarTela("/visao/TelaCadastroPergunta.fxml");
+        carregarTela("/visao/TelaCadastroPerguntas.fxml");
     }
     
     @FXML

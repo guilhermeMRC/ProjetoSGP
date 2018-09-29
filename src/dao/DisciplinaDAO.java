@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controle;
+package dao;
 
+import dao.GenericDAO;
 import java.util.List;
 import modelo.Disciplina;
 
@@ -22,7 +23,7 @@ public class DisciplinaDAO extends GenericDAO<Disciplina>{
         try {
             lista = getManager().createQuery("from Disciplina d").getResultList();
             encerrar();
-        return lista;
+            return lista;
         } catch (Exception e) {
             e.printStackTrace();
             encerrar();

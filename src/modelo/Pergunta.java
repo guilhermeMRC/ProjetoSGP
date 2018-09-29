@@ -5,9 +5,13 @@
  */
 package modelo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,25 +24,27 @@ import javax.persistence.OneToMany;
  */
 
 @Entity
-public class Pergunta {
+public class Pergunta implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String descricao;
-    private Integer nivel;
     private Integer tempo;
-    private String tag;
+    private List<String> tags;
     private boolean habilitar;
     
     @ManyToOne
     private Disciplina disciplina;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pergunta")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Alternativa> alternativas;
     
+    @Enumerated(EnumType.STRING)
+    private Dificuldade dificuldade;
+    
     public Pergunta (){
-        
+        tags = new ArrayList();
     }
 
     public Long getId() {
@@ -57,12 +63,12 @@ public class Pergunta {
         this.descricao = descricao;
     }
 
-    public Integer getNivel() {
-        return nivel;
+    public Dificuldade getDificuldade() {
+        return dificuldade;
     }
 
-    public void setNivel(Integer nivel) {
-        this.nivel = nivel;
+    public void setDificuldade(Dificuldade dificuldade) {
+        this.dificuldade = dificuldade;
     }
 
     public Integer getTempo() {
@@ -73,12 +79,12 @@ public class Pergunta {
         this.tempo = tempo;
     }
 
-    public String getTag() {
-        return tag;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public Disciplina getDisciplina() {
@@ -103,7 +109,5 @@ public class Pergunta {
 
     public void setHabilitar(boolean habilitar) {
         this.habilitar = habilitar;
-    }
-
-   
+    } 
 }

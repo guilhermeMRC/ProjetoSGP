@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controle;
+package dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,7 +32,6 @@ public abstract class GenericDAO<T> {
         manager.close();
     }
 
-    //AINDA NÃO TESTEI
     /*
     Para atualizar a classe no banco é somente necessário o merge e não o refresh, 
     pois o merge volta com a classe para o estage de maneged e o refresh não faz isso. 
