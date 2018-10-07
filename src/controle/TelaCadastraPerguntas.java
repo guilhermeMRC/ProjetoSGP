@@ -32,7 +32,7 @@ import org.eclipse.persistence.jpa.rs.exceptions.JPARSException;
 
 /**
  *
- * @author gnune
+ * @author Turma de Sistemas 6° periodo
  */
 public class TelaCadastraPerguntas implements Initializable {
 

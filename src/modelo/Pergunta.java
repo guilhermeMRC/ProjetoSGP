@@ -32,7 +32,10 @@ public class Pergunta implements Serializable{
     private String descricao;
     private Integer tempo;
     private List<String> tags;
-    private boolean habilitar;
+    
+    /*coloquei essa variavel como inicializada como true 
+    para poder vir por padrão*/
+    private boolean habilitar = true;
     
     @ManyToOne
     private Disciplina disciplina;

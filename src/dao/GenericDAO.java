@@ -11,7 +11,7 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author GuiGuizinho
+ * @author Turma de Sistemas 6° periodo
  * @param <T>
  */
 public abstract class GenericDAO<T> {

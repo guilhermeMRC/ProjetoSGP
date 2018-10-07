@@ -17,7 +17,7 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f7f7f7;">
          <children>
-            <JFXTextArea fx:id="campoPergunta" focusColor="#429344" labelFloat="true" layoutX="14.0" layoutY="49.0" prefHeight="175.0" prefWidth="492.0" promptText="Descrição da pergunta" style="-fx-background-color: #fff;" wrapText="true">
+            <JFXTextArea fx:id="campoPergunta" focusColor="#429344" labelFloat="true" layoutX="14.0" layoutY="68.0" prefHeight="175.0" prefWidth="492.0" promptText="Descrição da pergunta" style="-fx-background-color: #fff;" wrapText="true">
                <font>
                   <Font size="15.0" />
                </font>
