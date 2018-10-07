@@ -4,8 +4,8 @@
 <?import com.jfoenix.controls.JFXChipView?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextArea?>
-<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastraPerguntas">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastraPerguntas">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f7f7f7;">
+      <AnchorPane prefHeight="640.0" prefWidth="890.0" style="-fx-background-color: #f7f7f7;">
          <children>
             <JFXTextArea fx:id="campoPergunta" focusColor="#429344" labelFloat="true" layoutX="14.0" layoutY="68.0" prefHeight="175.0" prefWidth="492.0" promptText="Descrição da pergunta" style="-fx-background-color: #fff;" wrapText="true">
                <font>
@@ -49,18 +49,17 @@
             <TextField fx:id="campoAlternativaB" layoutX="63.0" layoutY="375.0" prefHeight="25.0" prefWidth="440.0" />
             <TextField fx:id="campoAlternativaC" layoutX="63.0" layoutY="420.0" prefHeight="25.0" prefWidth="440.0" />
             <TextField fx:id="campoAlternativaD" layoutX="63.0" layoutY="460.0" prefHeight="25.0" prefWidth="440.0" />
-            <JFXComboBox fx:id="selecaoDificuldadePergunta" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="130.0" prefHeight="25.0" prefWidth="280.0" promptText="Nivel de dificuldade" />
-            <JFXComboBox fx:id="selecaoDisciplina" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="199.0" prefHeight="25.0" prefWidth="280.0" promptText="Disciplina" />
+            <JFXComboBox fx:id="selecaoDificuldadePergunta" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="146.0" prefHeight="31.0" prefWidth="296.0" promptText="Nivel de dificuldade" />
+            <JFXComboBox fx:id="selecaoDisciplina" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="212.0" prefHeight="31.0" prefWidth="296.0" promptText="Disciplina" />
             <Label layoutX="14.0" layoutY="280.0" text="Alternativas">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
             <JFXButton fx:id="botaoCadastrar" layoutX="107.0" layoutY="551.0" onAction="#CadastrarPergunta" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" styleClass="jfx-button-confirmar" stylesheets="@../css/estilo.css" text="Cadastrar" textFill="#0a0a0a" />
-            <JFXTimePicker fx:id="selecaoTempoPergunta" defaultColor="#429344" layoutX="533.0" layoutY="68.0" prefHeight="25.0" prefWidth="315.0" promptText="Tempo da pergunta" />
             <StackPane layoutX="522.0" layoutY="332.0" prefHeight="267.0" prefWidth="315.0">
                <children>
-                  <JFXChipView fx:id="campoTags" style="-fx-border-color: #CFCFCF; -fx-background-color: #fff;" />
+                  <JFXChipView fx:id="campoTags" prefHeight="267.0" prefWidth="331.0" style="-fx-border-color: #CFCFCF; -fx-background-color: #fff;" />
                </children>
             </StackPane>
             <Label layoutX="533.0" layoutY="282.0" text="Tags">
@@ -68,6 +67,8 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
+            <JFXSlider fx:id="sliderTempoPergunta" cache="true" layoutX="533.0" layoutY="89.0" majorTickUnit="30.0" max="180.0" minorTickCount="2" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" value="30.0" />
+            <Label layoutX="533.0" layoutY="58.0" text="Tempo" />
          </children>
       </AnchorPane>
    </children>

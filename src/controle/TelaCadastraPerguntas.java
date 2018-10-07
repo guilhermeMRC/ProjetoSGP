@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTimePicker;
 import dao.DisciplinaDAO;
@@ -20,11 +21,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import modelo.Alternativa;
 import modelo.Disciplina;
 import modelo.Pergunta;
@@ -52,16 +57,16 @@ public class TelaCadastraPerguntas implements Initializable {
     private JFXComboBox<Disciplina> selecaoDisciplina;
 
     @FXML
-    private JFXButton botaoCadastrar, botaoCancelar;
-
-    @FXML
-    private JFXTimePicker selecaoTempoPergunta;
+    private JFXButton botaoCadastrar, botaoCancelar, botaoDiminuir, botaoAumentar;
 
     @FXML
     private JFXChipView<String> campoTags;
 
     @FXML
     private JFXRadioButton opcaoA, opcaoB, opcaoC, opcaoD;
+    
+    @FXML
+    private JFXSlider sliderTempoPergunta;
 
     private List<Dificuldade> dificuldades = new ArrayList();
     private ObservableList<Dificuldade> obsDificuldade;
@@ -79,12 +84,12 @@ public class TelaCadastraPerguntas implements Initializable {
         mensagem na memoria do sistema vai ficar bem melhor.
         */
         campoTags.getSuggestions().addAll("Baskara", "Tomas Edson", "Matemática Financeira", "Literatura");
-        selecaoTempoPergunta._24HourViewProperty().setValue(Boolean.TRUE);
         carregarDificuldades();
         carregarDisciplinas();
 
     }
-
+    
+    
     public void CadastrarPergunta() {
        
         /*
@@ -99,17 +104,20 @@ public class TelaCadastraPerguntas implements Initializable {
             Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
             List<String> listTags = new ArrayList();
             Pergunta pergunta = new Pergunta();
-
+            
             pergunta.setDescricao(campoPergunta.getText());
             pergunta.setDificuldade(selecaoDificuldadePergunta.getSelectionModel().getSelectedItem());
-            // pergunta.setTempo(Integer.parseInt(selecaoTempoPergunta.getEditor().getText()));
+            
+            pergunta.setTempo(converterDoubleParaInteger(sliderTempoPergunta.getValue()));
+            
             pergunta.setDisciplina(disciplina);
             pergunta.setAlternativas(cadastrarAlternativa());
 
             campoTags.getChips().forEach((tags) -> {
                 listTags.add(tags);
             });
-
+            
+            
             try {
                 perguntaDAO.incluir(pergunta);
                 Alert mensagemErro = new Alert(Alert.AlertType.WARNING);
@@ -134,6 +142,7 @@ public class TelaCadastraPerguntas implements Initializable {
             mensagemAviso.setHeaderText("Erro ao cadastrar pergunta");
             mensagemAviso.setContentText("Não é possivel cadastrar uma pergunta sem informar seus dados!");
             mensagemAviso.showAndWait();
+            
         }
     }
 
@@ -190,4 +199,14 @@ public class TelaCadastraPerguntas implements Initializable {
         obsDisciplinas = FXCollections.observableArrayList(disciplinaDAO.listar());
         selecaoDisciplina.getItems().addAll(obsDisciplinas);
     }
+    
+    /*Método para converter o valor do slider que vem o double 
+    em Integer que foi mapeado no banco*/
+    public Integer converterDoubleParaInteger(Double valor){
+        
+        Integer tempo = valor.intValue();
+        return tempo;
+    }
+    
+    
 }

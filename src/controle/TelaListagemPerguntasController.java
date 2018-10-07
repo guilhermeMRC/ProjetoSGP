@@ -14,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 /**
@@ -22,32 +21,32 @@ import javafx.stage.Stage;
  *
  * @author GuiGuizinho
  */
-public class TelaPrincipalController implements Initializable {
+public class TelaListagemPerguntasController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
-    
-    @FXML
-    private MenuItem MIPerguntas;
-    
-    @FXML
-    public void carregarCadastroPerguntas(ActionEvent event) {
-        
-        carregarTela("/visao/TelaListagemPerguntas.fxml");
-    }
-    
-    @FXML
-    public void carregarCadastroDisciplinas(ActionEvent event) {
-        carregarTela("/visao/TelaCadastroDisciplinas.fxml");
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
     
-    //Método para carregar outras telas
+    @FXML
+    public void inserirPergunta(ActionEvent event) {
+        
+        carregarTela("/visao/TelaCadastroPerguntas.fxml");
+    }
+    
+    @FXML
+    public void alterarPergunta(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    public void excluirPergunta(ActionEvent event) {
+        
+    }
+    
     public void carregarTela(String arq) {
         
         try {
