@@ -67,7 +67,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <JFXSlider fx:id="sliderTempoPergunta" cache="true" layoutX="533.0" layoutY="89.0" majorTickUnit="30.0" max="180.0" minorTickCount="2" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" value="30.0" />
+            <JFXSlider fx:id="sliderTempoPergunta" blockIncrement="30.0" cache="true" layoutX="533.0" layoutY="89.0" majorTickUnit="30.0" max="180.0" minorTickCount="30" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="30.0" />
             <Label layoutX="533.0" layoutY="58.0" text="Tempo" />
          </children>
       </AnchorPane>

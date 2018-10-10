@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -44,7 +45,8 @@ public class TelaPrincipalController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       
+        
     }    
     
     //Método para carregar outras telas
@@ -55,7 +57,10 @@ public class TelaPrincipalController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource(arq));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+            
             
         } catch (IOException e) {
             e.printStackTrace();

@@ -126,7 +126,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
         try {
             TreeItem<DisciplinaTableView> selecionarDisciplina = treeTableView.getSelectionModel().getSelectedItem();
             Disciplina disciplina = new Disciplina();
-
+       
             /*
             Cria uma caixa de dialogo perguntando o nome da nova da disciplina e ja inicializa o campo com o nome da disciplina selecionada.
              */
@@ -178,8 +178,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
             mensagemErro.setContentText("Por favor, selecione uma disciplina!");
             mensagemErro.showAndWait();
         } else {
-            Disciplina disciplina = new Disciplina();
-
+           
             Alert mensagemConfirmacao = new Alert(AlertType.CONFIRMATION);
             mensagemConfirmacao.setTitle("Mensagem de confirmação");
             mensagemConfirmacao.setHeaderText("Exclusão de disciplina");
