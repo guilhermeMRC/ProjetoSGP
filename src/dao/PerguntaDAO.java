@@ -5,6 +5,8 @@
  */
 package dao;
 
+import java.util.List;
+import modelo.Disciplina;
 import modelo.Pergunta;
 
 /**
@@ -13,4 +15,24 @@ import modelo.Pergunta;
  */
 public class PerguntaDAO extends GenericDAO<Pergunta>{
     
+    public List<Pergunta> listar(){
+        
+        List<Pergunta> lista = null;
+        conectar();
+        
+        try {
+            
+            lista = getManager().createQuery("from Pergunta p").getResultList();
+            encerrar();
+            return lista;
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            encerrar();
+            return lista;
+            
+        }
+    }
+
 }

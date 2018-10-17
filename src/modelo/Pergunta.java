@@ -8,6 +8,9 @@ package modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.event.ActionEvent;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ToggleButton;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  *
@@ -45,6 +49,13 @@ public class Pergunta implements Serializable{
     
     @Enumerated(EnumType.STRING)
     private Dificuldade dificuldade;
+    
+    //atributo que é usado mas não vai ser salvo no banco
+    @Transient
+    private CheckBox checkbox = new CheckBox();
+    
+    @Transient
+    private ToggleButton togglebutton = new ToggleButton();
     
     public Pergunta (){
         tags = new ArrayList();
@@ -112,5 +123,24 @@ public class Pergunta implements Serializable{
 
     public void setHabilitar(boolean habilitar) {
         this.habilitar = habilitar;
-    } 
+    }
+
+    public CheckBox getCheckbox() {
+        return checkbox;
+    }
+
+    public void setCheckbox(CheckBox checkbox) {
+        this.checkbox = checkbox;
+    }
+
+    public ToggleButton getTogglebutton() {
+        
+        return togglebutton;
+    }
+
+    public void setTogglebutton(ToggleButton togglebutton) {
+        this.togglebutton = togglebutton;
+    }
+    
+   
 }
