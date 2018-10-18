@@ -10,38 +10,40 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="729.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaListagemPerguntasController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaListagemPerguntasController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="556.0" prefWidth="752.0">
+      <AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="849.0">
          <children>
-            <JFXButton fx:id="btnIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="18.0" layoutY="95.0" onAction="#inserirPergunta" style="-fx-background-color: #63B94C; -fx-background-radius: 7;">
+            <JFXButton fx:id="btnIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="48.0" layoutY="117.0" onAction="#inserirPergunta" style="-fx-background-color: #63B94C; -fx-background-radius: 7;">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="57.0" layoutY="95.0" onAction="#alterarPergunta" style="-fx-background-color: #EDAE36; -fx-background-radius: 7;" text="Button">
+            <JFXButton fx:id="btnAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="87.0" layoutY="117.0" onAction="#alterarPergunta" style="-fx-background-color: #EDAE36; -fx-background-radius: 7;" text="Button">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnExcluir" contentDisplay="GRAPHIC_ONLY" layoutX="96.0" layoutY="95.0" onAction="#excluirPergunta" style="-fx-background-color: #D5554B; -fx-background-radius: 7;">
+            <JFXButton fx:id="btnExcluir" contentDisplay="GRAPHIC_ONLY" layoutX="126.0" layoutY="117.0" onAction="#excluirPergunta" style="-fx-background-color: #D5554B; -fx-background-radius: 7;">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="TRASH" />
                </graphic>
             </JFXButton>
-            <TextField layoutX="534.0" layoutY="95.0" prefHeight="31.0" prefWidth="177.0" promptText="pesquisar..." />
-            <Label layoutX="310.0" layoutY="32.0" text="PERGUNTAS" textFill="#529e53">
+            <TextField fx:id="campoPesquisar" layoutX="584.0" layoutY="117.0" prefHeight="31.0" prefWidth="272.0" promptText="pesquisar..." />
+            <Label layoutX="422.0" layoutY="38.0" text="PERGUNTAS" textFill="#529e53">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TableView fx:id="tvPergunta" layoutX="20.0" layoutY="158.0" prefHeight="364.0" prefWidth="692.0">
+            <TableView fx:id="tabelaPerguntas" layoutX="48.0" layoutY="170.0" prefHeight="439.0" prefWidth="808.0">
               <columns>
-                <TableColumn fx:id="tcolSelect" prefWidth="75.0" text="Select" />
-                <TableColumn fx:id="tcolPergunta" prefWidth="75.0" text="Pergunta" />
-                  <TableColumn fx:id="tcolHabilitar" prefWidth="75.0" text="Habilitar" />
+                <TableColumn fx:id="colunaPergunta" prefWidth="370.0" text="Pergunta" />
+                <TableColumn fx:id="colunaDificuldade" minWidth="0.0" prefWidth="219.0" text="Dificuldade" />
+                  <TableColumn fx:id="colunaHabilitar" prefWidth="122.0" text="Habilitar" />
+                  <TableColumn fx:id="colunaSala" prefWidth="96.0" text="Sala" />
               </columns>
             </TableView>
+            <JFXButton fx:id="botaoGerarSala" layoutX="226.0" layoutY="117.0" onAction="#gerarSala" prefHeight="31.0" prefWidth="151.0" style="-fx-background-color: #63B94C;" text="Gerar Sala" textFill="#eeeeee" />
          </children>
       </AnchorPane>
    </children>

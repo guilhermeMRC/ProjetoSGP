@@ -55,7 +55,7 @@ public class Pergunta implements Serializable{
     private CheckBox checkbox = new CheckBox();
     
     @Transient
-    private ToggleButton togglebutton = new ToggleButton();
+    private ToggleButton togglebutton = new ToggleButton("Habilitar");
     
     public Pergunta (){
         tags = new ArrayList();
@@ -142,5 +142,4 @@ public class Pergunta implements Serializable{
         this.togglebutton = togglebutton;
     }
     
-   
 }

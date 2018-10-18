@@ -6,7 +6,10 @@
 package modelo;
 
 import java.io.Serializable;
+import javax.annotation.Generated;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +28,12 @@ public class Alternativa implements Serializable{
     private Long id;
     private String descricao;
     private boolean correto;
-   
+    
+    /*Criei esse enum para marcar a ordem certa
+    porque está gravando fora de ordem no banco*/
+    @Enumerated(EnumType.STRING)
+    private LetraAlternativa letraAlternativa;
+    
     public Alternativa (){
         
     }
@@ -53,4 +61,21 @@ public class Alternativa implements Serializable{
     public void setCorreto(boolean correto) {
         this.correto = correto;
     }
+
+    public LetraAlternativa getLetraAlternativa() {
+        return letraAlternativa;
+    }
+
+    public void setLetraAlternativa(LetraAlternativa letraAlternativa) {
+        this.letraAlternativa = letraAlternativa;
+    }
+
+    @Override
+    public String toString() {
+        
+        return getDescricao();
+    }
+
+    
+    
 }

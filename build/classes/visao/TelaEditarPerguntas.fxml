@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastraPerguntas">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaEditarPerguntasController">
    <children>
       <AnchorPane prefHeight="640.0" prefWidth="890.0" style="-fx-background-color: #f7f7f7;">
          <children>
@@ -56,7 +56,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <JFXButton fx:id="botaoCadastrar" layoutX="107.0" layoutY="551.0" onAction="#CadastrarPergunta" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" styleClass="jfx-button-confirmar" stylesheets="@../css/estilo.css" text="Cadastrar" textFill="#0a0a0a" />
+            <JFXButton fx:id="botaoEditar" layoutX="107.0" layoutY="551.0" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" styleClass="jfx-button-confirmar" stylesheets="@../css/estilo.css" text="Editar" textFill="#0a0a0a" />
             <StackPane layoutX="522.0" layoutY="332.0" prefHeight="267.0" prefWidth="315.0">
                <children>
                   <JFXChipView fx:id="campoTags" prefHeight="267.0" prefWidth="331.0" style="-fx-border-color: #CFCFCF; -fx-background-color: #fff;" />

@@ -32,6 +32,7 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import modelo.Alternativa;
 import modelo.Disciplina;
+import modelo.LetraAlternativa;
 import modelo.Pergunta;
 import org.eclipse.persistence.jpa.rs.exceptions.JPARSException;
 
@@ -70,8 +71,8 @@ public class TelaCadastraPerguntas implements Initializable {
 
     private List<Dificuldade> dificuldades = new ArrayList();
     private ObservableList<Dificuldade> obsDificuldade;
-    private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-    private PerguntaDAO perguntaDAO = new PerguntaDAO();
+    //private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    //private PerguntaDAO perguntaDAO = new PerguntaDAO();
     private ObservableList<Disciplina> obsDisciplinas;
 
     @Override
@@ -98,8 +99,10 @@ public class TelaCadastraPerguntas implements Initializable {
         é infomado somente os valores de 12horas. Ou seja, não tem como simular minutos. 
         */
         
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
         
         try {
+            
             campoTags = new JFXChipView();
             Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
             List<String> listTags = new ArrayList();
@@ -112,7 +115,7 @@ public class TelaCadastraPerguntas implements Initializable {
             
             pergunta.setDisciplina(disciplina);
             pergunta.setAlternativas(cadastrarAlternativa());
-
+            
             campoTags.getChips().forEach((tags) -> {
                 listTags.add(tags);
             });
@@ -154,9 +157,16 @@ public class TelaCadastraPerguntas implements Initializable {
         Alternativa d = new Alternativa();
 
         a.setDescricao(campoAlternativaA.getText());
+        a.setLetraAlternativa(LetraAlternativa.A);
+        
         b.setDescricao(campoAlternativaB.getText());
+        b.setLetraAlternativa(LetraAlternativa.B);
+        
         c.setDescricao(campoAlternativaC.getText());
+        c.setLetraAlternativa(LetraAlternativa.C);
+        
         d.setDescricao(campoAlternativaD.getText());
+        d.setLetraAlternativa(LetraAlternativa.D);
         
         if(opcaoA.isSelected()){
             a.setCorreto(true);
@@ -168,11 +178,11 @@ public class TelaCadastraPerguntas implements Initializable {
             d.setCorreto(true);
         }
         
-        alternativas.add(a);
-        alternativas.add(b);
-        alternativas.add(c);
-        alternativas.add(d);
-
+        alternativas.add(0,a);
+        alternativas.add(1,b);
+        alternativas.add(2,c);
+        alternativas.add(3,d);
+        
         return alternativas;
     }
 
@@ -196,6 +206,8 @@ public class TelaCadastraPerguntas implements Initializable {
     }
 
     public void carregarDisciplinas() {
+        
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         obsDisciplinas = FXCollections.observableArrayList(disciplinaDAO.listar());
         selecaoDisciplina.getItems().addAll(obsDisciplinas);
     }
