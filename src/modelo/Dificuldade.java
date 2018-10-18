@@ -6,5 +6,6 @@ package modelo;
 public enum Dificuldade {
     FACIL,
     MEDIO,
-    DIFICIL
+    DIFICIL,
+    NOVO
 }
