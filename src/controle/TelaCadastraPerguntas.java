@@ -32,7 +32,6 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import modelo.Alternativa;
 import modelo.Disciplina;
-import modelo.LetraAlternativa;
 import modelo.Pergunta;
 import org.eclipse.persistence.jpa.rs.exceptions.JPARSException;
 
@@ -114,15 +113,17 @@ public class TelaCadastraPerguntas implements Initializable {
             pergunta.setTempo(converterDoubleParaInteger(sliderTempoPergunta.getValue()));
             
             pergunta.setDisciplina(disciplina);
-            pergunta.setAlternativas(cadastrarAlternativa());
-            
+            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaA,opcaoA));
+            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaB,opcaoB));
+            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaC,opcaoC));
+            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD,opcaoD));
             campoTags.getChips().forEach((tags) -> {
                 listTags.add(tags);
             });
             
             
             try {
-                perguntaDAO.incluir(pergunta);
+                perguntaDAO.incluirComAlternativas(pergunta);
                 Alert mensagemErro = new Alert(Alert.AlertType.WARNING);
                 mensagemErro.setTitle("Erro do sistema");
                 mensagemErro.setContentText("Pergunta cadastrada com sucesso!");
@@ -149,41 +150,18 @@ public class TelaCadastraPerguntas implements Initializable {
         }
     }
 
-    public List<Alternativa> cadastrarAlternativa() {
-        List<Alternativa> alternativas = new ArrayList();
+    public Alternativa cadastrarAlternativa(TextField alternativa, JFXRadioButton opcao) {
+        //List<Alternativa> alternativas = new ArrayList();
         Alternativa a = new Alternativa();
-        Alternativa b = new Alternativa();
-        Alternativa c = new Alternativa();
-        Alternativa d = new Alternativa();
-
-        a.setDescricao(campoAlternativaA.getText());
-        a.setLetraAlternativa(LetraAlternativa.A);
         
-        b.setDescricao(campoAlternativaB.getText());
-        b.setLetraAlternativa(LetraAlternativa.B);
+        a.setDescricao(alternativa.getText());
+    
         
-        c.setDescricao(campoAlternativaC.getText());
-        c.setLetraAlternativa(LetraAlternativa.C);
-        
-        d.setDescricao(campoAlternativaD.getText());
-        d.setLetraAlternativa(LetraAlternativa.D);
-        
-        if(opcaoA.isSelected()){
+        if(opcao.isSelected()){
             a.setCorreto(true);
-        }else if(opcaoB.isSelected()){
-            b.setCorreto(true);
-        }else if(opcaoC.isSelected()){
-            c.setCorreto(true);
-        }else{
-            d.setCorreto(true);
         }
         
-        alternativas.add(0,a);
-        alternativas.add(1,b);
-        alternativas.add(2,c);
-        alternativas.add(3,d);
-        
-        return alternativas;
+        return a;
     }
 
     public void limparCampos() {

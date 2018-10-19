@@ -29,11 +29,6 @@ public class Alternativa implements Serializable{
     private String descricao;
     private boolean correto;
     
-    /*Criei esse enum para marcar a ordem certa
-    porque está gravando fora de ordem no banco*/
-    @Enumerated(EnumType.STRING)
-    private LetraAlternativa letraAlternativa;
-    
     public Alternativa (){
         
     }
@@ -62,20 +57,10 @@ public class Alternativa implements Serializable{
         this.correto = correto;
     }
 
-    public LetraAlternativa getLetraAlternativa() {
-        return letraAlternativa;
-    }
-
-    public void setLetraAlternativa(LetraAlternativa letraAlternativa) {
-        this.letraAlternativa = letraAlternativa;
-    }
-
     @Override
     public String toString() {
         
         return getDescricao();
-    }
-
-    
+    }   
     
 }

@@ -75,6 +75,9 @@ public class TelaListagemPerguntasController implements Initializable {
     private void handleButtonAction(ActionEvent event){
        
         System.out.println("cliquei");
+        Boolean status = ! pergunta.isHabilitar();
+        pergunta.setLabelHabilitar(status);
+        pergunta.setHabilitar(status);
     }
     
     /**

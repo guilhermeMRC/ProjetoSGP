@@ -15,6 +15,7 @@ import dao.DisciplinaDAO;
 import dao.PerguntaDAO;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -27,6 +28,7 @@ import modelo.Alternativa;
 import modelo.Dificuldade;
 import modelo.Disciplina;
 import modelo.Pergunta;
+import org.hibernate.mapping.Collection;
 
 /**
  * FXML Controller class
@@ -97,36 +99,25 @@ public class TelaEditarPerguntasController implements Initializable {
         
         //System.out.println("aaa: " + disciplina);
         campoPergunta.setText(pergunta.getDescricao());
-        
-        for(Alternativa a : pergunta.getAlternativas()){
-            
-            switch(a.getLetraAlternativa()){
-                case A: 
-                    System.out.println("aaa");
-                    campoAlternativaA.setText(a.getDescricao());
-                    if(a.isCorreto() == true) opcaoA.setSelected(true);
-                    
-                    break;
-                case B:
-                    System.out.println("bbb");
-                    campoAlternativaB.setText(a.getDescricao());
-                    if(a.isCorreto() == true) opcaoB.setSelected(true);
-                    
-                    break;
-                case C:
-                    System.out.println("ccc");
-                    campoAlternativaC.setText(a.getDescricao());
-                    if(a.isCorreto() == true) opcaoC.setSelected(true);
-                    
-                    break;
-                case D:
-                    System.out.println("ddd");
-                    campoAlternativaD.setText(a.getDescricao());
-                    if(a.isCorreto() == true) opcaoD.setSelected(true);
-                   
-                    break;        
-            }
-        }
+        //Collections.sort(pergunta.getAlternativas());
+
+
+
+        campoAlternativaA.setText(pergunta.getAlternativas().get(0).getDescricao());
+        if(pergunta.getAlternativas().get(0).isCorreto() == true) opcaoA.setSelected(true);
+
+
+        campoAlternativaB.setText(pergunta.getAlternativas().get(1).getDescricao());
+        if(pergunta.getAlternativas().get(1).isCorreto() == true) opcaoB.setSelected(true);
+
+
+        campoAlternativaC.setText(pergunta.getAlternativas().get(2).getDescricao());
+        if(pergunta.getAlternativas().get(2).isCorreto() == true) opcaoC.setSelected(true);
+
+
+        campoAlternativaD.setText(pergunta.getAlternativas().get(3).getDescricao());
+        if(pergunta.getAlternativas().get(3).isCorreto() == true) opcaoD.setSelected(true);
+
         
         selecaoDificuldadePergunta.getSelectionModel().select(pergunta.getDificuldade());
         

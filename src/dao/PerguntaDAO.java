@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.List;
+import modelo.Alternativa;
 import modelo.Disciplina;
 import modelo.Pergunta;
 
@@ -32,6 +33,22 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
             encerrar();
             return lista;
             
+        }
+    }
+    
+    public void incluirComAlternativas(Pergunta p) {
+        try {
+           
+            for(Alternativa a: p.getAlternativas()){
+                    getManager().getTransaction().begin();
+                    getManager().persist(a);
+                    getManager().getTransaction().commit();  
+            }
+            getManager().getTransaction().begin();
+            getManager().persist(p);
+            encerrar();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -37,6 +37,7 @@ public class Pergunta implements Serializable{
     private Integer tempo;
     private List<String> tags;
     
+    
     /*coloquei essa variavel como inicializada como true 
     para poder vir por padrão*/
     private boolean habilitar = true;
@@ -44,8 +45,8 @@ public class Pergunta implements Serializable{
     @ManyToOne
     private Disciplina disciplina;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Alternativa> alternativas;
+    @OneToMany()
+    private List<Alternativa> alternativas = new ArrayList<Alternativa>();
     
     @Enumerated(EnumType.STRING)
     private Dificuldade dificuldade;
@@ -59,6 +60,14 @@ public class Pergunta implements Serializable{
     
     public Pergunta (){
         tags = new ArrayList();
+    }
+    
+    public void setLabelHabilitar(Boolean status){
+        if(status){
+            togglebutton.setText("Habilitar");
+        }else
+            togglebutton.setText("Desabilitar");
+
     }
 
     public Long getId() {
@@ -124,6 +133,8 @@ public class Pergunta implements Serializable{
     public void setHabilitar(boolean habilitar) {
         this.habilitar = habilitar;
     }
+    
+    
 
     public CheckBox getCheckbox() {
         return checkbox;
@@ -140,6 +151,10 @@ public class Pergunta implements Serializable{
 
     public void setTogglebutton(ToggleButton togglebutton) {
         this.togglebutton = togglebutton;
+    }
+    
+    public void addAlternativa(Alternativa alt){
+        getAlternativas().add(alt);
     }
     
 }
