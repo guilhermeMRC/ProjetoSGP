@@ -51,5 +51,24 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
             e.printStackTrace();
         }
     }
-
+    
+    public void atualizarComAlternativas(Pergunta p) {
+       
+        try {
+            
+            for(Alternativa a: p.getAlternativas()){
+                    getManager().getTransaction().begin();
+                    getManager().merge(a);
+                    getManager().getTransaction().commit();  
+            }
+            getManager().getTransaction().begin();
+            getManager().merge(p);
+            encerrar();
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+    }
+     
 }
