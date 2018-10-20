@@ -24,6 +24,7 @@ public class Sala {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String descricao;
+    private boolean habilitar = true;
     
     @ManyToMany
     private List<Pergunta> perguntas;
@@ -55,6 +56,12 @@ public class Sala {
     public void setPerguntas(List<Pergunta> perguntas) {
         this.perguntas = perguntas;
     }
-    
-    
+
+    public boolean isHabilitar() {
+        return habilitar;
+    }
+
+    public void setHabilitar(boolean habilitar) {
+        this.habilitar = habilitar;
+    }
 }

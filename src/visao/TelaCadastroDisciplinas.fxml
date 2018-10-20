@@ -1,41 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastroDisciplinasController">
+<AnchorPane fx:id="ParenteContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastroDisciplinasController">
    <children>
-      <AnchorPane fx:id="rootAnchorPane" prefHeight="561.0" prefWidth="700.0">
-         <children>
-            <JFXTreeTableView fx:id="treeTableView" layoutX="29.0" layoutY="123.0" prefHeight="406.0" prefWidth="643.0" />
-            <JFXButton fx:id="btnIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="29.0" layoutY="77.0" onAction="#inserirDisciplina" style="-fx-background-color: #63B94C; -fx-background-radius: 7;">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="67.0" layoutY="77.0" onAction="#alterarDisciplina" style="-fx-background-color: #EDAE36; -fx-background-radius: 7;">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnExcluir" contentDisplay="GRAPHIC_ONLY" layoutX="104.0" layoutY="77.0" onAction="#excluirDisciplina" style="-fx-background-color: #D5554B; -fx-background-radius: 7;" text="Button">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="TRASH" />
-               </graphic>
-            </JFXButton>
-            <TextField fx:id="campoPesquisar" layoutX="475.0" layoutY="77.0" prefHeight="25.0" prefWidth="197.0" promptText="Pesquisar..." />
-            <Label layoutX="294.0" layoutY="24.0" text="DISCIPLINAS" textFill="#529e53">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
+      <TableView fx:id="tabelaDisciplinas" layoutX="113.0" layoutY="100.0" prefHeight="354.0" prefWidth="636.0" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="100.0">
+         <columns>
+            <TableColumn fx:id="colunaId" prefWidth="57.0" text="#" />
+            <TableColumn fx:id="colunaDisciplina" prefWidth="578.0" text="DISCIPLINA" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="647.0" layoutY="57.0" onAction="#inserirDisciplina" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="472.0" AnchorPane.leftAnchor="647.0" AnchorPane.rightAnchor="162.0" AnchorPane.topAnchor="57.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="685.0" layoutY="57.0" onAction="#alterarDisciplina" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="472.0" AnchorPane.leftAnchor="685.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="57.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="botaoExcluir" contentDisplay="GRAPHIC_ONLY" layoutX="723.0" layoutY="58.0" onAction="#excluirDisciplina" styleClass="jfx-button-excluir" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="471.0" AnchorPane.leftAnchor="723.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="58.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="TRASH" />
+         </graphic>
+      </JFXButton>
+      <TextField fx:id="campoPesquisar" layoutX="113.0" layoutY="57.0" prefHeight="25.0" prefWidth="344.0" promptText="Pesquisar..." />
    </children>
-</StackPane>
+</AnchorPane>

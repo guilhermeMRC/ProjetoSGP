@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="533.0" prefWidth="204.0" style="-fx-background-color: #FFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaMenuLateralController">
+   <children>
+      <JFXButton fx:id="botaoInicio" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="40.0" prefWidth="204.0" style="-fx-background-color: #D60F30; -fx-background-radius: 0;" text="Inicio" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="16" text="" />
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="botaoPergunta" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="40.0" prefWidth="204.0" styleClass="jfx-button" stylesheets="@../css/estilo.css" text="Perguntas">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <graphic>
+            <FontAwesomeIconView fontSmoothingType="LCD" glyphName="QUESTION" size="16" text="" />
+         </graphic>
+         <font>
+            <Font name="Century Gothic Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="botaoDisciplina" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="40.0" prefWidth="204.0" styleClass="jfx-button" stylesheets="@../css/estilo.css" text="Disciplinas">
+         <font>
+            <Font name="Century Gothic Bold" size="13.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView fontSmoothingType="LCD" glyphName="BOOK" size="16" text="" />
+         </graphic>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </JFXButton>
+      <JFXButton fx:id="botaoSalas" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="40.0" prefWidth="204.0" styleClass="jfx-button" stylesheets="@../css/estilo.css" text="Salas">
+         <font>
+            <Font name="Century Gothic Bold" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <graphic>
+            <FontAwesomeIconView fontSmoothingType="LCD" glyphName="OBJECT_GROUP" />
+         </graphic>
+      </JFXButton>
+      <Pane prefHeight="1.0" prefWidth="204.0" style="-fx-background-color: #ECECEC;">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Pane>
+   </children>
+   <effect>
+      <DropShadow height="0.0" radius="5.75" width="25.0" />
+   </effect>
+</VBox>

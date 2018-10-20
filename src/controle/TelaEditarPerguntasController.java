@@ -89,13 +89,19 @@ public class TelaEditarPerguntasController implements Initializable {
     
     private List<Dificuldade> dificuldades = new ArrayList();
     private ObservableList<Dificuldade> obsDificuldade;
-    //private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-    private PerguntaDAO perguntaDAO = new PerguntaDAO();
+    private PerguntaDAO perguntaDAO;
     private List<Disciplina> displinas = new ArrayList<>();
     private ObservableList<Disciplina> obsDisciplinas;
     Pergunta perguntaNova = new Pergunta();
-    //List<Long> listIdAlternativas = new ArrayList<>();
     
+    
+     @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        carregarDificuldades();
+        carregarDisciplinas();
+    }   
+  
     public void receberParametros(TelaListagemPerguntasController tela, Pergunta pergunta){
         
         //estou setando o id por aqui 
@@ -135,7 +141,7 @@ public class TelaEditarPerguntasController implements Initializable {
     @FXML
     public void editarPergunta(ActionEvent event) {
         
-        PerguntaDAO perguntaDAO = new PerguntaDAO();
+        perguntaDAO = new PerguntaDAO();
         
         Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
         
@@ -154,11 +160,6 @@ public class TelaEditarPerguntasController implements Initializable {
         perguntaNova.getAlternativas().get(2).setCorreto(opcaoC.isSelected());
         perguntaNova.getAlternativas().get(3).setCorreto(opcaoD.isSelected());
         
-        /*perguntaNova.addAlternativa(editarAlternativa(campoAlternativaA,opcaoA));
-        perguntaNova.addAlternativa(editarAlternativa(campoAlternativaB,opcaoB));
-        perguntaNova.addAlternativa(editarAlternativa(campoAlternativaC,opcaoC));
-        perguntaNova.addAlternativa(editarAlternativa(campoAlternativaD,opcaoD));*/
-        //pergunta.setTags(tags);
         try {
             
             perguntaDAO.atualizarComAlternativas(perguntaNova);
@@ -174,54 +175,6 @@ public class TelaEditarPerguntasController implements Initializable {
             
             System.out.println("Erro: " + e);
         }
-            
-        /*campoTags = new JFXChipView();
-            Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
-            List<String> listTags = new ArrayList();
-            Pergunta pergunta = new Pergunta();
-            
-            pergunta.setDescricao(campoPergunta.getText());
-            pergunta.setDificuldade(selecaoDificuldadePergunta.getSelectionModel().getSelectedItem());
-            
-            pergunta.setTempo(converterDoubleParaInteger(sliderTempoPergunta.getValue()));
-            
-            pergunta.setDisciplina(disciplina);
-            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaA,opcaoA));
-            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaB,opcaoB));
-            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaC,opcaoC));
-            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD,opcaoD));
-            campoTags.getChips().forEach((tags) -> {
-                listTags.add(tags);
-            });
-            
-            
-            try {
-                perguntaDAO.incluirComAlternativas(pergunta);
-                Alert mensagemErro = new Alert(Alert.AlertType.WARNING);
-                mensagemErro.setTitle("Erro do sistema");
-                mensagemErro.setContentText("Pergunta cadastrada com sucesso!");
-                mensagemErro.showAndWait();
-
-                limparCampos();
-
-            } catch (Exception ex) {
-                Alert mensagemErro = new Alert(Alert.AlertType.WARNING);
-                mensagemErro.setTitle("Erro do sistema");
-                mensagemErro.setHeaderText("Erro ao cadastrar pergunta");
-                mensagemErro.setContentText("Não é possivel cadastrar uma pergunta!"
-                                          + "Verifique se todos os dados foram preenchidos corretamente!");
-                mensagemErro.showAndWait();
-            }
-
-        } catch (Exception ex) {
-            Alert mensagemAviso = new Alert(Alert.AlertType.WARNING);
-            mensagemAviso.setTitle("Aviso do sistema");
-            mensagemAviso.setHeaderText("Erro ao cadastrar pergunta");
-            mensagemAviso.setContentText("Não é possivel cadastrar uma pergunta sem informar seus dados!");
-            mensagemAviso.showAndWait();
-            
-        }*/
-        
     }
     
     public Integer converterDoubleParaInteger(Double valor){
@@ -249,7 +202,6 @@ public class TelaEditarPerguntasController implements Initializable {
     }
     
     public Alternativa editarAlternativa(TextField alternativa, JFXRadioButton opcao) {
-        //List<Alternativa> alternativas = new ArrayList();
         Alternativa a = new Alternativa();
         a.setDescricao(alternativa.getText());
        
@@ -258,14 +210,4 @@ public class TelaEditarPerguntasController implements Initializable {
         }
         return a;
     }
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-        carregarDificuldades();
-        carregarDisciplinas();
-    }    
-
 }

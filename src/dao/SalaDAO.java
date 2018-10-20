@@ -6,21 +6,20 @@
 package dao;
 
 import java.util.List;
-import modelo.Disciplina;
+import modelo.Sala;
 
 /**
  *
- * @author GuiGuizinho
+ * @author gnune
  */
-public class DisciplinaDAO extends GenericDAO<Disciplina>{
-    
-    public List<Disciplina> listar(){
+public class SalaDAO extends GenericDAO<Sala>{
+    public List<Sala> listar(){
         
-        List<Disciplina> lista = null;
+        List<Sala> lista = null;
         conectar();
         
         try {
-            lista = getManager().createQuery("from Disciplina d").getResultList();
+            lista = getManager().createQuery("from Sala s").getResultList();
             encerrar();
             return lista;
         } catch (Exception e) {
@@ -28,5 +27,5 @@ public class DisciplinaDAO extends GenericDAO<Disciplina>{
             encerrar();
             return lista;
         }
-    }     
+    }
 }

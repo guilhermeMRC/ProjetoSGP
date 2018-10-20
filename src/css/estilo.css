@@ -3,13 +3,21 @@
     Author     : gnunes
 */
 
-.jfx-button-confirmar{
-    -jfx-button-type: RAISED;
-    -fx-text-fill: #FFF;
-    -fx-background-color: #63B94C;
+
+/*Hover dos botões da navbar*/
+.jfx-button-navbar:hover{
+    -fx-background-color:#F0F0F0;
 }
-.jfx-button-cancelar{
-    -jfx-button-type: RAISED;
-    -fx-text-fill: #FFF;
-    -fx-background-color:#D5554B;
+
+/* Botões Adcionar, Alterar e Excluir */
+.jfx-button-adcionar{
+    -fx-background-color:#9ccc65; 
+}
+
+.jfx-button-alterar{
+    -fx-background-color:#fff176; 
+}
+
+.jfx-button-excluir{
+    -fx-background-color:#e57373; 
 }

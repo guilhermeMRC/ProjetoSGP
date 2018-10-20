@@ -2,49 +2,43 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaListagemPerguntasController">
+<AnchorPane fx:id="ParenteContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaListagemPerguntasController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="849.0">
-         <children>
-            <JFXButton fx:id="btnIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="48.0" layoutY="117.0" onAction="#inserirPergunta" style="-fx-background-color: #63B94C; -fx-background-radius: 7;">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="87.0" layoutY="117.0" onAction="#alterarPergunta" style="-fx-background-color: #EDAE36; -fx-background-radius: 7;" text="Button">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnExcluir" contentDisplay="GRAPHIC_ONLY" layoutX="126.0" layoutY="117.0" onAction="#excluirPergunta" style="-fx-background-color: #D5554B; -fx-background-radius: 7;">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="TRASH" />
-               </graphic>
-            </JFXButton>
-            <TextField fx:id="campoPesquisar" layoutX="584.0" layoutY="117.0" prefHeight="31.0" prefWidth="272.0" promptText="pesquisar..." />
-            <Label layoutX="422.0" layoutY="38.0" text="PERGUNTAS" textFill="#529e53">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <TableView fx:id="tabelaPerguntas" layoutX="48.0" layoutY="170.0" prefHeight="439.0" prefWidth="808.0">
-              <columns>
-                <TableColumn fx:id="colunaPergunta" prefWidth="370.0" text="Pergunta" />
-                <TableColumn fx:id="colunaDificuldade" minWidth="0.0" prefWidth="219.0" text="Dificuldade" />
-                  <TableColumn fx:id="colunaHabilitar" prefWidth="122.0" text="Habilitar" />
-                  <TableColumn fx:id="colunaSala" prefWidth="96.0" text="Sala" />
-              </columns>
-            </TableView>
-            <JFXButton fx:id="botaoGerarSala" layoutX="226.0" layoutY="117.0" onAction="#gerarSala" prefHeight="31.0" prefWidth="151.0" style="-fx-background-color: #63B94C;" text="Gerar Sala" textFill="#eeeeee" />
-         </children>
-      </AnchorPane>
+      <TableView fx:id="tabelaPerguntas" layoutX="43.0" layoutY="96.0" prefHeight="367.0" prefWidth="752.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="96.0">
+         <columns>
+            <TableColumn fx:id="colunaId" prefWidth="53.0" text="#" />
+            <TableColumn fx:id="colunaPergunta" prefWidth="358.0" text="PERGUNTA" />
+            <TableColumn fx:id="colunaDificuldade" prefWidth="167.0" text="DIFICULDADE" />
+            <TableColumn fx:id="colunaHabilitar" prefWidth="86.0" text="HABILITAR" />
+            <TableColumn fx:id="colunaSala" prefWidth="87.0" text="SALA" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="693.0" layoutY="53.0" onAction="#inserirPergunta" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="693.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="53.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="731.0" layoutY="53.0" onAction="#alterarPergunta" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="731.0" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="53.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="botaoExcluir" contentDisplay="GRAPHIC_ONLY" layoutX="769.0" layoutY="54.0" onAction="#excluirPergunta" styleClass="jfx-button-excluir" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="475.0" AnchorPane.leftAnchor="769.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="54.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="TRASH" />
+         </graphic>
+      </JFXButton>
+      <TextField fx:id="campoPesquisar" layoutX="43.0" layoutY="53.0" prefHeight="25.0" prefWidth="344.0" promptText="Pesquisar..." />
+      <JFXButton fx:id="botaoGerarSala" layoutX="461.0" layoutY="54.0" onAction="#criarSala" prefHeight="25.0" prefWidth="141.0" style="-fx-background-color: #90caf9;" text="Gerar Sala" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="12.0" />
+         </font>
+      </JFXButton>
    </children>
-</StackPane>
+</AnchorPane>

@@ -5,13 +5,12 @@
  */
 package modelo;
 
+import com.jfoenix.controls.JFXCheckBox;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.ActionEvent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -36,8 +35,7 @@ public class Pergunta implements Serializable{
     private String descricao;
     private Integer tempo;
     private List<String> tags;
-    
-    
+   
     /*coloquei essa variavel como inicializada como true 
     para poder vir por padrão*/
     private boolean habilitar = true;
@@ -46,20 +44,21 @@ public class Pergunta implements Serializable{
     private Disciplina disciplina;
     
     @OneToMany()
-    private List<Alternativa> alternativas = new ArrayList<Alternativa>();
+    private List<Alternativa> alternativas;
     
     @Enumerated(EnumType.STRING)
     private Dificuldade dificuldade;
     
     //atributo que é usado mas não vai ser salvo no banco
     @Transient
-    private CheckBox checkbox = new CheckBox();
+    private JFXCheckBox checkbox = new JFXCheckBox();
     
     @Transient
     private ToggleButton togglebutton = new ToggleButton("Habilitar");
     
     public Pergunta (){
         tags = new ArrayList();
+        alternativas = new ArrayList<Alternativa>();
     }
     
     public void setLabelHabilitar(Boolean status){
@@ -67,7 +66,6 @@ public class Pergunta implements Serializable{
             togglebutton.setText("Habilitar");
         }else
             togglebutton.setText("Desabilitar");
-
     }
 
     public Long getId() {
@@ -134,13 +132,11 @@ public class Pergunta implements Serializable{
         this.habilitar = habilitar;
     }
     
-    
-
     public CheckBox getCheckbox() {
         return checkbox;
     }
 
-    public void setCheckbox(CheckBox checkbox) {
+    public void setCheckbox(JFXCheckBox checkbox) {
         this.checkbox = checkbox;
     }
 

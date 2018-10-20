@@ -7,35 +7,26 @@ package controle;
 
 import dao.DisciplinaDAO;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.util.Callback;
 import modelo.Disciplina;
 
 /**
@@ -51,27 +42,24 @@ public class TelaCadastroDisciplinasController implements Initializable {
      * @param url
      * @param rb
      */
-    @FXML
-    private AnchorPane rootAnchorPane;
-
-    @FXML
-    private StackPane rootpane;
-
-    @FXML
-    private TextField campoPesquisar;
-
-    @FXML
-    private JFXButton btnIncluir, btnAlterar, btnExcluir;
-
-    @FXML
-    private JFXTreeTableView<DisciplinaTableView> treeTableView;
-
-    private ObservableList<Disciplina> observableListDisciplinas;
-    private List<Disciplina> listaDisciplinas = new ArrayList<>();
+    
+    @FXML private TableView<Disciplina> tabelaDisciplinas;
+    @FXML private TableColumn<Disciplina, Long> colunaId;
+    @FXML private TableColumn<Disciplina, String> colunaDisciplina;
+    @FXML private TextField campoPesquisar;
+    @FXML private JFXButton botaoIncluir, botaoAlterar, botaoExcluir;
+    @FXML private AnchorPane ParenteContainer;
+    
+    private ObservableList<Disciplina> observableList;
+    
+    public AnchorPane getAnchorPane() {
+        return this.ParenteContainer;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        carregarTableViewDisciplinas();
+        inicializarTabela();
+        observableList = FXCollections.observableArrayList();
     }
 
     public void TelaCadastroDisciplinasController() {
@@ -82,220 +70,96 @@ public class TelaCadastroDisciplinasController implements Initializable {
 
         Disciplina novaDisciplina = new Disciplina();
 
-        /*
-        Cria uma caixa de dialogo perguntando o nome da disciplina a ser cadastrada
-         */
-        
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Cadastro de disciplina");
         dialog.setHeaderText("Cadastrar disciplina");
         dialog.setContentText("Informe o nome da disciplina:");
 
-        Optional<String> resultado = dialog.showAndWait(); //Utilizado para pegar o valor informando no campo e mostrar a caixa de dialogo
+        Optional<String> resultado = dialog.showAndWait();
 
-        if (resultado.isPresent()) { //Verifica se o botão OK foi pressionado
+        if (resultado.isPresent()) {
             try {
-                novaDisciplina.setDescricao(resultado.get());
                 DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-
+                novaDisciplina.setDescricao(resultado.get());
                 disciplinaDAO.incluir(novaDisciplina);
                 dialog.close();
-                carregarTableViewDisciplinas();
+                inicializarTabela();
             } catch (Exception e) {
-                /*
-                Cria uma caixa de dialogo exibindo uma mensagem de erro
-                 */
-                Alert mensagemErro = new Alert(AlertType.ERROR);
-                mensagemErro.setTitle("Mensagem de erro do sistema");
-                mensagemErro.setHeaderText("Erro ao cadastrar disciplina");
-                mensagemErro.setContentText("Verique se:\n"
-                        + "1 - Todos os campos foram preenchidos corretamente\n"
-                        + "2 - O serviço do banco de dados está funcionando");
+
             }
         }
     }
 
     @FXML
     public void alterarDisciplina(ActionEvent event) {
+        try{  
+            Disciplina disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
 
-        /*
-        Jão, para você que estava com duvida sobre como pegar a informação da tabela e informar na tela de edição de disciplina,
-        esse é o pulo do Gato. Oque esta sendo feito aqui é justamente selecionar a tabela (Classe principal). Em seguida,
-        é retornado a tabela em si e não a classe Principal, por fim, permitindo que eu possa pegar o item que eu selecionei da tabela.
-         */
-        try {
-            TreeItem<DisciplinaTableView> selecionarDisciplina = treeTableView.getSelectionModel().getSelectedItem();
-            Disciplina disciplina = new Disciplina();
-       
-            /*
-            Cria uma caixa de dialogo perguntando o nome da nova da disciplina e ja inicializa o campo com o nome da disciplina selecionada.
-             */
-            TextInputDialog dialogAlteracao = new TextInputDialog(selecionarDisciplina.getValue().getDisciplina());
+            TextInputDialog dialogAlteracao = new TextInputDialog(disciplina.getDescricao());
             dialogAlteracao.setTitle("Alterar disciplina");
             dialogAlteracao.setHeaderText("Alterar disciplina");
             dialogAlteracao.setContentText("Informe o novo nome da disciplina");
 
             Optional<String> resultado = dialogAlteracao.showAndWait();
-
             if (resultado.isPresent()) {
                 try {
                     DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-                    //O método getValue() é uma propriedade do StringProprety, para que ele retorne uma String 
-                    disciplina.setId(selecionarDisciplina.getValue().getId());
                     disciplina.setDescricao(resultado.get());
                     disciplinaDAO.atualizar(disciplina);
-                    dialogAlteracao.close();
-                    carregarTableViewDisciplinas();
-                } catch (Exception e) {
+                    inicializarTabela();
+                } catch (Exception ex) {
 
-                    /*
-                    Cria uma caixa de dialogo exibindo uma mensagem de erro
-                     */
-                    Alert mensagemErro = new Alert(AlertType.ERROR);
-                    mensagemErro.setTitle("Mensagem de erro do sistema");
-                    mensagemErro.setHeaderText("Erro ao alterar a disciplinas");
-                    mensagemErro.setContentText("Verifique se o serviço do banco de dados está funcionando corretamente e/ou"
-                            + "se todas as informações foram preenchidas corretamente!");
                 }
+            } else {
+                dialogAlteracao.close();
             }
-        } catch (NullPointerException e) {
-            Alert mensagemErro = new Alert(AlertType.WARNING);
-            mensagemErro.setTitle("Mensagem de alerta do sistema");
-            mensagemErro.setHeaderText("Erro ao acessar tela de alteração");
-            mensagemErro.setContentText("Por favor, selecione uma disciplina!");
-            mensagemErro.showAndWait();
+        } catch(NullPointerException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aviso do sistema");
+            alert.setHeaderText("Erro ao tentar editar disciplina");
+            alert.setContentText("Nenhuma disciplina foi selecionada");
+            alert.show();
         }
     }
 
     @FXML
     public void excluirDisciplina(ActionEvent event) {
-        TreeItem<DisciplinaTableView> selecionarDisciplina = treeTableView.getSelectionModel().getSelectedItem();
+        try{
+            Disciplina disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
+            Alert telaDeletarDisciplina = new Alert(AlertType.CONFIRMATION);
+            telaDeletarDisciplina.setTitle("Deletar disciplina");
+            telaDeletarDisciplina.setContentText("Tem certeza que deseja deletar essa disciplina?");
 
-        if (treeTableView.getSelectionModel().isEmpty()) {
-            Alert mensagemErro = new Alert(AlertType.WARNING);
-            mensagemErro.setTitle("Mensagem de erro do sistema");
-            mensagemErro.setHeaderText("Erro ao deletar disciplina");
-            mensagemErro.setContentText("Por favor, selecione uma disciplina!");
-            mensagemErro.showAndWait();
-        } else {
-           
-            Alert mensagemConfirmacao = new Alert(AlertType.CONFIRMATION);
-            mensagemConfirmacao.setTitle("Mensagem de confirmação");
-            mensagemConfirmacao.setHeaderText("Exclusão de disciplina");
-            mensagemConfirmacao.setContentText("Deseja excluir essa disciplina?");
-
-            Optional<ButtonType> opcao = mensagemConfirmacao.showAndWait();
-
-            if (opcao.get() == ButtonType.OK) {
+            Optional<ButtonType > resultado = telaDeletarDisciplina.showAndWait();
+            if (resultado.isPresent()) {
                 try {
                     DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-                    disciplinaDAO.excluir(Disciplina.class, selecionarDisciplina.getValue().getId());
-                    mensagemConfirmacao.close();
-                    carregarTableViewDisciplinas();
-                } catch (Exception e) {
-                    Alert mensagemErro = new Alert(AlertType.ERROR);
-                    mensagemErro.setTitle("Mensagem de erro do sistema");
-                    mensagemErro.setHeaderText("Erro ao deletar a disciplinas");
-                    mensagemErro.setContentText("Verifique se o serviço do banco de dados está funcionando corretamente!");
+                    disciplinaDAO.excluir(Disciplina.class, disciplina.getId());
+                    inicializarTabela();
+                } catch (Exception ex) {
+
                 }
+            } else {
+                telaDeletarDisciplina.close();
             }
+        } catch(NullPointerException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aviso do sistema");
+            alert.setHeaderText("Erro ao tentar excluir disciplina");
+            alert.setContentText("Nenhuma disciplina selecionada");
+            alert.show();
         }
 
     }
 
-    public List<Disciplina> carregarDisciplinas() {
-        DisciplinaDAO dao = new DisciplinaDAO();
-
-        try {
-            listaDisciplinas = dao.listar();
-            return listaDisciplinas;
-
-        } catch (Exception e) {
-
-            Alert mensagemErro = new Alert(AlertType.ERROR);
-            mensagemErro.setTitle("Mensagem de erro do sistema");
-            mensagemErro.setHeaderText("Erro ao carregar a lista de disciplinas");
-            mensagemErro.setContentText("Verifique se o serviço do banco de dados está funcionando corretamente!");
-
-            return listaDisciplinas;
-        }
+    public void inicializarTabela() {
+        colunaId.setCellValueFactory(new PropertyValueFactory("id"));
+        colunaDisciplina.setCellValueFactory(new PropertyValueFactory("descricao"));
+        tabelaDisciplinas.setItems(atualizaTabela());
     }
 
-    public void carregarTableViewDisciplinas() {
-
-        /*
-        Cria uma coluna na tabela. São criados Callbacks para que ele pegue o valor da classe e informe na tabela
-         */
-        JFXTreeTableColumn<DisciplinaTableView, String> idDisciplina = new JFXTreeTableColumn<>("ID");
-        idDisciplina.setPrefWidth(75);
-        idDisciplina.setResizable(false);
-        idDisciplina.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<DisciplinaTableView, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<DisciplinaTableView, String> param) {
-                return param.getValue().getValue().id;
-            }
-        });
-
-        JFXTreeTableColumn<DisciplinaTableView, String> descricao = new JFXTreeTableColumn<>("DESCRICAO");
-        descricao.setPrefWidth(567);
-        descricao.setResizable(false);
-        descricao.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<DisciplinaTableView, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<DisciplinaTableView, String> param) {
-                return param.getValue().getValue().disciplina;
-            }
-        });
-
-        ObservableList<DisciplinaTableView> disciplinas = FXCollections.observableArrayList();
-
-        for (int i = 0; i < carregarDisciplinas().size(); i++) {
-            disciplinas.add(new DisciplinaTableView((String) carregarDisciplinas().get(i).getId().toString(), carregarDisciplinas().get(i).getDescricao()));
-        }
-
-        final TreeItem<DisciplinaTableView> root = new RecursiveTreeItem<DisciplinaTableView>(disciplinas, RecursiveTreeObject::getChildren);
-        treeTableView.getColumns().setAll(idDisciplina, descricao);
-        treeTableView.setRoot(root);
-        treeTableView.setShowRoot(false);
-
-        /*
-        Listener que ira verificar em tempo real se o nome digitado no campo pesquisa existe dentro da tabela.
-        Ele fica escutando a cada caracter digitado e faz automaticamente uma busca pela disciplina digitada.
-         */
-        campoPesquisar.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                treeTableView.setPredicate(new Predicate<TreeItem<DisciplinaTableView>>() {
-                    @Override
-                    public boolean test(TreeItem<DisciplinaTableView> disciplina) {
-                        Boolean flag = disciplina.getValue().disciplina.getValue().contains(newValue);
-                        return flag;
-                    }
-                });
-            }
-        });
+    public ObservableList<Disciplina> atualizaTabela() {
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        return FXCollections.observableArrayList(disciplinaDAO.listar());
     }
-
-    /*
-    Classe utilizada para manipular a tabela
-     */
-    class DisciplinaTableView extends RecursiveTreeObject<DisciplinaTableView> {
-
-        StringProperty id;
-        StringProperty disciplina;
-
-        public DisciplinaTableView(String id, String disciplina) {
-            this.id = new SimpleStringProperty(id);
-            this.disciplina = new SimpleStringProperty(disciplina);
-        }
-
-        public Long getId() {
-            Long id = Long.parseLong(this.id.get());
-            return id;
-        }
-
-        public String getDisciplina() {
-            return this.disciplina.get();
-        }
-    }
-
 }

@@ -1,43 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.Pane?>
 
-<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="476.0" minWidth="820.0" prefHeight="476.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaPrincipalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaInicialController">
    <children>
-      <AnchorPane minHeight="356.0" minWidth="296.0" prefHeight="356.0" prefWidth="820.0" style="-fx-background-color: #fcfcfc;">
+      <Pane prefHeight="59.0" prefWidth="835.0" style="-fx-background-color: #66A931;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <MenuBar minHeight="25.0" minWidth="600.0" prefHeight="44.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="Cadastros">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#carregarCadastroDisciplinas" text="Disciplinas">
-                           <graphic>
-                              <FontAwesomeIconView fill="#9e8e32" glyphName="BOOK" size="14" />
-                           </graphic></MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#carregarCadastroPerguntas" text="Perguntas">
-                           <graphic>
-                              <FontAwesomeIconView fill="#3a5683" glyphName="QUESTION_CIRCLE" size="14" />
-                           </graphic></MenuItem>
-                  </items>
-                     <graphic>
-                        <FontAwesomeIconView fill="#34a806" glyphName="PLUS_CIRCLE" size="16" wrappingWidth="14.714285850524902" />
-                     </graphic>
-                </Menu>
-              </menus>
-            </MenuBar>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="51.0" prefHeight="384.0" prefWidth="798.0" text="SEJA BEM VINDO AO SISTEMA GERENCIADOR DE PERGUNTAS" textAlignment="CENTER" textFill="#55a162" wrapText="true">
-               <font>
-                  <Font name="Arial" size="42.0" />
-               </font>
-            </Label>
+            <JFXHamburger fx:id="hamburger" layoutX="14.0" layoutY="20.0" />
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="793.0" layoutY="18.0" onAction="#fecharAplicacao">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="16" />
+               </graphic>
+            </JFXButton>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="740.0" layoutY="18.0" text="Button">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="17" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </Pane>
+      <AnchorPane fx:id="rootPane" layoutX="-2.0" layoutY="59.0" prefHeight="496.0" prefWidth="843.0">
+         <children>
+            <ImageView fitHeight="466.0" fitWidth="708.0" layoutX="79.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../Desktop/SGP/src/imagens/Logo%201.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutY="58.0" prefHeight="496.0" prefWidth="185.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="650.0" AnchorPane.topAnchor="58.0" />
    </children>
-</StackPane>
+   <effect>
+      <DropShadow height="44.72" radius="19.6375" width="35.83" />
+   </effect>
+</AnchorPane>
