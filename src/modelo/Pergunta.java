@@ -141,7 +141,11 @@ public class Pergunta implements Serializable{
     }
 
     public ToggleButton getTogglebutton() {
-        
+        if(isHabilitar() == true){
+            this.togglebutton.setText("Desabilitar");
+        }else{
+            this.togglebutton.setText("Habilitar");
+        }
         return togglebutton;
     }
 

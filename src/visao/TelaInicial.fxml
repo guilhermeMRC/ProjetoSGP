@@ -31,7 +31,7 @@
          <children>
             <ImageView fitHeight="466.0" fitWidth="708.0" layoutX="79.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../Desktop/SGP/src/imagens/Logo%201.png" />
+                  <Image url="@../imagens/Logo%201.png" />
                </image>
             </ImageView>
          </children>

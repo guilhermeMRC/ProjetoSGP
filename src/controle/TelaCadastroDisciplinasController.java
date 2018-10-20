@@ -8,6 +8,8 @@ package controle;
 import dao.DisciplinaDAO;
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
@@ -21,11 +23,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.Disciplina;
 
@@ -46,29 +51,71 @@ public class TelaCadastroDisciplinasController implements Initializable {
     @FXML private TableView<Disciplina> tabelaDisciplinas;
     @FXML private TableColumn<Disciplina, Long> colunaId;
     @FXML private TableColumn<Disciplina, String> colunaDisciplina;
+    @FXML private TableColumn<Disciplina, ToggleButton> colunaHabilitarDesabilitar;
     @FXML private TextField campoPesquisar;
     @FXML private JFXButton botaoIncluir, botaoAlterar, botaoExcluir;
     @FXML private AnchorPane ParenteContainer;
     
-    private ObservableList<Disciplina> observableList;
+    private Disciplina disciplina = new Disciplina();
     
+    private ObservableList<Disciplina> observableListDisciplina;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        carregarTabela();
+        //observableListDisciplina = FXCollections.observableArrayList();
+        //habilitarDesabilitarDisciplina();
+    }
+
     public AnchorPane getAnchorPane() {
         return this.ParenteContainer;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        inicializarTabela();
-        observableList = FXCollections.observableArrayList();
+    private void handleButtonAction(ActionEvent event){
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        
+        for(Disciplina d : tabelaDisciplinas.getItems()){
+            
+            if(d.getTogglebutton() == event.getTarget()){
+                disciplina = d;
+                break;
+            }
+            
+        }
+        
+        System.out.println(disciplina.getId());
+        
+        boolean status = disciplina.isHabilitar();
+        if(status == true){
+            
+            disciplina.setHabilitar(false);
+            disciplinaDAO.atualizar(disciplina);
+            
+        }else {
+            
+            disciplina.setHabilitar(true);
+            disciplinaDAO.atualizar(disciplina);
+            
+        }
+        carregarTabela();
     }
 
+    public void habilitarDesabilitarDisciplina(){
+        
+        for(int i = 0; i<observableListDisciplina.size(); i++){
+            observableListDisciplina.get(i).getTogglebutton().setOnAction(this::handleButtonAction);
+        }
+        
+    }
+    
     public void TelaCadastroDisciplinasController() {
     }
 
     @FXML
     public void inserirDisciplina(ActionEvent event) {
 
-        Disciplina novaDisciplina = new Disciplina();
+        disciplina = new Disciplina();
+        //Disciplina novaDisciplina = new Disciplina();
 
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Cadastro de disciplina");
@@ -80,10 +127,10 @@ public class TelaCadastroDisciplinasController implements Initializable {
         if (resultado.isPresent()) {
             try {
                 DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-                novaDisciplina.setDescricao(resultado.get());
-                disciplinaDAO.incluir(novaDisciplina);
+                disciplina.setDescricao(resultado.get());
+                disciplinaDAO.incluir(disciplina);
                 dialog.close();
-                inicializarTabela();
+                carregarTabela();
             } catch (Exception e) {
 
             }
@@ -93,7 +140,8 @@ public class TelaCadastroDisciplinasController implements Initializable {
     @FXML
     public void alterarDisciplina(ActionEvent event) {
         try{  
-            Disciplina disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
+            
+            disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
 
             TextInputDialog dialogAlteracao = new TextInputDialog(disciplina.getDescricao());
             dialogAlteracao.setTitle("Alterar disciplina");
@@ -106,7 +154,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
                     DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
                     disciplina.setDescricao(resultado.get());
                     disciplinaDAO.atualizar(disciplina);
-                    inicializarTabela();
+                    carregarTabela();
                 } catch (Exception ex) {
 
                 }
@@ -125,7 +173,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
     @FXML
     public void excluirDisciplina(ActionEvent event) {
         try{
-            Disciplina disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
+            disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
             Alert telaDeletarDisciplina = new Alert(AlertType.CONFIRMATION);
             telaDeletarDisciplina.setTitle("Deletar disciplina");
             telaDeletarDisciplina.setContentText("Tem certeza que deseja deletar essa disciplina?");
@@ -135,7 +183,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
                 try {
                     DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
                     disciplinaDAO.excluir(Disciplina.class, disciplina.getId());
-                    inicializarTabela();
+                    carregarTabela();
                 } catch (Exception ex) {
 
                 }
@@ -152,14 +200,30 @@ public class TelaCadastroDisciplinasController implements Initializable {
 
     }
 
-    public void inicializarTabela() {
+    public void carregarTabela() {
+        
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaDisciplina.setCellValueFactory(new PropertyValueFactory("descricao"));
-        tabelaDisciplinas.setItems(atualizaTabela());
+        colunaHabilitarDesabilitar.setCellValueFactory(new PropertyValueFactory("togglebutton"));
+        
+        observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listar());
+
+        /*for (Disciplina d : disciplinaDAO.listar()) {
+            observableListDisciplina.add(d);
+        }*/
+        habilitarDesabilitarDisciplina();
+        tabelaDisciplinas.setItems(observableListDisciplina);
+        
+        
     }
 
-    public ObservableList<Disciplina> atualizaTabela() {
+    /*public ObservableList<Disciplina> atualizaTabela() {
+        
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        ob
         return FXCollections.observableArrayList(disciplinaDAO.listar());
-    }
+        
+    }*/
+    
 }
