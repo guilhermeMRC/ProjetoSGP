@@ -16,23 +16,18 @@
             <TableColumn fx:id="colunaSala" prefWidth="578.0" text="SALA" />
          </columns>
       </TableView>
-      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="646.0" layoutY="53.0" onAction="#inserirSala" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="646.0" AnchorPane.rightAnchor="163.0" AnchorPane.topAnchor="53.0">
+      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="684.0" layoutY="53.0" onAction="#inserirSala" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="684.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="53.0">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="684.0" layoutY="53.0" onAction="#alterarSala" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="684.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="53.0">
+      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="722.0" layoutY="53.0" onAction="#alterarSala" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="722.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="53.0">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="botaoExcluir" contentDisplay="GRAPHIC_ONLY" layoutX="722.0" layoutY="54.0" onAction="#excluirSala" styleClass="jfx-button-excluir" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="475.0" AnchorPane.leftAnchor="722.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="54.0">
-         <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="TRASH" />
-         </graphic>
-      </JFXButton>
       <TextField fx:id="campoPesquisar" layoutX="112.0" layoutY="53.0" prefHeight="25.0" prefWidth="344.0" promptText="Pesquisar..." />
-      <JFXButton fx:id="botaoVisualizarSala" contentDisplay="GRAPHIC_ONLY" defaultButton="true" layoutX="606.0" layoutY="53.0" onAction="#visualizarSala" prefHeight="25.0" prefWidth="26.0" ripplerFill="BLACK" style="-fx-background-color: #90caf9;" textFill="WHITE">
+      <JFXButton fx:id="botaoVisualizarSala" contentDisplay="GRAPHIC_ONLY" defaultButton="true" layoutX="644.0" layoutY="53.0" onAction="#visualizarSala" prefHeight="25.0" prefWidth="26.0" ripplerFill="BLACK" style="-fx-background-color: #90caf9;" textFill="WHITE">
          <font>
             <Font name="Century Gothic Bold" size="12.0" />
          </font>

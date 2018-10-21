@@ -19,19 +19,14 @@
             <TableColumn fx:id="colunaSala" prefWidth="87.0" text="SALA" />
          </columns>
       </TableView>
-      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="693.0" layoutY="53.0" onAction="#inserirPergunta" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="693.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="53.0">
+      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="731.0" layoutY="55.0" onAction="#inserirPergunta" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="474.0" AnchorPane.leftAnchor="731.0" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="55.0">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="731.0" layoutY="53.0" onAction="#alterarPergunta" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="731.0" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="53.0">
+      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="769.0" layoutY="55.0" onAction="#alterarPergunta" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="474.0" AnchorPane.leftAnchor="769.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="55.0">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="botaoExcluir" contentDisplay="GRAPHIC_ONLY" layoutX="769.0" layoutY="54.0" onAction="#excluirPergunta" styleClass="jfx-button-excluir" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="475.0" AnchorPane.leftAnchor="769.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="54.0">
-         <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="TRASH" />
          </graphic>
       </JFXButton>
       <TextField fx:id="campoPesquisar" layoutX="43.0" layoutY="53.0" prefHeight="25.0" prefWidth="344.0" promptText="Pesquisar..." />
