@@ -6,6 +6,7 @@
 package modelo;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXToggleButton;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,21 +52,22 @@ public class Pergunta implements Serializable{
     
     //atributo que é usado mas não vai ser salvo no banco
     @Transient
-    private JFXCheckBox checkbox = new JFXCheckBox();
+    private JFXCheckBox checkbox;
     
     @Transient
-    private ToggleButton togglebutton = new ToggleButton("Habilitar");
+    private ToggleButton togglebutton = new JFXToggleButton();
     
     public Pergunta (){
-        tags = new ArrayList();
-        alternativas = new ArrayList<Alternativa>();
+        this.tags = new ArrayList();
+        this.alternativas = new ArrayList<Alternativa>();
+        this.checkbox = new JFXCheckBox();
     }
     
     public void setLabelHabilitar(Boolean status){
         if(status){
-            togglebutton.setText("Habilitar");
+            this.togglebutton.setText("Habilitar");
         }else
-            togglebutton.setText("Desabilitar");
+            this.togglebutton.setText("Desabilitar");
     }
 
     public Long getId() {
@@ -132,7 +134,7 @@ public class Pergunta implements Serializable{
         this.habilitar = habilitar;
     }
     
-    public CheckBox getCheckbox() {
+    public JFXCheckBox getCheckbox() {
         return checkbox;
     }
 

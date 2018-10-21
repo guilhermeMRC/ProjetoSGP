@@ -12,11 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,7 +50,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
     @FXML private TableColumn<Disciplina, String> colunaDisciplina;
     @FXML private TableColumn<Disciplina, ToggleButton> colunaHabilitarDesabilitar;
     @FXML private TextField campoPesquisar;
-    @FXML private JFXButton botaoIncluir, botaoAlterar, botaoExcluir;
+    @FXML private JFXButton botaoIncluir, botaoAlterar;
     @FXML private AnchorPane ParenteContainer;
     
     private Disciplina disciplina = new Disciplina();
@@ -80,10 +77,8 @@ public class TelaCadastroDisciplinasController implements Initializable {
                 disciplina = d;
                 break;
             }
-            
+    
         }
-        
-        System.out.println(disciplina.getId());
         
         boolean status = disciplina.isHabilitar();
         if(status == true){
@@ -170,7 +165,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
         }
     }
 
-    @FXML
+    /*@FXML
     public void excluirDisciplina(ActionEvent event) {
         try{
             disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
@@ -198,7 +193,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
             alert.show();
         }
 
-    }
+    }*/
 
     public void carregarTabela() {
         
@@ -206,16 +201,13 @@ public class TelaCadastroDisciplinasController implements Initializable {
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaDisciplina.setCellValueFactory(new PropertyValueFactory("descricao"));
         colunaHabilitarDesabilitar.setCellValueFactory(new PropertyValueFactory("togglebutton"));
+        colunaHabilitarDesabilitar.setStyle("-fx-alignment: CENTER;");
         
         observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listar());
 
-        /*for (Disciplina d : disciplinaDAO.listar()) {
-            observableListDisciplina.add(d);
-        }*/
         habilitarDesabilitarDisciplina();
         tabelaDisciplinas.setItems(observableListDisciplina);
-        
-        
+   
     }
 
     /*public ObservableList<Disciplina> atualizaTabela() {

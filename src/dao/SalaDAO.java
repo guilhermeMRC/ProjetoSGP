@@ -12,12 +12,13 @@ import modelo.Sala;
  *
  * @author gnune
  */
-public class SalaDAO extends GenericDAO<Sala>{
-    public List<Sala> listar(){
-        
+public class SalaDAO extends GenericDAO<Sala> {
+
+    public List<Sala> listar() {
+
         List<Sala> lista = null;
         conectar();
-        
+
         try {
             lista = getManager().createQuery("from Sala s").getResultList();
             encerrar();
@@ -26,6 +27,22 @@ public class SalaDAO extends GenericDAO<Sala>{
             e.printStackTrace();
             encerrar();
             return lista;
+        }
+    }
+
+    public Sala listarPorId(Long id) {
+
+        Sala sala = null;
+        conectar();
+
+        try {
+            sala = (Sala) getManager().createQuery("from Sala s where s.id = " + id).getSingleResult();
+            encerrar();
+            return sala;
+        } catch (Exception e) {
+            e.printStackTrace();
+            encerrar();
+            return sala;
         }
     }
 }

@@ -163,10 +163,10 @@ public class TelaEditarPerguntasController implements Initializable {
         try {
             
             perguntaDAO.atualizarComAlternativas(perguntaNova);
-            Alert mensagemErro = new Alert(Alert.AlertType.WARNING);
-            mensagemErro.setTitle("Erro do sistema");
-            mensagemErro.setContentText("Pergunta editada com sucesso!");
-            mensagemErro.showAndWait();
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Mensagem do sistema");
+            mensagem.setContentText("Pergunta editada com sucesso!");
+            mensagem.showAndWait();
             Stage stage = new Stage();
             stage = (Stage) botaoEditar.getScene().getWindow();
             stage.close();

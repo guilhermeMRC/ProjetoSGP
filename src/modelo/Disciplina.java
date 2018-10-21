@@ -31,7 +31,7 @@ public class Disciplina implements Serializable {
     
     @Transient 
     private ToggleButton togglebutton = new ToggleButton();
-    
+
     public Disciplina(){
     
     }
