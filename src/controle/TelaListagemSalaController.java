@@ -25,6 +25,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -41,13 +42,14 @@ public class TelaListagemSalaController implements Initializable {
 
     @FXML
     private AnchorPane ParenteContainer;
-
     @FXML
     private TableView<Sala> tabelaSalas;
     @FXML
     private TableColumn<Sala, Long> colunaId;
     @FXML
     private TableColumn<Sala, String> colunaSala;
+    @FXML
+    private TableColumn<Sala, ToggleButton> colunaIHabilitarDesabilitar;
 
     @FXML
     private JFXButton botaoIncluir, botaoAlterar, botaoExcluir, botaoVisualizarSala;
@@ -56,12 +58,62 @@ public class TelaListagemSalaController implements Initializable {
     private SalaDAO salaDAO;
     private ObservableList<Pergunta> obsPerguntas;
     private TelaListagemSalaController telaListagemSalaController;
-
+    private ObservableList<Sala> obsSalas;
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         inicializarTabela();
     }
 
+    /*Esse método é responsavel por iniciar o evento dos 
+    togglesbuttons da tabela ele pega qual a pergunta daquele
+    togglebutton específio e quando eu tenho esses dados 
+    é só dar um merge pelo método atualizar no PerguntaDAO*/
+    private void handleButtonAction(ActionEvent event) {
+
+        //seto o PerguntaDAO que faz a conexão com o banco de dados
+        SalaDAO disciplinaDAO = new SalaDAO();
+
+        //esse for varre a tabela atrás do togglebutton que eu cliquei
+        for (Sala s : tabelaSalas.getItems()) {
+
+            //aqui faz a checagem de qual tooglebutton eu apertei
+            if (s.getTogglebutton() == event.getTarget()) {
+                //aqui joga as informações para uma pergunta instaciada como atributo la em cima na classe
+                sala = s;
+                break;
+            }
+
+        }
+
+        //aqui pega o valor do atributo habilitar 
+        boolean status = sala.isHabilitar();
+        
+        //aqui ele checa e atualiza no banco
+        if (status == true) {
+
+            sala.setHabilitar(false);
+            disciplinaDAO.atualizar(sala);
+
+        } else {
+
+            sala.setHabilitar(true);
+            disciplinaDAO.atualizar(sala);
+
+        }
+        
+        //aqui atualiza a tabela
+        inicializarTabela();
+    }
+    
+    public void habilitarDesabilitarSala() {
+
+        for (int i = 0; i < obsSalas.size(); i++) {
+            obsSalas.get(i).getTogglebutton().setOnAction(this::handleButtonAction);
+        }
+
+    }
+    
     @FXML
     void inserirSala(ActionEvent event) {
 
@@ -85,12 +137,15 @@ public class TelaListagemSalaController implements Initializable {
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
+                inicializarTabela();
             } catch (IOException ex) {
                 Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
+                inicializarTabela();
             }
         } else {
             inputDialog.close();
         }
+        inicializarTabela();
     }
 
     @FXML
@@ -131,11 +186,6 @@ public class TelaListagemSalaController implements Initializable {
     }
 
     @FXML
-    void excluirSala(ActionEvent event) {
-
-    }
-
-    @FXML
     void visualizarSala(ActionEvent event) {
         try{
             salaDAO = new SalaDAO();
@@ -173,16 +223,19 @@ public class TelaListagemSalaController implements Initializable {
     }
 
     public void inicializarTabela() {
+        salaDAO = new SalaDAO();
+        
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaId.setStyle("-fx-alignment: CENTER;");
 
         colunaSala.setCellValueFactory(new PropertyValueFactory("descricao"));
-
-        tabelaSalas.setItems(atualizarSala());
+        
+        colunaIHabilitarDesabilitar.setCellValueFactory(new PropertyValueFactory("togglebutton"));
+        
+        obsSalas = FXCollections.observableArrayList(salaDAO.listar());
+        
+        habilitarDesabilitarSala();
+        tabelaSalas.setItems(obsSalas);
     }
 
-    public ObservableList<Sala> atualizarSala() {
-        salaDAO = new SalaDAO();
-        return FXCollections.observableArrayList(salaDAO.listar());
-    }
 }

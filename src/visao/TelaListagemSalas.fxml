@@ -13,7 +13,8 @@
       <TableView fx:id="tabelaSalas" layoutX="112.0" layoutY="96.0" prefHeight="369.0" prefWidth="636.0" AnchorPane.bottomAnchor="88.0" AnchorPane.leftAnchor="112.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="96.0">
          <columns>
             <TableColumn fx:id="colunaId" prefWidth="57.0" text="#" />
-            <TableColumn fx:id="colunaSala" prefWidth="578.0" text="SALA" />
+            <TableColumn fx:id="colunaSala" prefWidth="462.0" text="SALA" />
+            <TableColumn fx:id="colunaIHabilitarDesabilitar" prefWidth="116.0" text="on/off" />
          </columns>
       </TableView>
       <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="684.0" layoutY="53.0" onAction="#inserirSala" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="684.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="53.0">

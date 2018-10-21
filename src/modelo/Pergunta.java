@@ -55,7 +55,7 @@ public class Pergunta implements Serializable{
     private JFXCheckBox checkbox;
     
     @Transient
-    private ToggleButton togglebutton = new ToggleButton();
+    private ToggleButton togglebutton = new JFXToggleButton();
     
     public Pergunta (){
         this.tags = new ArrayList();

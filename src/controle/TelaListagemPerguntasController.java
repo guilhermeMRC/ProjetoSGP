@@ -79,7 +79,7 @@ public class TelaListagemPerguntasController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         carregarTabela();
-        habilitarDesabilitarPergunta();
+        //habilitarDesabilitarPergunta();
 
     }
     
@@ -102,20 +102,31 @@ public class TelaListagemPerguntasController implements Initializable {
 
     }
 
+    /*Esse método é responsavel por iniciar o evento dos 
+    togglesbuttons da tabela ele pega qual a pergunta daquele
+    togglebutton específio e quando eu tenho esses dados 
+    é só dar um merge pelo método atualizar no PerguntaDAO*/
     private void handleButtonAction(ActionEvent event) {
 
+        //seto o PerguntaDAO que faz a conexão com o banco de dados
         PerguntaDAO disciplinaDAO = new PerguntaDAO();
 
+        //esse for varre a tabela atrás do togglebutton que eu cliquei
         for (Pergunta p : tabelaPerguntas.getItems()) {
 
+            //aqui faz a checagem de qual tooglebutton eu apertei
             if (p.getTogglebutton() == event.getTarget()) {
+                //aqui joga as informações para uma pergunta instaciada como atributo la em cima na classe
                 pergunta = p;
                 break;
             }
 
         }
 
+        //aqui pega o valor do atributo habilitar 
         boolean status = pergunta.isHabilitar();
+        
+        //aqui ele checa e atualiza no banco
         if (status == true) {
 
             pergunta.setHabilitar(false);
@@ -127,9 +138,14 @@ public class TelaListagemPerguntasController implements Initializable {
             disciplinaDAO.atualizar(pergunta);
 
         }
+        
+        //aqui atualiza a tabela
         carregarTabela();
     }
 
+    /*Método que faz o togglebuttons aparecerem na
+    tabela ele pega e faz um for no obsrvablelist e 
+    depois seta um evento em cada togglebutton*/
     public void habilitarDesabilitarPergunta() {
 
         for (int i = 0; i < obsPergunta.size(); i++) {
@@ -139,6 +155,8 @@ public class TelaListagemPerguntasController implements Initializable {
     }
 
     public void carregarTabela() {
+        perguntaDAO = new PerguntaDAO();
+        
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaId.setStyle("-fx-alignment: CENTER;");
 
@@ -153,24 +171,9 @@ public class TelaListagemPerguntasController implements Initializable {
         colunaSala.setCellValueFactory(new PropertyValueFactory("checkbox"));
         colunaSala.setStyle("-fx-alignment: CENTER;");
 
-        tabelaPerguntas.setItems(getPerguntas());
-    }
-
-    public ObservableList<Pergunta> getPerguntas() {
-        perguntaDAO = new PerguntaDAO();
-
-        ObservableList<Pergunta> perguntas = FXCollections.observableArrayList();
-
-        for (Pergunta p : perguntaDAO.listar()) {
-            perguntas.add(p);
-            obsPergunta.add(p);
-        }
-
+        obsPergunta = FXCollections.observableArrayList(perguntaDAO.listar());
         habilitarDesabilitarPergunta();
-        tabelaPerguntas.setItems(perguntas);
-
-        return perguntas;
-
+        tabelaPerguntas.setItems(obsPergunta);
     }
 
     public void carregarTela(String arq) {

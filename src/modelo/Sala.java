@@ -5,12 +5,15 @@
  */
 package modelo;
 
+import com.jfoenix.controls.JFXToggleButton;
 import java.util.List;
+import javafx.scene.control.ToggleButton;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 /**
  *
@@ -25,6 +28,9 @@ public class Sala {
     private Long id;
     private String descricao;
     private boolean habilitar = true;
+    
+    @Transient
+    private ToggleButton togglebutton = new JFXToggleButton();
     
     @ManyToMany
     private List<Pergunta> pergunta;
@@ -64,4 +70,31 @@ public class Sala {
     public void setHabilitar(boolean habilitar) {
         this.habilitar = habilitar;
     }
+
+    public ToggleButton getTogglebutton() {
+        if(isHabilitar() == true){
+            
+            this.togglebutton.setSelected(true);
+            
+        }else{
+            
+            this.togglebutton.setSelected(false);
+            
+        }
+        return togglebutton;
+    }
+    
+    public void setTogglebutton(ToggleButton toggleButton) {
+        this.togglebutton = toggleButton;
+    }
+
+    public List<Pergunta> getPergunta() {
+        return pergunta;
+    }
+
+    public void setPergunta(List<Pergunta> pergunta) {
+        this.pergunta = pergunta;
+    }
+    
+    
 }

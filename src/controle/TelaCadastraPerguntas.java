@@ -29,13 +29,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
 import modelo.Alternativa;
 import modelo.Disciplina;
 import modelo.Pergunta;
-import org.eclipse.persistence.jpa.rs.exceptions.JPARSException;
 
 /**
  *
