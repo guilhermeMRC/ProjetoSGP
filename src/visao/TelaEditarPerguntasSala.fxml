@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaEditarPerguntasSalaController">
+   <children>
+      <TableView fx:id="tabelaSalas" layoutX="35.0" layoutY="79.0" prefHeight="404.0" prefWidth="644.0">
+         <columns>
+            <TableColumn fx:id="colunaPergunta" prefWidth="172.0" text="PERGUNTA" />
+            <TableColumn fx:id="colunaDisciplina" prefWidth="117.0" text="DISCIPLINA" />
+            <TableColumn fx:id="colunaDificuldade" prefWidth="118.0" text="DIFICULDADE" />
+            <TableColumn fx:id="colunaTempo" prefWidth="98.0" text="TEMPO (SEGs)" />
+            <TableColumn fx:id="colunaHabilitar" prefWidth="138.0" text="HABILITAR" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="botaoSalvar" layoutX="248.0" layoutY="513.0" onAction="#EditarSala" prefHeight="25.0" prefWidth="217.0" style="-fx-background-color: #95C260;" text="Salvar" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <TextField fx:id="campoNomeSala" layoutX="35.0" layoutY="39.0" prefHeight="25.0" prefWidth="208.0" />
+      <Label layoutX="35.0" layoutY="14.0" text="Nome da sala:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="653.0" layoutY="39.0" onAction="#inserirPergunta" style="-fx-background-color: #5CB85C;" text="Button">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+         </graphic>
+      </JFXButton>
+   </children>
+</AnchorPane>

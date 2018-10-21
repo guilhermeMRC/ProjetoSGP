@@ -124,10 +124,10 @@ public class TelaCadastraPerguntas implements Initializable {
             
             try {
                 perguntaDAO.incluirComAlternativas(pergunta);
-                Alert mensagemErro = new Alert(Alert.AlertType.WARNING);
-                mensagemErro.setTitle("Erro do sistema");
-                mensagemErro.setContentText("Pergunta cadastrada com sucesso!");
-                mensagemErro.showAndWait();
+                Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+                mensagem.setTitle("Cadastro de pergunta");
+                mensagem.setContentText("Pergunta cadastrada com sucesso!");
+                mensagem.showAndWait();
 
                 limparCampos();
 

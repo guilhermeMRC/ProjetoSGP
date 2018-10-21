@@ -23,7 +23,7 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
         
         try {
             
-            lista = getManager().createQuery("from Pergunta p").getResultList();
+            lista = getManager().createQuery("from Pergunta p where p.habilitar = 1").getResultList();
             encerrar();
             return lista;
             
@@ -64,6 +64,22 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
             getManager().getTransaction().begin();
             getManager().merge(p);
             encerrar();
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+    }
+    
+     public void atualizarPerguntas(List<Pergunta> p) {
+       
+        try {
+            
+            for(Pergunta pergunta: p){
+                    getManager().getTransaction().begin();
+                    getManager().merge(pergunta);
+                    getManager().getTransaction().commit();  
+            }
             
         } catch (Exception e) {
             

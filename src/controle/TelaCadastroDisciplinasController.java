@@ -10,11 +10,8 @@ import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import modelo.Disciplina;
@@ -46,6 +44,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
     @FXML private TableView<Disciplina> tabelaDisciplinas;
     @FXML private TableColumn<Disciplina, Long> colunaId;
     @FXML private TableColumn<Disciplina, String> colunaDisciplina;
+    @FXML private TableColumn<Disciplina, ToggleButton> colunaHabilitar;
     @FXML private TextField campoPesquisar;
     @FXML private JFXButton botaoIncluir, botaoAlterar, botaoExcluir;
     @FXML private AnchorPane ParenteContainer;
@@ -155,6 +154,10 @@ public class TelaCadastroDisciplinasController implements Initializable {
     public void inicializarTabela() {
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaDisciplina.setCellValueFactory(new PropertyValueFactory("descricao"));
+        
+        colunaHabilitar.setCellValueFactory(new PropertyValueFactory("togglebutton"));
+        colunaHabilitar.setStyle("-fx-alignment: CENTER;");
+        
         tabelaDisciplinas.setItems(atualizaTabela());
     }
 

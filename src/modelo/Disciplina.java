@@ -6,10 +6,12 @@
 package modelo;
 
 import java.io.Serializable;
+import javafx.scene.control.ToggleButton;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  *
@@ -25,10 +27,20 @@ public class Disciplina implements Serializable {
     private String descricao;
     private boolean habilitar = true;
     
+    @Transient
+    private final ToggleButton togglebutton = new ToggleButton("Habilitar");
+    
     public Disciplina(){
     
     }
    
+    public void setLabelHabilitar(Boolean status){
+        if(status){
+            togglebutton.setText("Habilitar");
+        }else
+            togglebutton.setText("Desabilitar");
+    }
+    
     public Long getId() {
         return id;
     }

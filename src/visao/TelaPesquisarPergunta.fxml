@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaPesquisarPerguntaController">
+   <children>
+      <TableView fx:id="tabelaPerguntas" layoutX="35.0" layoutY="79.0" prefHeight="404.0" prefWidth="644.0">
+         <columns>
+            <TableColumn fx:id="colunaPergunta" prefWidth="172.0" text="PERGUNTA" />
+            <TableColumn fx:id="colunaDisciplina" prefWidth="117.0" text="DISCIPLINA" />
+            <TableColumn fx:id="colunaDificuldade" prefWidth="118.0" text="DIFICULDADE" />
+            <TableColumn fx:id="colunaTempo" prefWidth="155.0" text="TEMPO (SEGs)" />
+            <TableColumn fx:id="colunaSelecionar" prefWidth="81.0" text="SELECIONAR" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="botaoSalvar" layoutX="248.0" layoutY="513.0" onAction="#salvarPeguntas" prefHeight="25.0" prefWidth="217.0" style="-fx-background-color: #95C260;" text="Salvar" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <TextField fx:id="campoNomeSala" layoutX="35.0" layoutY="39.0" prefHeight="25.0" prefWidth="208.0" promptText="Pesquisar..." />
+   </children>
+</AnchorPane>

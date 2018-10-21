@@ -19,110 +19,155 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import modelo.Pergunta;
 import modelo.Sala;
 
 /**
  * FXML Controller class
- * 
+ *
  * @author gnunes
  */
-public class TelaListagemSalaController implements Initializable{
-    
-    @FXML private AnchorPane ParenteContainer;
+public class TelaListagemSalaController implements Initializable {
 
-    @FXML private TableView<Sala> tabelaSalas;
-    @FXML private TableColumn<Sala, Long> colunaId;
-    @FXML private TableColumn<Sala, String> colunaSala;
-    
-    @FXML private JFXButton botaoIncluir, botaoAlterar, botaoExcluir, botaoVisualizarSala;
-    
+    @FXML
+    private AnchorPane ParenteContainer;
+
+    @FXML
+    private TableView<Sala> tabelaSalas;
+    @FXML
+    private TableColumn<Sala, Long> colunaId;
+    @FXML
+    private TableColumn<Sala, String> colunaSala;
+
+    @FXML
+    private JFXButton botaoIncluir, botaoAlterar, botaoExcluir, botaoVisualizarSala;
+
     private Sala sala;
     private SalaDAO salaDAO;
-    
+    private ObservableList<Pergunta> obsPerguntas;
+    private TelaListagemSalaController telaListagemSalaController;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       inicializarTabela();
+        inicializarTabela();
     }
-    
+
     @FXML
     void inserirSala(ActionEvent event) {
-        
+
+        FXMLLoader loader = new FXMLLoader();
+
+        TextInputDialog inputDialog = new TextInputDialog();
+        inputDialog.setTitle("Cadastro de sala");
+        inputDialog.setHeaderText("Cadastrar sala");
+        inputDialog.setContentText("Informe o nome da sala: ");
+
+        Optional<String> resultado = inputDialog.showAndWait();
+
+        if (resultado.isPresent() && !resultado.get().isEmpty()) {
+            try {
+                AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaCadastroSalas.fxml").openStream());
+                TelaCadastrarSalaController controller = (TelaCadastrarSalaController) loader.getController();
+
+                controller.receberParametros(resultado.get());
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (IOException ex) {
+                Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            inputDialog.close();
+        }
+    }
+
+    @FXML
+    void alterarSala(ActionEvent event) {
+       salaDAO = new SalaDAO();
+       sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
+       obsPerguntas = FXCollections.observableArrayList();
+       
+       for(Pergunta p : sala.getPerguntas()){
+           obsPerguntas.add(p);
+       }
+       
+       FXMLLoader loader = new FXMLLoader();
+
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("/visao/TelaCadastarSala.fxml"));
-            Scene scene = new Scene(root);
+            AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaEditarPerguntasSala.fxml").openStream());
+            TelaEditarPerguntasSalaController controller = (TelaEditarPerguntasSalaController) loader.getController();
+
+            controller.setPerguntas(obsPerguntas);
+            controller.setNomeSala(sala.getDescricao());
+            controller.setSala(sala);
 
             Stage stage = new Stage();
-            stage.setTitle("Cadastro de salas");
-            stage.setResizable(false);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-
-            inicializarTabela();
-            
-            
         } catch (IOException ex) {
             Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    @FXML
-    void alterarSala(ActionEvent event) {
 
     }
 
     @FXML
     void excluirSala(ActionEvent event) {
-        sala = tabelaSalas.getSelectionModel().getSelectedItem();
-        
-        Alert telaDeletarSala = new Alert(Alert.AlertType.CONFIRMATION);
-        telaDeletarSala.setTitle("Deletar Sala");
-        telaDeletarSala.setContentText("Tem certeza que deseja deletar essa sala?");
-        
-        Optional<ButtonType> resultado = telaDeletarSala.showAndWait();
-        if(resultado.isPresent()){
-            try{
-                salaDAO = new SalaDAO();
-                salaDAO.excluir(Sala.class, sala.getId());
-                inicializarTabela();
-            } catch(Exception ex){
-                Alert mensagemErro = new Alert(Alert.AlertType.ERROR);
-                mensagemErro.setTitle("Mensagem de erro do sistema");
-                mensagemErro.setHeaderText("Erro ao deletar sala");
-                mensagemErro.setContentText("Verique se:\n"
-                        + "1 - Todos os campos foram preenchidos corretamente\n"
-                        + "2 - O serviço do banco de dados está funcionando");
-            }
-        }
-        
+       
     }
 
     @FXML
     void visualizarSala(ActionEvent event) {
+        salaDAO = new SalaDAO();
+        sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
+        obsPerguntas = FXCollections.observableArrayList();
+
+        for (Pergunta p : sala.getPerguntas()) {
+            obsPerguntas.add(p);
+        }
+
+        FXMLLoader loader = new FXMLLoader();
+
+        try {
+            AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaVisualizarPerguntasSala.fxml").openStream());
+            TelaVisualizarPerguntasSalaController controller = (TelaVisualizarPerguntasSalaController) loader.getController();
+
+            controller.setPerguntas(obsPerguntas);
+            controller.setNomeSala(sala.getDescricao());
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
-    
-    public void inicializarTabela(){
-         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
-         colunaId.setStyle("-fx-alignment: CENTER;");
-         
-         colunaSala.setCellValueFactory(new PropertyValueFactory("descricao"));
-         
-         tabelaSalas.setItems(atualizarSala());
+
+    public void inicializarTabela() {
+        colunaId.setCellValueFactory(new PropertyValueFactory("id"));
+        colunaId.setStyle("-fx-alignment: CENTER;");
+
+        colunaSala.setCellValueFactory(new PropertyValueFactory("descricao"));
+
+        tabelaSalas.setItems(atualizarSala());
     }
-    
-    public ObservableList<Sala> atualizarSala(){
+
+    public ObservableList<Sala> atualizarSala() {
         salaDAO = new SalaDAO();
-        return FXCollections.observableArrayList(salaDAO.listar());   
+        return FXCollections.observableArrayList(salaDAO.listar());
     }
 }

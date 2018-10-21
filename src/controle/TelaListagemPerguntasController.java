@@ -113,14 +113,18 @@ public class TelaListagemPerguntasController implements Initializable {
         colunaSala.setCellValueFactory(new PropertyValueFactory("checkbox"));
         colunaSala.setStyle("-fx-alignment: CENTER;");
 
+        tabelaPerguntas.setItems(getPerguntas());
+    }
+    
+    public ObservableList<Pergunta> getPerguntas(){
         perguntaDAO = new PerguntaDAO();
         obsPergunta = FXCollections.observableArrayList();
-
-        for (Pergunta p : perguntaDAO.listar()) {
+        
+        for(Pergunta p:perguntaDAO.listar()){
             obsPergunta.add(p);
         }
-
-        tabelaPerguntas.setItems(obsPergunta);
+        
+        return obsPergunta;
     }
 
     public void carregarTela(String arq) {
@@ -143,16 +147,8 @@ public class TelaListagemPerguntasController implements Initializable {
     @FXML
     void criarSala(ActionEvent event) {
        
-        perguntaDAO = new PerguntaDAO();
         obsPergunta = FXCollections.observableArrayList();
         
-        for(Pergunta p:perguntaDAO.listar()){
-            if(p.getCheckbox().isSelected()){
-                System.out.println("Funcionou");
-            }else {
-                System.out.println("Se fudeo");
-            }
-        }
     }
 
     /*Método para passar uma pergunta de uma tela para outra*/
