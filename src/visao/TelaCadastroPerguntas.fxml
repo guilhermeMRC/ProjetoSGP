@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextArea?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -51,7 +52,7 @@
             <TextField fx:id="campoAlternativaD" layoutX="63.0" layoutY="460.0" prefHeight="25.0" prefWidth="440.0" />
             <JFXComboBox fx:id="selecaoDificuldadePergunta" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="146.0" prefHeight="31.0" prefWidth="296.0" promptText="Nivel de dificuldade" />
             <JFXComboBox fx:id="selecaoDisciplina" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="212.0" prefHeight="31.0" prefWidth="296.0" promptText="Disciplina" />
-            <Label layoutX="14.0" layoutY="280.0" text="Alternativas">
+            <Label layoutX="10.0" layoutY="301.0" text="Alternativas">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -65,13 +66,19 @@
                   <JFXChipView fx:id="campoTags" prefHeight="267.0" prefWidth="331.0" style="-fx-border-color: #CFCFCF; -fx-background-color: #fff;" />
                </children>
             </StackPane>
-            <Label layoutX="533.0" layoutY="282.0" text="Tags">
+            <Label layoutX="531.0" layoutY="301.0" text="Tags">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
             <JFXSlider fx:id="sliderTempoPergunta" blockIncrement="30.0" cache="true" layoutX="533.0" layoutY="89.0" majorTickUnit="30.0" max="180.0" min="30.0" minorTickCount="30" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="30.0" />
             <Label layoutX="533.0" layoutY="58.0" text="Tempo" />
+            <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="533.0" layoutY="250.0" onAction="#inserirDisciplina" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+               </graphic>
+            </JFXButton>
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" layoutX="543.0" layoutY="269.0" />
          </children>
       </AnchorPane>
    </children>

@@ -7,6 +7,7 @@ package controle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import dao.DisciplinaDAO;
 import dao.PerguntaDAO;
 import dao.SalaDAO;
 import java.io.IOException;
@@ -35,6 +36,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.Dificuldade;
+import modelo.Disciplina;
 import modelo.Pergunta;
 import modelo.Sala;
 
@@ -80,7 +82,7 @@ public class TelaListagemPerguntasController implements Initializable {
         habilitarDesabilitarPergunta();
 
     }
-
+    
     @FXML
     public void inserirPergunta(ActionEvent event) {
 
