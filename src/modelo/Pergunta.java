@@ -6,6 +6,7 @@
 package modelo;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXToggleButton;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class Pergunta implements Serializable{
     private JFXCheckBox checkbox;
     
     @Transient
-    private ToggleButton togglebutton = new ToggleButton("Habilitar");
+    private ToggleButton togglebutton = new JFXToggleButton();
     
     public Pergunta (){
         this.tags = new ArrayList();
@@ -142,7 +143,11 @@ public class Pergunta implements Serializable{
     }
 
     public ToggleButton getTogglebutton() {
-        
+        if(isHabilitar() == true){
+            this.togglebutton.setText("Desabilitar");
+        }else{
+            this.togglebutton.setText("Habilitar");
+        }
         return togglebutton;
     }
 

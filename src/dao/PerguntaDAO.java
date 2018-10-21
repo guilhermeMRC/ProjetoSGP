@@ -23,6 +23,26 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
         
         try {
             
+            lista = getManager().createQuery("from Pergunta p").getResultList();
+            encerrar();
+            return lista;
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            encerrar();
+            return lista;
+            
+        }
+    }
+    
+    public List<Pergunta> listar2(){
+        
+        List<Pergunta> lista = null;
+        conectar();
+        
+        try {
+            
             lista = getManager().createQuery("from Pergunta p where p.habilitar = 1").getResultList();
             encerrar();
             return lista;
@@ -35,6 +55,7 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
             
         }
     }
+    
     
     public void incluirComAlternativas(Pergunta p) {
         try {

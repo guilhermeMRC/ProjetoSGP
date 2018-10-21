@@ -156,7 +156,6 @@ public class TelaCadastraPerguntas implements Initializable {
         
         a.setDescricao(alternativa.getText());
     
-        
         if(opcao.isSelected()){
             a.setCorreto(true);
         }

@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXToggleButton;
 import java.io.Serializable;
 import javafx.scene.control.ToggleButton;
 import javax.persistence.Entity;
@@ -27,20 +29,13 @@ public class Disciplina implements Serializable {
     private String descricao;
     private boolean habilitar = true;
     
-    @Transient
-    private final ToggleButton togglebutton = new ToggleButton("Habilitar");
-    
+    @Transient 
+    private ToggleButton togglebutton = new ToggleButton();
+
     public Disciplina(){
     
     }
    
-    public void setLabelHabilitar(Boolean status){
-        if(status){
-            togglebutton.setText("Habilitar");
-        }else
-            togglebutton.setText("Desabilitar");
-    }
-    
     public Long getId() {
         return id;
     }
@@ -63,6 +58,19 @@ public class Disciplina implements Serializable {
 
     public void setHabilitar(boolean habilitar) {
         this.habilitar = habilitar;
+    }
+
+    public ToggleButton getTogglebutton() {
+        if(isHabilitar() == true){
+            this.togglebutton.setText("Desabilitar");
+        }else{
+            this.togglebutton.setText("Habilitar");
+        }
+        return togglebutton;
+    }
+
+    public void setTogglebutton(ToggleButton togglebutton) {
+        this.togglebutton = togglebutton;
     }
     
     @Override

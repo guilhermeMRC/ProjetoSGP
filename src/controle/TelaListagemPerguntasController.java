@@ -77,6 +77,7 @@ public class TelaListagemPerguntasController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         carregarTabela();
+        habilitarDesabilitarPergunta();
 
     }
 
@@ -84,20 +85,57 @@ public class TelaListagemPerguntasController implements Initializable {
     public void inserirPergunta(ActionEvent event) {
 
         carregarTela("/visao/TelaCadastroPerguntas.fxml");
+        carregarTabela();
     }
 
     @FXML
     public void alterarPergunta(ActionEvent event) {
 
         passarParametroTelaDisciplinaEdicao();
-
+        carregarTabela();
     }
 
     @FXML
     public void excluirPergunta(ActionEvent event) {
 
     }
+    
+    private void handleButtonAction(ActionEvent event){
+       
+        PerguntaDAO disciplinaDAO = new PerguntaDAO();
+        
+        for(Pergunta p : tabelaPerguntas.getItems()){
+            
+            if(p.getTogglebutton() == event.getTarget()){
+                pergunta = p;
+                break;
+            }
+            
+        }
+        
+        boolean status = pergunta.isHabilitar();
+        if(status == true){
+            
+            pergunta.setHabilitar(false);
+            disciplinaDAO.atualizar(pergunta);
+            
+        }else {
+            
+            pergunta.setHabilitar(true);
+            disciplinaDAO.atualizar(pergunta);
+            
+        }
+        carregarTabela();
+    }
 
+    public void habilitarDesabilitarPergunta(){
+        
+        for(int i = 0; i<obsPergunta.size(); i++){
+            obsPergunta.get(i).getTogglebutton().setOnAction(this::handleButtonAction);
+        }
+        
+    }
+    
     public void carregarTabela() {
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaId.setStyle("-fx-alignment: CENTER;");
@@ -118,13 +156,14 @@ public class TelaListagemPerguntasController implements Initializable {
     
     public ObservableList<Pergunta> getPerguntas(){
         perguntaDAO = new PerguntaDAO();
-        obsPergunta = FXCollections.observableArrayList();
-        
-        for(Pergunta p:perguntaDAO.listar()){
-            obsPergunta.add(p);
-        }
-        
+
+        obsPergunta = FXCollections.observableArrayList(perguntaDAO.listar());
+
+        habilitarDesabilitarPergunta();
+        tabelaPerguntas.setItems(obsPergunta);
+
         return obsPergunta;
+
     }
 
     public void carregarTela(String arq) {
@@ -145,8 +184,19 @@ public class TelaListagemPerguntasController implements Initializable {
     }
 
     @FXML
-    void criarSala(ActionEvent event) {
+    public void criarSala(ActionEvent event) {
        
+        perguntaDAO = new PerguntaDAO();
+        //obsPergunta = FXCollections.observableArrayList();
+        
+        for(Pergunta p:obsPergunta){
+            if(p.getCheckbox().isSelected()){
+                System.out.println("Funcionou");
+            }else {
+                System.out.println("Se fudeo");
+            }
+        }
+
         obsPergunta = FXCollections.observableArrayList();
         
     }
@@ -192,6 +242,6 @@ public class TelaListagemPerguntasController implements Initializable {
             alert.show();
         }
         
-        carregarTabela();
+        //carregarTabela();
     }
 }

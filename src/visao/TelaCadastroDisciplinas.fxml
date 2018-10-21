@@ -12,8 +12,8 @@
       <TableView fx:id="tabelaDisciplinas" layoutX="113.0" layoutY="100.0" prefHeight="354.0" prefWidth="636.0" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="100.0">
          <columns>
             <TableColumn fx:id="colunaId" prefWidth="57.0" text="#" />
-            <TableColumn fx:id="colunaDisciplina" prefWidth="477.0" text="DISCIPLINA" />
-            <TableColumn fx:id="colunaHabilitar" prefWidth="100.0" text="HABILITAR" />
+            <TableColumn fx:id="colunaDisciplina" minWidth="0.0" prefWidth="461.0" text="DISCIPLINA" />
+            <TableColumn fx:id="colunaHabilitarDesabilitar" prefWidth="117.0" text="On/Off" />
          </columns>
       </TableView>
       <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="685.0" layoutY="58.0" onAction="#inserirDisciplina" style="-fx-background-color: #5CB85C;" text="Button" AnchorPane.bottomAnchor="471.0" AnchorPane.leftAnchor="685.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="58.0">

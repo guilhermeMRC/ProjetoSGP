@@ -20,7 +20,7 @@ public class DisciplinaDAO extends GenericDAO<Disciplina>{
         conectar();
         
         try {
-            lista = getManager().createQuery("from Disciplina d where d.habilitar = 1").getResultList();
+            lista = getManager().createQuery("from Disciplina d").getResultList();
             encerrar();
             return lista;
         } catch (Exception e) {
