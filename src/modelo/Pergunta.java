@@ -63,13 +63,6 @@ public class Pergunta implements Serializable{
         this.checkbox = new JFXCheckBox();
     }
     
-    public void setLabelHabilitar(Boolean status){
-        if(status){
-            this.togglebutton.setText("Habilitar");
-        }else
-            this.togglebutton.setText("Desabilitar");
-    }
-
     public Long getId() {
         return id;
     }
@@ -141,12 +134,19 @@ public class Pergunta implements Serializable{
     public void setCheckbox(JFXCheckBox checkbox) {
         this.checkbox = checkbox;
     }
-
+    
+    /*Aqui é onde faz as mudanças na aparencia do tooglebutto
+    quando ele habilita ou desabilita e quando a pergunta 
+    esta desabilitada o checkbox agora desabilita*/
     public ToggleButton getTogglebutton() {
         if(isHabilitar() == true){
-            this.togglebutton.setText("Desabilitar");
+            //this.togglebutton.setText("Desabilitar");
+            this.togglebutton.setSelected(true);
+            this.checkbox.setDisable(false);
         }else{
-            this.togglebutton.setText("Habilitar");
+            //this.togglebutton.setText("Habilitar");
+            this.togglebutton.setSelected(false);
+            this.checkbox.setDisable(true);
         }
         return togglebutton;
     }

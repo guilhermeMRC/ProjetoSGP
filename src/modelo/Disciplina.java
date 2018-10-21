@@ -30,7 +30,7 @@ public class Disciplina implements Serializable {
     private boolean habilitar = true;
     
     @Transient 
-    private ToggleButton togglebutton = new ToggleButton();
+    private ToggleButton togglebutton = new JFXToggleButton();
 
     public Disciplina(){
     
@@ -59,12 +59,16 @@ public class Disciplina implements Serializable {
     public void setHabilitar(boolean habilitar) {
         this.habilitar = habilitar;
     }
-
+    
+    /*Aqui é onde faz as mudanças na aparencia do tooglebutto
+    quando ele habilita ou desabilita */
     public ToggleButton getTogglebutton() {
         if(isHabilitar() == true){
-            this.togglebutton.setText("Desabilitar");
+            this.togglebutton.setSelected(true);
+            
         }else{
-            this.togglebutton.setText("Habilitar");
+            
+            this.togglebutton.setSelected(false);  
         }
         return togglebutton;
     }

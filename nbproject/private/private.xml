@@ -5,6 +5,8 @@
         <group>
             <file>file:/C:/Users/GuiGuizinho/Documents/NetBeansProjects/ProjetoSGP/src/controle/TelaCadastroDisciplinasController.java</file>
             <file>file:/C:/Users/GuiGuizinho/Documents/NetBeansProjects/ProjetoSGP/src/modelo/Pergunta.java</file>
+            <file>file:/C:/Users/GuiGuizinho/Documents/NetBeansProjects/ProjetoSGP/src/dao/PerguntaDAO.java</file>
+            <file>file:/C:/Users/GuiGuizinho/Documents/NetBeansProjects/ProjetoSGP/src/controle/TelaCadastraPerguntas.java</file>
             <file>file:/C:/Users/GuiGuizinho/Documents/NetBeansProjects/ProjetoSGP/src/modelo/Disciplina.java</file>
             <file>file:/C:/Users/GuiGuizinho/Documents/NetBeansProjects/ProjetoSGP/src/dao/DisciplinaDAO.java</file>
             <file>file:/C:/Users/GuiGuizinho/Documents/NetBeansProjects/ProjetoSGP/src/controle/TelaListagemPerguntasController.java</file>

@@ -18,6 +18,7 @@ import modelo.Dificuldade;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +26,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.DragEvent;
@@ -89,7 +91,31 @@ public class TelaCadastraPerguntas implements Initializable {
 
     }
     
-    
+    @FXML
+    public void inserirDisciplina(ActionEvent event) {
+        
+        Disciplina disciplina = new Disciplina();
+        
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Cadastro de disciplina");
+        dialog.setHeaderText("Cadastrar disciplina");
+        dialog.setContentText("Informe o nome da disciplina:");
+
+        Optional<String> resultado = dialog.showAndWait();
+
+        if (resultado.isPresent()) {
+            try {
+                DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+                disciplina.setDescricao(resultado.get());
+                disciplinaDAO.incluir(disciplina);
+                dialog.close();
+                carregarDisciplinas();
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
     public void CadastrarPergunta() {
        
         /*
