@@ -27,7 +27,7 @@ public class Sala {
     private boolean habilitar = true;
     
     @ManyToMany
-    private List<Pergunta> perguntas;
+    private List<Pergunta> pergunta;
     
     public Sala(){
         
@@ -50,11 +50,11 @@ public class Sala {
     }
 
     public List<Pergunta> getPerguntas() {
-        return perguntas;
+        return pergunta;
     }
 
     public void setPerguntas(List<Pergunta> perguntas) {
-        this.perguntas = perguntas;
+        this.pergunta = perguntas;
     }
 
     public boolean isHabilitar() {

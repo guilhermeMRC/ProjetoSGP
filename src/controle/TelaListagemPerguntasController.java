@@ -71,7 +71,7 @@ public class TelaListagemPerguntasController implements Initializable {
     private Pergunta pergunta;
     private TelaListagemPerguntasController telaListarPerguntas;
 
-    private ObservableList<Pergunta> obsPergunta;
+    private ObservableList<Pergunta> obsPergunta = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -99,43 +99,43 @@ public class TelaListagemPerguntasController implements Initializable {
     public void excluirPergunta(ActionEvent event) {
 
     }
-    
-    private void handleButtonAction(ActionEvent event){
-       
+
+    private void handleButtonAction(ActionEvent event) {
+
         PerguntaDAO disciplinaDAO = new PerguntaDAO();
-        
-        for(Pergunta p : tabelaPerguntas.getItems()){
-            
-            if(p.getTogglebutton() == event.getTarget()){
+
+        for (Pergunta p : tabelaPerguntas.getItems()) {
+
+            if (p.getTogglebutton() == event.getTarget()) {
                 pergunta = p;
                 break;
             }
-            
+
         }
-        
+
         boolean status = pergunta.isHabilitar();
-        if(status == true){
-            
+        if (status == true) {
+
             pergunta.setHabilitar(false);
             disciplinaDAO.atualizar(pergunta);
-            
-        }else {
-            
+
+        } else {
+
             pergunta.setHabilitar(true);
             disciplinaDAO.atualizar(pergunta);
-            
+
         }
         carregarTabela();
     }
 
-    public void habilitarDesabilitarPergunta(){
-        
-        for(int i = 0; i<obsPergunta.size(); i++){
+    public void habilitarDesabilitarPergunta() {
+
+        for (int i = 0; i < obsPergunta.size(); i++) {
             obsPergunta.get(i).getTogglebutton().setOnAction(this::handleButtonAction);
         }
-        
+
     }
-    
+
     public void carregarTabela() {
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaId.setStyle("-fx-alignment: CENTER;");
@@ -153,16 +153,21 @@ public class TelaListagemPerguntasController implements Initializable {
 
         tabelaPerguntas.setItems(getPerguntas());
     }
-    
-    public ObservableList<Pergunta> getPerguntas(){
+
+    public ObservableList<Pergunta> getPerguntas() {
         perguntaDAO = new PerguntaDAO();
 
-        obsPergunta = FXCollections.observableArrayList(perguntaDAO.listar());
+        ObservableList<Pergunta> perguntas = FXCollections.observableArrayList();
+
+        for (Pergunta p : perguntaDAO.listar()) {
+            perguntas.add(p);
+            obsPergunta.add(p);
+        }
 
         habilitarDesabilitarPergunta();
-        tabelaPerguntas.setItems(obsPergunta);
+        tabelaPerguntas.setItems(perguntas);
 
-        return obsPergunta;
+        return perguntas;
 
     }
 
@@ -185,20 +190,44 @@ public class TelaListagemPerguntasController implements Initializable {
 
     @FXML
     public void criarSala(ActionEvent event) {
-       
-        perguntaDAO = new PerguntaDAO();
-        //obsPergunta = FXCollections.observableArrayList();
-        
-        for(Pergunta p:obsPergunta){
-            if(p.getCheckbox().isSelected()){
-                System.out.println("Funcionou");
-            }else {
-                System.out.println("Se fudeo");
+
+        ObservableList<Pergunta> perguntas = FXCollections.observableArrayList();
+
+        for (Pergunta p : obsPergunta) {
+            if (p.getCheckbox().isSelected()) {
+                perguntas.add(p);
             }
         }
 
-        obsPergunta = FXCollections.observableArrayList();
-        
+        TextInputDialog inputDialog = new TextInputDialog();
+        inputDialog.setTitle("Cadastro de sala");
+        inputDialog.setHeaderText("Cadastrar sala");
+        inputDialog.setContentText("Informe o nome da sala: ");
+
+        Optional<String> resultado = inputDialog.showAndWait();
+        if (resultado.isPresent()) {
+            try {
+
+                Sala novaSala = new Sala();
+                novaSala.setDescricao(resultado.get());
+                novaSala.setPerguntas(perguntas);
+
+                SalaDAO salaDAO = new SalaDAO();
+                salaDAO.incluir(novaSala);
+
+                Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+                mensagem.setTitle("Mensagem do sistema");
+                mensagem.setHeaderText("Cadastrar sala");
+                mensagem.setContentText("Sala cadastrada com sucesso!");
+                mensagem.show();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            inputDialog.close();
+        }
+
     }
 
     /*Método para passar uma pergunta de uma tela para outra*/
@@ -229,19 +258,19 @@ public class TelaListagemPerguntasController implements Initializable {
                 stage2.alwaysOnTopProperty();
                 stage2.initModality(Modality.APPLICATION_MODAL);
                 stage2.show();
-                
+
             } catch (IOException ex) {
 
             }
-            
-        } catch(NullPointerException ex){
+
+        } catch (NullPointerException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Aviso do sistema");
             alert.setHeaderText("Erro ao tentar editar pergunta");
             alert.setContentText("Nenhuma pergunta foi selecionada");
             alert.show();
         }
-        
+
         //carregarTabela();
     }
 }

@@ -95,64 +95,79 @@ public class TelaListagemSalaController implements Initializable {
 
     @FXML
     void alterarSala(ActionEvent event) {
-       salaDAO = new SalaDAO();
-       sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
-       obsPerguntas = FXCollections.observableArrayList();
-       
-       for(Pergunta p : sala.getPerguntas()){
-           obsPerguntas.add(p);
-       }
-       
-       FXMLLoader loader = new FXMLLoader();
-
         try {
-            AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaEditarPerguntasSala.fxml").openStream());
-            TelaEditarPerguntasSalaController controller = (TelaEditarPerguntasSalaController) loader.getController();
+            salaDAO = new SalaDAO();
+            sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
+            obsPerguntas = FXCollections.observableArrayList();
 
-            controller.setPerguntas(obsPerguntas);
-            controller.setNomeSala(sala.getDescricao());
-            controller.setSala(sala);
+            for (Pergunta p : sala.getPerguntas()) {
+                obsPerguntas.add(p);
+            }
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException ex) {
-            Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
+            FXMLLoader loader = new FXMLLoader();
+
+            try {
+                AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaEditarPerguntasSala.fxml").openStream());
+                TelaEditarPerguntasSalaController controller = (TelaEditarPerguntasSalaController) loader.getController();
+
+                controller.setPerguntas(obsPerguntas);
+                controller.setNomeSala(sala.getDescricao());
+                controller.setSala(sala);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (IOException ex) {
+                Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NullPointerException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aviso do sistema");
+            alert.setHeaderText("Erro ao tentar editar sala");
+            alert.setContentText("Nenhuma sala foi selecionada");
+            alert.show();
         }
-
     }
 
     @FXML
     void excluirSala(ActionEvent event) {
-       
+
     }
 
     @FXML
     void visualizarSala(ActionEvent event) {
-        salaDAO = new SalaDAO();
-        sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
-        obsPerguntas = FXCollections.observableArrayList();
+        try{
+            salaDAO = new SalaDAO();
+            sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
+            obsPerguntas = FXCollections.observableArrayList();
 
-        for (Pergunta p : sala.getPerguntas()) {
-            obsPerguntas.add(p);
-        }
+            for (Pergunta p : sala.getPerguntas()) {
+                obsPerguntas.add(p);
+            }
 
-        FXMLLoader loader = new FXMLLoader();
+            FXMLLoader loader = new FXMLLoader();
 
-        try {
-            AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaVisualizarPerguntasSala.fxml").openStream());
-            TelaVisualizarPerguntasSalaController controller = (TelaVisualizarPerguntasSalaController) loader.getController();
+            try {
+                AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaVisualizarPerguntasSala.fxml").openStream());
+                TelaVisualizarPerguntasSalaController controller = (TelaVisualizarPerguntasSalaController) loader.getController();
 
-            controller.setPerguntas(obsPerguntas);
-            controller.setNomeSala(sala.getDescricao());
+                controller.setPerguntas(obsPerguntas);
+                controller.setNomeSala(sala.getDescricao());
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException ex) {
-            Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (IOException ex) {
+                Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch(NullPointerException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aviso do sistema");
+            alert.setHeaderText("Erro ao tentar visualizar sala");
+            alert.setContentText("Nenhuma sala foi selecionada");
+            alert.show();
         }
 
     }
