@@ -196,7 +196,7 @@ public class TelaEditarPerguntasController implements Initializable {
     public void carregarDisciplinas() {
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-        displinas = disciplinaDAO.listar();
+        displinas = disciplinaDAO.listarDisciplinasAtivasOuDesativadas(true);
         obsDisciplinas = FXCollections.observableArrayList(displinas);
         selecaoDisciplina.getItems().addAll(obsDisciplinas);
     }

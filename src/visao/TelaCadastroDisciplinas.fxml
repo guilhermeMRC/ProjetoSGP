@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -26,6 +27,7 @@
             <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
          </graphic>
       </JFXButton>
-      <TextField fx:id="campoPesquisar" layoutX="113.0" layoutY="57.0" prefHeight="25.0" prefWidth="344.0" promptText="Pesquisar..." />
+      <TextField fx:id="campoPesquisar" layoutX="113.0" layoutY="57.0" prefHeight="31.0" prefWidth="252.0" promptText="Pesquisar..." />
+      <JFXComboBox fx:id="comboListagem" layoutX="403.0" layoutY="57.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="190.0" promptText="Selecione uma opção..." />
    </children>
 </AnchorPane>

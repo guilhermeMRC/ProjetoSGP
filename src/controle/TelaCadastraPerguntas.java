@@ -207,7 +207,7 @@ public class TelaCadastraPerguntas implements Initializable {
     public void carregarDisciplinas() {
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-        obsDisciplinas = FXCollections.observableArrayList(disciplinaDAO.listar());
+        obsDisciplinas = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasAtivasOuDesativadas(true));
         selecaoDisciplina.getItems().addAll(obsDisciplinas);
     }
     

@@ -147,7 +147,25 @@ public class TelaEditarPerguntasSalaController implements Initializable{
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
             
-            perguntas.addAll(controller.getPerguntas());
+            ObservableList listaVelha = this.getPerguntas();
+            ObservableList listaSelecionada = controller.getPerguntas();
+            ObservableList listaNova = null;
+            
+            boolean teste = false;
+            for (Object object : listaSelecionada) {
+                if(!listaVelha.contains(object)){
+                    listaNova.add(object);
+                }else{
+                    teste=true;
+                }
+            }
+            if(teste){
+              Alert erro = new Alert(Alert.AlertType.ERROR);
+              erro.setHeaderText("Uma ou mais perguntas não foram adicionadas pois ja estava na sala");  
+            }
+            
+            
+            perguntas.addAll(listaNova);
             
         } catch (IOException ex) {
             Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);

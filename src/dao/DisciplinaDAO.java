@@ -5,7 +5,9 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Query;
 import modelo.Disciplina;
 
 /**
@@ -28,5 +30,63 @@ public class DisciplinaDAO extends GenericDAO<Disciplina>{
             encerrar();
             return lista;
         }
-    }     
+    }   
+    
+    /*public List<Disciplina> listarAtivos(){
+        
+        List<Disciplina> lista = null;
+        List<Disciplina> listaAtiva = new ArrayList<Disciplina>();
+        conectar();
+        
+        try {
+            lista = getManager().createQuery("from Disciplina d").getResultList();
+            encerrar();
+            for (Disciplina disciplina : lista) {
+                if(disciplina.isHabilitar()){
+                    listaAtiva.add(disciplina);
+                }
+            }
+            return listaAtiva;
+        } catch (Exception e) {
+            e.printStackTrace();
+            encerrar();
+            return listaAtiva;
+        }
+    }*/
+   
+    public List<Disciplina> listarDisciplinasAtivasOuDesativadas(boolean status){
+        
+        List<Disciplina> lista = null;
+        String query = "from Disciplina d where d.habilitar ="+ status;
+        conectar();
+        
+        try {
+            lista = getManager().createQuery(query, Disciplina.class).getResultList();
+            encerrar();
+            
+            return lista;
+        } catch (Exception e) {
+            e.printStackTrace();
+            encerrar();
+            return lista;
+        }
+    }
+    
+    public List<Disciplina> listarDisciplinasPorDescricao(String filtro){
+        
+        List<Disciplina> lista = null;
+        String query = "from Disciplina d where d.descricao like '%"+ filtro +"%'" ;
+        conectar();
+        
+        try {
+            lista = getManager().createQuery(query, Disciplina.class).getResultList();
+            encerrar();
+            
+            return lista;
+        } catch (Exception e) {
+            e.printStackTrace();
+            encerrar();
+            return lista;
+        }
+    }
 }

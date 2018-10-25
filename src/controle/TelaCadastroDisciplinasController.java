@@ -7,6 +7,7 @@ package controle;
 
 import dao.DisciplinaDAO;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.Disciplina;
 
@@ -51,17 +48,19 @@ public class TelaCadastroDisciplinasController implements Initializable {
     @FXML private TableColumn<Disciplina, ToggleButton> colunaHabilitarDesabilitar;
     @FXML private TextField campoPesquisar;
     @FXML private JFXButton botaoIncluir, botaoAlterar;
+    @FXML private JFXComboBox<String> comboListagem;
     @FXML private AnchorPane ParenteContainer;
     
     private Disciplina disciplina = new Disciplina();
-    
+    private ObservableList<String> obsOpcaoListagem;  
     private ObservableList<Disciplina> observableListDisciplina;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         carregarTabela();
-        //observableListDisciplina = FXCollections.observableArrayList();
-        //habilitarDesabilitarDisciplina();
+        carregarOpcaoListar();
+        comboListagem.getSelectionModel().select(0);
+        trazerDisciplinaFiltro();
     }
 
     public AnchorPane getAnchorPane() {
@@ -92,7 +91,21 @@ public class TelaCadastroDisciplinasController implements Initializable {
             disciplinaDAO.atualizar(disciplina);
             
         }
-        carregarTabela();
+        
+        /*Esse if aqui checa qual tabela ele atualiza dependendo da pesquisa
+        se ele quiser trazer todas as disciplinas apenas da um refresh na tabela 
+        se caso ele estiver trazendo apenas as habiltadas e desabilitar alguma disciplina
+        ela some e só aparece quando ele buscar na tabela de desabilitadas e vice versa isso*/
+        
+        if(comboListagem.getSelectionModel().getSelectedItem().equals("Listar Todas")){
+           carregarTabela();
+        
+        }else if (comboListagem.getSelectionModel().getSelectedItem().equals("Listar Habilitadas")){
+            trazerDisciplinasHabilitadas(true);
+        }else {
+            trazerDisciplinasHabilitadas(false);
+        }
+        
     }
 
     public void habilitarDesabilitarDisciplina(){
@@ -100,7 +113,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
         for(int i = 0; i<observableListDisciplina.size(); i++){
             observableListDisciplina.get(i).getTogglebutton().setOnAction(this::handleButtonAction);
         }
-        
+       
     }
     
     public void TelaCadastroDisciplinasController() {
@@ -207,9 +220,77 @@ public class TelaCadastroDisciplinasController implements Initializable {
 
         habilitarDesabilitarDisciplina();
         tabelaDisciplinas.setItems(observableListDisciplina);
-   
+        
     }
-
+    
+    public void trazerDisciplinasHabilitadas(boolean status) {
+        
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        
+        observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasAtivasOuDesativadas(status));
+        habilitarDesabilitarDisciplina();
+        tabelaDisciplinas.setItems(observableListDisciplina);
+        //tabelaDisciplinas.refresh();
+        
+    }
+    
+    //carrega as opções para o CheckBox
+    public void carregarOpcaoListar() {
+        
+        List<String> opcoes = new ArrayList<>();
+        opcoes.add("Listar Todas");
+        opcoes.add("Listar Habilitadas");
+        opcoes.add("Listar Desabilitadas");
+        
+        obsOpcaoListagem = FXCollections.observableArrayList(opcoes);
+        comboListagem.getItems().setAll(obsOpcaoListagem);
+        
+    }
+    
+    
+    /*Método que seleciona os filtros específicos
+    Listar todos (vem por padrão) e as outras opções
+    são listar as disciplinas habilitadas e as desabilitadas*/
+    @FXML
+    public void escolherOpcao(ActionEvent event) {
+        
+        /*um boolean que vai servir para trazer a lista 
+        que eu quero que é a lista de disciplinas ativadas
+        ou desativadas*/ 
+        boolean status;
+        
+        String escolha = comboListagem.getSelectionModel().getSelectedItem();
+        
+        switch(escolha){
+            
+            case "Listar Todas":
+                carregarTabela();
+                break;
+            
+            case "Listar Habilitadas":
+                status = true;
+                trazerDisciplinasHabilitadas(status);
+                break;
+                
+            case "Listar Desabilitadas":
+                status = false;
+                trazerDisciplinasHabilitadas(status);
+                break;
+        }
+        
+    }
+    
+    //Ainda não esta funcionando direito
+    public void trazerDisciplinaFiltro() {
+        
+        List<Disciplina> pesquisarDescricao = new ArrayList<>();
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        
+        observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasPorDescricao(campoPesquisar.getText()));
+        habilitarDesabilitarDisciplina();
+        tabelaDisciplinas.setItems(observableListDisciplina);
+        
+    }
     /*public ObservableList<Disciplina> atualizaTabela() {
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
