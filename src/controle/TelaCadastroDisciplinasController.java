@@ -16,8 +16,10 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,6 +27,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.Disciplina;
 
@@ -57,19 +61,44 @@ public class TelaCadastroDisciplinasController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        carregarTabela();
+        
+        //estancio o evento para chamar no comboListagem por padrão
+        ActionEvent event = new ActionEvent();
+        
+        //carrega todas as opções no combobox (comboListagem)
         carregarOpcaoListar();
+        
+        /*Pega a primeira opção para que venha por padrão 
+        a primeira opção que é a de listar todas*/ 
         comboListagem.getSelectionModel().select(0);
-        trazerDisciplinaFiltro();
+        
+        //chama o evento do comboBox para checar qual é a escolha
+        escolherOpcao(event);
+        
+        /*inicia o campoPesquisa com uma espécie de envento 
+        que propicia usar o método trazerPesquisa. Esse método 
+        pede uma String que no caso é o texto o próprio campo*/
+        campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
+            
+            trazerPesquisa(campoPesquisar.getText());
+            
+        });
     }
 
     public AnchorPane getAnchorPane() {
         return this.ParenteContainer;
     }
 
+    /*Esse evento serve para eu fazer com que tenha um evento 
+    em cada togglebutton da tabela. Ou seja cada togglebutton 
+    terá esse evento implementado*/
     private void handleButtonAction(ActionEvent event){
+        //chamo a conexão com o banco através da Classe DisciplinaDAO 
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         
+        /*Faço um for na tabela e comparo cada objeto Disciplina
+        com da tabela com o alvo do evento (getTarget) para saber 
+        qual togglebutton eu estou acionando*/
         for(Disciplina d : tabelaDisciplinas.getItems()){
             
             if(d.getTogglebutton() == event.getTarget()){
@@ -79,6 +108,10 @@ public class TelaCadastroDisciplinasController implements Initializable {
     
         }
         
+        /*Esse ponto eu checo os status. Como é um evento que reage
+        ao toque, ele nesse caso reagirá de forma que quando a disciplina 
+        estiver habilitada ela receberá um false e aparecerá como desabilitada
+        e vice versa se caso o status for false.*/
         boolean status = disciplina.isHabilitar();
         if(status == true){
             
@@ -92,22 +125,19 @@ public class TelaCadastroDisciplinasController implements Initializable {
             
         }
         
-        /*Esse if aqui checa qual tabela ele atualiza dependendo da pesquisa
-        se ele quiser trazer todas as disciplinas apenas da um refresh na tabela 
-        se caso ele estiver trazendo apenas as habiltadas e desabilitar alguma disciplina
-        ela some e só aparece quando ele buscar na tabela de desabilitadas e vice versa isso*/
-        
-        if(comboListagem.getSelectionModel().getSelectedItem().equals("Listar Todas")){
-           carregarTabela();
-        
-        }else if (comboListagem.getSelectionModel().getSelectedItem().equals("Listar Habilitadas")){
-            trazerDisciplinasHabilitadas(true);
-        }else {
-            trazerDisciplinasHabilitadas(false);
-        }
+        /*Chama o método para que a cada vez que eu usar o togglebutton
+        eu possa atualizar a tebela através do que está escolhido no comboBox
+        Se caso estiver trazendo a tabela com as habilitadas e desabilito alguma
+        disciplina pelo togglebutton ele acaba saindo da tabela e vice e versa.
+        Quando eu troco de tabela aquela disciplina que eu desabilitei ela volta 
+        quando eu carrego as desabilitadas e vice e versa. Fazendo com que a cada 
+        escolha a tebela seja atualizada*/
+        escolherOpcao(event);
         
     }
 
+    /*Esse método pega os togglebuttons da classe e implementa 
+    um método de evento neles. Vide o evento acima*/
     public void habilitarDesabilitarDisciplina(){
         
         for(int i = 0; i<observableListDisciplina.size(); i++){
@@ -118,33 +148,50 @@ public class TelaCadastroDisciplinasController implements Initializable {
     
     public void TelaCadastroDisciplinasController() {
     }
-
+    
+    //Método que insere a disciplina. Grava no banco
     @FXML
     public void inserirDisciplina(ActionEvent event) {
 
         disciplina = new Disciplina();
-        //Disciplina novaDisciplina = new Disciplina();
-
+        
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Cadastro de disciplina");
         dialog.setHeaderText("Cadastrar disciplina");
         dialog.setContentText("Informe o nome da disciplina:");
 
         Optional<String> resultado = dialog.showAndWait();
-
+        
+        //checa se apertou o botão ok (retorna um true) ou se apertou cancel(retorna false) 
         if (resultado.isPresent()) {
-            try {
-                DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+            
+            /*checa se o textImput esta vindo vazio. Aqui diz que não 
+            é possível salvar vazio*/
+            if(resultado.get().equals("")){
+                
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Messagem de Erro");
+                alert.setContentText("Erro!!");
+                alert.show();
+                
+            }else {
                 disciplina.setDescricao(resultado.get());
-                disciplinaDAO.incluir(disciplina);
-                dialog.close();
-                carregarTabela();
-            } catch (Exception e) {
+                try{
 
-            }
+                    DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+
+                    disciplinaDAO.incluir(disciplina);
+                    dialog.close();
+                    carregarTabelaComTodos();
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+            }    
         }
     }
-
+    
     @FXML
     public void alterarDisciplina(ActionEvent event) {
         try{  
@@ -162,7 +209,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
                     DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
                     disciplina.setDescricao(resultado.get());
                     disciplinaDAO.atualizar(disciplina);
-                    carregarTabela();
+                    carregarTabelaComTodos();
                 } catch (Exception ex) {
 
                 }
@@ -208,7 +255,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
 
     }*/
 
-    public void carregarTabela() {
+    public void carregarTabelaComTodos() {
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
@@ -223,7 +270,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
         
     }
     
-    public void trazerDisciplinasHabilitadas(boolean status) {
+    public void trazerDisciplinasOnOuOff(boolean status) {
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         
@@ -247,7 +294,6 @@ public class TelaCadastroDisciplinasController implements Initializable {
         
     }
     
-    
     /*Método que seleciona os filtros específicos
     Listar todos (vem por padrão) e as outras opções
     são listar as disciplinas habilitadas e as desabilitadas*/
@@ -264,31 +310,34 @@ public class TelaCadastroDisciplinasController implements Initializable {
         switch(escolha){
             
             case "Listar Todas":
-                carregarTabela();
+                carregarTabelaComTodos();
                 break;
             
             case "Listar Habilitadas":
                 status = true;
-                trazerDisciplinasHabilitadas(status);
+                trazerDisciplinasOnOuOff(status); 
                 break;
                 
             case "Listar Desabilitadas":
                 status = false;
-                trazerDisciplinasHabilitadas(status);
+                trazerDisciplinasOnOuOff(status);
                 break;
         }
         
     }
     
-    //Ainda não esta funcionando direito
-    public void trazerDisciplinaFiltro() {
+    public void trazerPesquisa(String filtro){
         
-        List<Disciplina> pesquisarDescricao = new ArrayList<>();
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        List<Disciplina> disciplinas = new ArrayList<Disciplina>();
         
-        observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasPorDescricao(campoPesquisar.getText()));
-        habilitarDesabilitarDisciplina();
-        tabelaDisciplinas.setItems(observableListDisciplina);
+        if(filtro.equals("")){
+            carregarTabelaComTodos();
+        }else{
+            //disciplinaDAO.listarDisciplinasPorDescricao(filtro);
+            observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasPorDescricao(filtro));
+            tabelaDisciplinas.getItems().setAll(observableListDisciplina);
+        }
         
     }
     /*public ObservableList<Disciplina> atualizaTabela() {

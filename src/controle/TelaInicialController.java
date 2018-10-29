@@ -75,6 +75,6 @@ public class TelaInicialController implements Initializable,CallBack {
     
     @FXML
     void fecharAplicacao(ActionEvent event) {
-         System.exit(0);
+        System.exit(0);
     }
 }

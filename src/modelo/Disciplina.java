@@ -9,11 +9,13 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXToggleButton;
 import java.io.Serializable;
 import javafx.scene.control.ToggleButton;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import org.hibernate.annotations.Columns;
 
 /**
  *
@@ -26,6 +28,7 @@ public class Disciplina implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(nullable = false)
     private String descricao;
     private boolean habilitar = true;
     

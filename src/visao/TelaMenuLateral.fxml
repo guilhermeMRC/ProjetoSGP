@@ -21,17 +21,6 @@
             <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="16" text="" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="botaoPergunta" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="40.0" prefWidth="204.0" styleClass="jfx-button" stylesheets="@../css/estilo.css" text="Perguntas">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <graphic>
-            <FontAwesomeIconView fontSmoothingType="LCD" glyphName="QUESTION" size="16" text="" />
-         </graphic>
-         <font>
-            <Font name="Century Gothic Bold" size="13.0" />
-         </font>
-      </JFXButton>
       <JFXButton fx:id="botaoDisciplina" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="40.0" prefWidth="204.0" styleClass="jfx-button" stylesheets="@../css/estilo.css" text="Disciplinas">
          <font>
             <Font name="Century Gothic Bold" size="13.0" />
@@ -42,6 +31,17 @@
          <VBox.margin>
             <Insets />
          </VBox.margin>
+      </JFXButton>
+      <JFXButton fx:id="botaoPergunta" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="40.0" prefWidth="204.0" styleClass="jfx-button" stylesheets="@../css/estilo.css" text="Perguntas">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <graphic>
+            <FontAwesomeIconView fontSmoothingType="LCD" glyphName="QUESTION" size="16" text="" />
+         </graphic>
+         <font>
+            <Font name="Century Gothic Bold" size="13.0" />
+         </font>
       </JFXButton>
       <JFXButton fx:id="botaoSalas" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="40.0" prefWidth="204.0" styleClass="jfx-button" stylesheets="@../css/estilo.css" text="Salas">
          <font>
