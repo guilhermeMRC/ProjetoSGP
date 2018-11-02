@@ -16,8 +16,8 @@ import javax.persistence.Persistence;
  */
 public abstract class GenericDAO<T> {
 
-    private final EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProjetoSGPPU");
-    private final EntityManager manager = factory.createEntityManager();
+    protected final EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProjetoSGPPU");
+    protected final EntityManager manager = factory.createEntityManager();
 
     public EntityManager getManager() {
         return manager;

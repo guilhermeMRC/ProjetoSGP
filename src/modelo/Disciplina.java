@@ -28,7 +28,6 @@ public class Disciplina implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(nullable = false)
     private String descricao;
     private boolean habilitar = true;
     

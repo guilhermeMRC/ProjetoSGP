@@ -171,7 +171,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
                 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("Messagem de Erro");
-                alert.setContentText("Erro!!");
+                alert.setContentText("Erro! Não é permitido cadastrar Disciplina Vázio" );
                 alert.show();
                 
             }else {
@@ -194,6 +194,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
     
     @FXML
     public void alterarDisciplina(ActionEvent event) {
+        
         try{  
             
             disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
@@ -205,14 +206,30 @@ public class TelaCadastroDisciplinasController implements Initializable {
 
             Optional<String> resultado = dialogAlteracao.showAndWait();
             if (resultado.isPresent()) {
-                try {
-                    DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+                
+                if(resultado.get().equals("")){
+                    
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Messagem de Erro");
+                    alert.setContentText("Erro! Não é permitido cadastrar Disciplina Vázio" );
+                    alert.show();
+                    
+                }else {
+                    
                     disciplina.setDescricao(resultado.get());
-                    disciplinaDAO.atualizar(disciplina);
-                    carregarTabelaComTodos();
-                } catch (Exception ex) {
-
+                    
+                    try {
+                        
+                        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+                        disciplinaDAO.atualizar(disciplina);
+                        carregarTabelaComTodos();
+                        
+                    } catch (Exception ex) {
+                        
+                        ex.getStackTrace();
+                    }
                 }
+                
             } else {
                 dialogAlteracao.close();
             }
@@ -224,36 +241,6 @@ public class TelaCadastroDisciplinasController implements Initializable {
             alert.show();
         }
     }
-
-    /*@FXML
-    public void excluirDisciplina(ActionEvent event) {
-        try{
-            disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
-            Alert telaDeletarDisciplina = new Alert(AlertType.CONFIRMATION);
-            telaDeletarDisciplina.setTitle("Deletar disciplina");
-            telaDeletarDisciplina.setContentText("Tem certeza que deseja deletar essa disciplina?");
-
-            Optional<ButtonType > resultado = telaDeletarDisciplina.showAndWait();
-            if (resultado.isPresent()) {
-                try {
-                    DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-                    disciplinaDAO.excluir(Disciplina.class, disciplina.getId());
-                    carregarTabela();
-                } catch (Exception ex) {
-
-                }
-            } else {
-                telaDeletarDisciplina.close();
-            }
-        } catch(NullPointerException ex){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Aviso do sistema");
-            alert.setHeaderText("Erro ao tentar excluir disciplina");
-            alert.setContentText("Nenhuma disciplina selecionada");
-            alert.show();
-        }
-
-    }*/
 
     public void carregarTabelaComTodos() {
         
@@ -326,6 +313,9 @@ public class TelaCadastroDisciplinasController implements Initializable {
         
     }
     
+    /*Metodo usado para capturar o filtro que é uma String passado por um TextField.
+    Esse filtro é importante porque se ele for diferente de vazio ("")
+    ele vai trazer as disciplinas pela pesquisa*/
     public void trazerPesquisa(String filtro){
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
@@ -334,7 +324,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
         if(filtro.equals("")){
             carregarTabelaComTodos();
         }else{
-            //disciplinaDAO.listarDisciplinasPorDescricao(filtro);
+            
             observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasPorDescricao(filtro));
             tabelaDisciplinas.getItems().setAll(observableListDisciplina);
         }

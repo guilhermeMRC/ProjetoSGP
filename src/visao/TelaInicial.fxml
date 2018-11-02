@@ -10,33 +10,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaInicialController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="959.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaInicialController">
    <children>
       <Pane prefHeight="59.0" prefWidth="835.0" style="-fx-background-color: #66A931;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <JFXHamburger fx:id="hamburger" layoutX="14.0" layoutY="20.0" />
-            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="793.0" layoutY="18.0" onAction="#fecharAplicacao">
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="891.0" layoutY="14.0" onAction="#fecharAplicacao">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="16" />
                </graphic>
             </JFXButton>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="740.0" layoutY="18.0" text="Button">
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="838.0" layoutY="14.0" text="Button">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="17" />
                </graphic>
             </JFXButton>
          </children>
       </Pane>
-      <AnchorPane fx:id="rootPane" layoutX="-2.0" layoutY="59.0" prefHeight="496.0" prefWidth="843.0">
+      <AnchorPane fx:id="rootPane" layoutX="-2.0" layoutY="59.0" prefHeight="496.0" prefWidth="963.0">
          <children>
-            <ImageView fitHeight="466.0" fitWidth="708.0" layoutX="79.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="466.0" fitWidth="708.0" layoutX="137.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagens/Logo%201.png" />
                </image>
             </ImageView>
          </children>
       </AnchorPane>
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutY="58.0" prefHeight="496.0" prefWidth="185.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="650.0" AnchorPane.topAnchor="58.0" />
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutY="58.0" prefHeight="496.0" prefWidth="221.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="738.0" AnchorPane.topAnchor="58.0" />
    </children>
    <effect>
       <DropShadow height="44.72" radius="19.6375" width="35.83" />

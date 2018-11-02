@@ -11,7 +11,6 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTimePicker;
 import dao.DisciplinaDAO;
 import dao.PerguntaDAO;
 import modelo.Dificuldade;
@@ -113,13 +112,7 @@ public class TelaCadastraPerguntas implements Initializable {
     }
 
     public void CadastrarPergunta() {
-       
-        /*
-        O cadastro do tempo da pergunta ainda não esta funcionando, estou verificando o erro 
-        no componente de hora, pois ele pega o formato em 24hrs mas quando ele insere no editor
-        é infomado somente os valores de 12horas. Ou seja, não tem como simular minutos. 
-        */
-        
+      
         PerguntaDAO perguntaDAO = new PerguntaDAO();
         
         try {
@@ -141,6 +134,7 @@ public class TelaCadastraPerguntas implements Initializable {
             pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD,opcaoD));
             campoTags.getChips().forEach((tags) -> {
                 listTags.add(tags);
+                System.out.println(listTags.toString());
             });
             
             
@@ -192,6 +186,10 @@ public class TelaCadastraPerguntas implements Initializable {
         campoAlternativaC.clear();
         campoAlternativaD.clear();
         Alternativas.getToggles().clear();
+        sliderTempoPergunta.setValue(30);
+        selecaoDificuldadePergunta.getSelectionModel().clearSelection();
+        selecaoDisciplina.getSelectionModel().clearSelection();
+        campoTags.getChips().clear();
     }
 
     public void carregarDificuldades() {
@@ -207,12 +205,13 @@ public class TelaCadastraPerguntas implements Initializable {
     public void carregarDisciplinas() {
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+        selecaoDisciplina.getItems().clear();
         obsDisciplinas = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasAtivasOuDesativadas(true));
         selecaoDisciplina.getItems().addAll(obsDisciplinas);
     }
     
-    /*Método para converter o valor do slider que vem o double 
-    em Integer que foi mapeado no banco*/
+    /*Método para converter o valor do slider (que vem como double) 
+    em Integer porque foi mapeado no banco como Integer*/
     public Integer converterDoubleParaInteger(Double valor){
         
         Integer tempo = valor.intValue();

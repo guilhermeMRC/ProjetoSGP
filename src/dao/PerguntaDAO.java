@@ -7,7 +7,6 @@ package dao;
 
 import java.util.List;
 import modelo.Alternativa;
-import modelo.Disciplina;
 import modelo.Pergunta;
 
 /**
@@ -16,6 +15,7 @@ import modelo.Pergunta;
  */
 public class PerguntaDAO extends GenericDAO<Pergunta>{
     
+    /*Lista todas as perguntas cadastradas*/
     public List<Pergunta> listar(){
         
         List<Pergunta> lista = null;
@@ -36,14 +36,18 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
         }
     }
     
-    public List<Pergunta> listar2(){
+    /*Listar perguntas ativas ou desativadas. O para isso precisa passar um 
+    boolean como parametro para que se traga do banco as desativadas ou as ativadas
+    se for true retorna a lista com as ativadas e se for false retorna a lista desativada*/
+    public List<Pergunta> listarPerguntasAtivasOuDesativadas(boolean status){
         
         List<Pergunta> lista = null;
+        String query = "from Pergunta p where p.habilitar ="+ status;
         conectar();
         
         try {
             
-            lista = getManager().createQuery("from Pergunta p where p.habilitar = 1").getResultList();
+            lista = getManager().createQuery(query, Pergunta.class).getResultList();
             encerrar();
             return lista;
             
@@ -55,7 +59,32 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
             
         }
     }
-    
+
+    /*Método que recebe uma String como filtro e através disso
+    vai ao banco e filtra por descrição ou  disciplina ou dificuldade*/
+    public List<Pergunta> listarPerguntasPorDescricaoOuDificuldadeOuDisciplina(String filtro){
+        
+        List<Pergunta> lista = null;
+        String query = "from Pergunta p where p.descricao like '%"+ filtro +"%' or "
+                + "p.dificuldade like '%"+filtro+"%' or "
+                + "p.disciplina.descricao like '%"+filtro+"%'"
+                + "Order By p.descricao";
+        conectar();
+        
+        try {
+            
+            lista = getManager().createQuery(query, Pergunta.class).getResultList();
+            encerrar();
+            return lista;
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            encerrar();
+            return lista;
+            
+        }
+    }
     
     public void incluirComAlternativas(Pergunta p) {
         try {

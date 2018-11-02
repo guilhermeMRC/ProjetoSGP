@@ -72,10 +72,14 @@ public class DisciplinaDAO extends GenericDAO<Disciplina>{
         }
     }
     
+    /*Método que pega um palavra ou uma letra 
+    e passa como parametro para busca no banco 
+    e retorna um lista com a pesquisa correspondente*/
     public List<Disciplina> listarDisciplinasPorDescricao(String filtro){
         
         List<Disciplina> lista = null;
-        String query = "from Disciplina d where d.descricao like '%"+ filtro +"%'" ;
+        String query = "from Disciplina d where d.descricao like '%"+ filtro +"%'" 
+                        + "Order By d.descricao";
         conectar();
         
         try {

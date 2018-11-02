@@ -18,7 +18,7 @@
    <children>
       <AnchorPane prefHeight="640.0" prefWidth="890.0" style="-fx-background-color: #f7f7f7;">
          <children>
-            <JFXTextArea fx:id="campoPergunta" focusColor="#429344" labelFloat="true" layoutX="14.0" layoutY="68.0" prefHeight="175.0" prefWidth="492.0" promptText="Descrição da pergunta" style="-fx-background-color: #fff;" wrapText="true">
+            <JFXTextArea fx:id="campoPergunta" focusColor="#429344" labelFloat="true" layoutX="14.0" layoutY="62.0" prefHeight="181.0" prefWidth="492.0" promptText="Descrição da pergunta" style="-fx-background-color: #fff;" wrapText="true">
                <font>
                   <Font size="15.0" />
                </font>
@@ -72,13 +72,15 @@
                </font>
             </Label>
             <JFXSlider fx:id="sliderTempoPergunta" blockIncrement="30.0" cache="true" layoutX="533.0" layoutY="89.0" majorTickUnit="30.0" max="180.0" min="30.0" minorTickCount="30" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="30.0" />
-            <Label layoutX="533.0" layoutY="58.0" text="Tempo" />
-            <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="533.0" layoutY="250.0" onAction="#inserirDisciplina" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css">
+            <Label layoutX="533.0" layoutY="58.0" text="Tempo">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="533.0" layoutY="260.0" onAction="#inserirDisciplina" prefHeight="17.0" prefWidth="47.0" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
                </graphic>
             </JFXButton>
-            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" layoutX="543.0" layoutY="269.0" />
          </children>
       </AnchorPane>
    </children>

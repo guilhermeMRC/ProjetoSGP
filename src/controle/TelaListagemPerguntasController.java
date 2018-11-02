@@ -7,6 +7,7 @@ package controle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import dao.DisciplinaDAO;
 import dao.PerguntaDAO;
 import dao.SalaDAO;
@@ -31,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -62,9 +64,13 @@ public class TelaListagemPerguntasController implements Initializable {
     private TableColumn<Pergunta, JFXCheckBox> colunaSala;
     @FXML
     private TableColumn<Pergunta, Dificuldade> colunaDificuldade;
-
+    @FXML
+    private TableColumn<Pergunta, Disciplina> colunaDisciplina;
     @FXML
     private JFXButton botaoIncluir, botaoAlterar, botaoExcluir, criarSala;
+    
+    @FXML
+    private JFXComboBox<String> comboListagem;
 
     @FXML
     private TextField campoPesquisar;
@@ -73,20 +79,29 @@ public class TelaListagemPerguntasController implements Initializable {
     private Pergunta pergunta;
     private TelaListagemPerguntasController telaListarPerguntas;
 
+    private ObservableList<String> obsOpcaoListagem = FXCollections.observableArrayList();
     private ObservableList<Pergunta> obsPergunta = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        carregarTabela();
+        ActionEvent event = new ActionEvent();
+        carregarOpcaoListar();
+        comboListagem.getSelectionModel().select(0);
+        escolherOpcao(event);
         //habilitarDesabilitarPergunta();
+        campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
+            
+            trazerPesquisa(campoPesquisar.getText());
+            
+        });
 
     }
     
     @FXML
     public void inserirPergunta(ActionEvent event) {
 
-        carregarTela("/visao/TelaCadastroPerguntas.fxml");
+        carregarTela("/visao/TelaCadastroPerguntas.fxml","Cadastro de Pergunta");
         carregarTabela();
     }
 
@@ -109,7 +124,7 @@ public class TelaListagemPerguntasController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
 
         //seto o PerguntaDAO que faz a conexão com o banco de dados
-        PerguntaDAO disciplinaDAO = new PerguntaDAO();
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
 
         //esse for varre a tabela atrás do togglebutton que eu cliquei
         for (Pergunta p : tabelaPerguntas.getItems()) {
@@ -130,17 +145,16 @@ public class TelaListagemPerguntasController implements Initializable {
         if (status == true) {
 
             pergunta.setHabilitar(false);
-            disciplinaDAO.atualizar(pergunta);
+            perguntaDAO.atualizarComAlternativas(pergunta);
 
         } else {
 
             pergunta.setHabilitar(true);
-            disciplinaDAO.atualizar(pergunta);
+            perguntaDAO.atualizarComAlternativas(pergunta);
 
         }
         
-        //aqui atualiza a tabela
-        carregarTabela();
+        escolherOpcao(event);
     }
 
     /*Método que faz o togglebuttons aparecerem na
@@ -161,9 +175,13 @@ public class TelaListagemPerguntasController implements Initializable {
         colunaId.setStyle("-fx-alignment: CENTER;");
 
         colunaPergunta.setCellValueFactory(new PropertyValueFactory("descricao"));
-
+        colunaPergunta.setStyle("-fx-alignment: CENTER;");
+        
         colunaDificuldade.setCellValueFactory(new PropertyValueFactory("dificuldade"));
         colunaDificuldade.setStyle("-fx-alignment: CENTER;");
+        
+        colunaDisciplina.setCellValueFactory(new PropertyValueFactory("disciplina"));
+        colunaDisciplina.setStyle("-fx-alignment: CENTER;");
 
         colunaHabilitar.setCellValueFactory(new PropertyValueFactory("togglebutton"));
         colunaHabilitar.setStyle("-fx-alignment: CENTER;");
@@ -175,14 +193,25 @@ public class TelaListagemPerguntasController implements Initializable {
         habilitarDesabilitarPergunta();
         tabelaPerguntas.setItems(obsPergunta);
     }
-
-    public void carregarTela(String arq) {
+    
+    public void trazerPerguntasOnOuOff(boolean status) {
+        
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
+        
+        obsPergunta = FXCollections.observableArrayList(perguntaDAO.listarPerguntasAtivasOuDesativadas(status));
+        habilitarDesabilitarPergunta();
+        tabelaPerguntas.setItems(obsPergunta);
+        //tabelaDisciplinas.refresh();
+        
+    }
+    public void carregarTela(String arq, String titlo) {
 
         try {
 
             Parent root = FXMLLoader.load(getClass().getResource(arq));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle(titlo);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
@@ -260,6 +289,7 @@ public class TelaListagemPerguntasController implements Initializable {
 
                 Scene scene = new Scene(root);
                 stage2.setScene(scene);
+                stage2.setTitle("Editar Pergunta");
                 stage2.alwaysOnTopProperty();
                 stage2.initModality(Modality.APPLICATION_MODAL);
                 stage2.show();
@@ -276,6 +306,69 @@ public class TelaListagemPerguntasController implements Initializable {
             alert.show();
         }
 
-        //carregarTabela();
+    }
+    
+    /*Método que carrega as opções para o checkBox*/
+    public void carregarOpcaoListar() {
+        
+        List<String> opcoes = new ArrayList<>();
+        opcoes.add("Listar Todas");
+        opcoes.add("Listar Habilitadas");
+        opcoes.add("Listar Desabilitadas");
+        
+        obsOpcaoListagem = FXCollections.observableArrayList(opcoes);
+        comboListagem.getItems().setAll(obsOpcaoListagem);
+        
+    }
+    
+    /*Método que pega a escolha do comboBox de filtros na tabela.
+    Aqui o usuário pode trazer todos os registros os habilitados e 
+    os desabilitados*/
+    @FXML
+    public void escolherOpcao(ActionEvent event) {
+        
+        /*um boolean que vai servir para trazer a lista 
+        que eu quero que é a lista de disciplinas ativadas
+        ou desativadas*/ 
+        boolean status;
+        
+        String escolha = comboListagem.getSelectionModel().getSelectedItem();
+        
+        switch(escolha){
+            
+            case "Listar Todas":
+                carregarTabela();
+                break;
+            
+            case "Listar Habilitadas":
+                status = true;
+                trazerPerguntasOnOuOff(status); 
+                break;
+                
+            case "Listar Desabilitadas":
+                status = false;
+                trazerPerguntasOnOuOff(status);
+                break;
+            
+        }
+        
+    }
+    
+    /*Mesma ideia do método da Classe TelaCadastroDisciplinaController.
+    Porém aqui implementei a pesquisa por descricao, disciplina e dificuldade*/
+    public void trazerPesquisa(String filtro){
+        
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
+        
+        if(filtro.equals("")){
+            
+            carregarTabela();
+            
+        }else{
+            
+            obsPergunta  = FXCollections.observableArrayList(perguntaDAO.listarPerguntasPorDescricaoOuDificuldadeOuDisciplina(filtro));
+            tabelaPerguntas.getItems().setAll(obsPergunta);
+        }
+        
     }
 }
