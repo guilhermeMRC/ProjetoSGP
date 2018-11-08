@@ -47,12 +47,11 @@ public class TelaInicialController implements Initializable,CallBack {
             transition.setRate(transition.getRate() * -1);
             transition.play();
 
-            if (drawer.isOpened()) {
-                drawer.close();
-                drawer.setVisible(false);
-            } else {
+            if (!drawer.isOpened()) {
                 drawer.setVisible(true);
                 drawer.open();
+            } else {
+                
             }
         });
     }
@@ -72,6 +71,11 @@ public class TelaInicialController implements Initializable,CallBack {
         }
     }
     
+    @FXML
+    void fecharMenuLateral(ActionEvent event) {
+          drawer.close();
+          drawer.setVisible(false);
+    }
     
     @FXML
     void fecharAplicacao(ActionEvent event) {

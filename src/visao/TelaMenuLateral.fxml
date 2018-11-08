@@ -54,10 +54,13 @@
             <FontAwesomeIconView fontSmoothingType="LCD" glyphName="OBJECT_GROUP" />
          </graphic>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" prefHeight="31.0" prefWidth="205.0" text="Sobre">
+      <JFXButton fx:id="botaosobre" alignment="BASELINE_LEFT" onAction="#telas" prefHeight="31.0" prefWidth="205.0" text="Sobre">
          <graphic>
-            <FontAwesomeIconView />
+            <FontAwesomeIconView glyphName="INFO_CIRCLE" size="16" />
          </graphic>
+         <font>
+            <Font size="13.0" />
+         </font>
       </JFXButton>
       <Pane prefHeight="0.0" prefWidth="204.0" style="-fx-background-color: #ECECEC;">
          <VBox.margin>

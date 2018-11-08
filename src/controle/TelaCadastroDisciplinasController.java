@@ -246,9 +246,11 @@ public class TelaCadastroDisciplinasController implements Initializable {
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
+        colunaId.setStyle("-fx-alignment: CENTER;");
         colunaDisciplina.setCellValueFactory(new PropertyValueFactory("descricao"));
+        colunaDisciplina.setStyle("-fx-alignment: CENTER");
         colunaHabilitarDesabilitar.setCellValueFactory(new PropertyValueFactory("togglebutton"));
-        colunaHabilitarDesabilitar.setStyle("-fx-alignment: CENTER;");
+        colunaHabilitarDesabilitar.setStyle("-fx-alignment: CENTER");
         
         observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listar());
 

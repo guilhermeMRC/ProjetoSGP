@@ -27,7 +27,7 @@
             </JFXButton>
          </children>
       </Pane>
-      <AnchorPane fx:id="rootPane" layoutX="-2.0" layoutY="59.0" prefHeight="496.0" prefWidth="963.0">
+      <AnchorPane fx:id="rootPane" layoutX="-2.0" layoutY="59.0" onDragDetected="#fecharMenuLateral" prefHeight="496.0" prefWidth="963.0">
          <children>
             <ImageView fitHeight="466.0" fitWidth="708.0" layoutX="137.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -36,7 +36,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutY="58.0" prefHeight="496.0" prefWidth="221.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="738.0" AnchorPane.topAnchor="58.0" />
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutY="58.0" prefHeight="496.0" prefWidth="208.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="751.0" AnchorPane.topAnchor="58.0" />
    </children>
    <effect>
       <DropShadow height="44.72" radius="19.6375" width="35.83" />
