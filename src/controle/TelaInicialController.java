@@ -51,7 +51,8 @@ public class TelaInicialController implements Initializable,CallBack {
                 drawer.setVisible(true);
                 drawer.open();
             } else {
-                
+                drawer.close();
+                drawer.setVisible(false);
             }
         });
     }

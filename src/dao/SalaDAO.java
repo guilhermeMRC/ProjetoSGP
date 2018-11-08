@@ -45,4 +45,47 @@ public class SalaDAO extends GenericDAO<Sala> {
             return sala;
         }
     }
+    
+    public List<Sala> listarSalasAtivasOuDesativadas(boolean status){
+        
+        List<Sala> lista = null;
+        String query = "from Sala s where s.habilitar ="+ status;
+        conectar();
+        
+        try {
+            
+            lista = getManager().createQuery(query, Sala.class).getResultList();
+            encerrar();
+            return lista;
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            encerrar();
+            return lista;
+            
+        }
+    }
+    
+    public List<Sala> listarSalasPorDescricao(String filtro){
+        
+        List<Sala> lista = null;
+        String query = "from Sala s where s.descricao like '%"+ filtro +"%'" 
+                        + "Order By s.descricao";
+        conectar();
+        
+        try {
+            
+            lista = getManager().createQuery(query, Sala.class).getResultList();
+            encerrar();
+            return lista;
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            encerrar();
+            return lista;
+            
+        }
+    }
 }

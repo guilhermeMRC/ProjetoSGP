@@ -6,9 +6,12 @@
 package controle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import dao.SalaDAO;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,9 +27,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -50,7 +55,11 @@ public class TelaListagemSalaController implements Initializable {
     private TableColumn<Sala, String> colunaSala;
     @FXML
     private TableColumn<Sala, ToggleButton> colunaIHabilitarDesabilitar;
-
+    @FXML
+    private JFXComboBox<String> comboListagem;
+    @FXML
+    private TextField campoPesquisar;
+    
     @FXML
     private JFXButton botaoIncluir, botaoAlterar, botaoExcluir, botaoVisualizarSala;
 
@@ -59,10 +68,21 @@ public class TelaListagemSalaController implements Initializable {
     private ObservableList<Pergunta> obsPerguntas;
     private TelaListagemSalaController telaListagemSalaController;
     private ObservableList<Sala> obsSalas;
+    private ObservableList<String> obsOpcaoListagem;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        inicializarTabela();
+        
+        ActionEvent event = new ActionEvent();
+        carregarOpcaoListar();
+        comboListagem.getSelectionModel().select(0);
+        escolherOpcao(event);
+        
+        campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
+            
+            trazerPesquisa(campoPesquisar.getText());
+            
+        });
     }
 
     /*Esse método é responsavel por iniciar o evento dos 
@@ -72,7 +92,7 @@ public class TelaListagemSalaController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
 
         //seto o PerguntaDAO que faz a conexão com o banco de dados
-        SalaDAO disciplinaDAO = new SalaDAO();
+        SalaDAO salaDAO = new SalaDAO();
 
         //esse for varre a tabela atrás do togglebutton que eu cliquei
         for (Sala s : tabelaSalas.getItems()) {
@@ -93,17 +113,16 @@ public class TelaListagemSalaController implements Initializable {
         if (status == true) {
 
             sala.setHabilitar(false);
-            disciplinaDAO.atualizar(sala);
+            salaDAO.atualizar(sala);
 
         } else {
 
             sala.setHabilitar(true);
-            disciplinaDAO.atualizar(sala);
+            salaDAO.atualizar(sala);
 
         }
         
-        //aqui atualiza a tabela
-        inicializarTabela();
+        escolherOpcao(event);
     }
     
     public void habilitarDesabilitarSala() {
@@ -149,7 +168,7 @@ public class TelaListagemSalaController implements Initializable {
     }
 
     @FXML
-    void alterarSala(ActionEvent event) {
+    public void alterarSala(ActionEvent event) {
         try {
             salaDAO = new SalaDAO();
             sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
@@ -223,14 +242,16 @@ public class TelaListagemSalaController implements Initializable {
     }
 
     public void inicializarTabela() {
-        salaDAO = new SalaDAO();
+        SalaDAO salaDAO = new SalaDAO();
         
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaId.setStyle("-fx-alignment: CENTER;");
 
         colunaSala.setCellValueFactory(new PropertyValueFactory("descricao"));
+        colunaSala.setStyle("-fx-alignment: CENTER;");
         
         colunaIHabilitarDesabilitar.setCellValueFactory(new PropertyValueFactory("togglebutton"));
+        colunaIHabilitarDesabilitar.setStyle("-fx-alignment: CENTER;");
         
         obsSalas = FXCollections.observableArrayList(salaDAO.listar());
         
@@ -238,4 +259,72 @@ public class TelaListagemSalaController implements Initializable {
         tabelaSalas.setItems(obsSalas);
     }
 
+    public void carregarOpcaoListar() {
+        
+        List<String> opcoes = new ArrayList<>();
+        opcoes.add("Listar Todas");
+        opcoes.add("Listar Habilitadas");
+        opcoes.add("Listar Desabilitadas");
+        
+        obsOpcaoListagem = FXCollections.observableArrayList(opcoes);
+        comboListagem.getItems().setAll(obsOpcaoListagem);
+        
+    }
+    
+    @FXML
+    public void escolherOpcao(ActionEvent event) {
+        
+        /*um boolean que vai servir para trazer a lista 
+        que eu quero que é a lista de disciplinas ativadas
+        ou desativadas*/ 
+        boolean status;
+        
+        String escolha = comboListagem.getSelectionModel().getSelectedItem();
+        
+        switch(escolha){
+            
+            case "Listar Todas":
+                inicializarTabela();
+                break;
+            
+            case "Listar Habilitadas":
+                status = true;
+                trazerSalasOnOuOff(status); 
+                break;
+                
+            case "Listar Desabilitadas":
+                status = false;
+                trazerSalasOnOuOff(status);
+                break;
+            
+        }
+    }    
+        
+    public void trazerSalasOnOuOff(boolean status) {
+        
+        SalaDAO salaDAO = new SalaDAO();
+
+        obsSalas = FXCollections.observableArrayList(salaDAO.listarSalasAtivasOuDesativadas(status));
+        habilitarDesabilitarSala();
+        tabelaSalas.setItems(obsSalas);
+        //tabelaDisciplinas.refresh();
+        
+    }
+    
+    public void trazerPesquisa(String filtro){
+        
+        SalaDAO salaDAO = new SalaDAO();
+        
+        if(filtro.equals("")){
+            
+            inicializarTabela();
+            
+        }else{
+            
+            obsSalas  = FXCollections.observableArrayList(salaDAO.listarSalasPorDescricao(filtro));
+            tabelaSalas.getItems().setAll(obsSalas);
+        }
+        
+    }
+    
 }

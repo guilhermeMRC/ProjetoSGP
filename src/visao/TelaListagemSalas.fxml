@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -8,27 +9,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ParenteContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaListagemSalaController">
+<AnchorPane fx:id="ParenteContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaListagemSalaController">
    <children>
-      <TableView fx:id="tabelaSalas" layoutX="112.0" layoutY="96.0" prefHeight="369.0" prefWidth="636.0" AnchorPane.bottomAnchor="88.0" AnchorPane.leftAnchor="112.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="96.0">
+      <TableView fx:id="tabelaSalas" layoutX="21.0" layoutY="106.0" prefHeight="364.0" prefWidth="922.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="106.0">
          <columns>
             <TableColumn fx:id="colunaId" prefWidth="57.0" text="#" />
-            <TableColumn fx:id="colunaSala" prefWidth="462.0" text="SALA" />
-            <TableColumn fx:id="colunaIHabilitarDesabilitar" prefWidth="116.0" text="Habilitar" />
+            <TableColumn fx:id="colunaSala" prefWidth="720.0" text="SALA" />
+            <TableColumn fx:id="colunaIHabilitarDesabilitar" prefWidth="144.0" text="Habilitar" />
          </columns>
       </TableView>
-      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="684.0" layoutY="53.0" onAction="#inserirSala" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="684.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="53.0">
+      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="830.0" layoutY="58.0" onAction="#inserirSala" prefHeight="24.0" prefWidth="53.0" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Button" AnchorPane.bottomAnchor="413.0" AnchorPane.leftAnchor="830.0" AnchorPane.rightAnchor="83.0" AnchorPane.topAnchor="58.0">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="722.0" layoutY="53.0" onAction="#alterarSala" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="476.0" AnchorPane.leftAnchor="722.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="53.0">
+      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="893.0" layoutY="58.0" onAction="#alterarSala" prefHeight="24.0" prefWidth="53.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="413.0" AnchorPane.leftAnchor="893.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="58.0">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
          </graphic>
       </JFXButton>
-      <TextField fx:id="campoPesquisar" layoutX="112.0" layoutY="53.0" prefHeight="25.0" prefWidth="344.0" promptText="Pesquisar..." />
-      <JFXButton fx:id="botaoVisualizarSala" contentDisplay="GRAPHIC_ONLY" defaultButton="true" layoutX="644.0" layoutY="53.0" onAction="#visualizarSala" prefHeight="25.0" prefWidth="26.0" ripplerFill="BLACK" style="-fx-background-color: #90caf9;" textFill="WHITE">
+      <TextField fx:id="campoPesquisar" layoutX="21.0" layoutY="55.0" prefHeight="31.0" prefWidth="267.0" promptText="Pesquisar..." />
+      <JFXButton fx:id="botaoVisualizarSala" contentDisplay="GRAPHIC_ONLY" defaultButton="true" layoutX="767.0" layoutY="58.0" onAction="#visualizarSala" prefHeight="24.0" prefWidth="53.0" ripplerFill="BLACK" style="-fx-background-color: #90caf9;" text="Button" textFill="WHITE">
          <font>
             <Font name="Century Gothic Bold" size="12.0" />
          </font>
@@ -36,5 +37,6 @@
             <FontAwesomeIconView fill="WHITE" glyphName="EYE" />
          </graphic>
       </JFXButton>
+      <JFXComboBox fx:id="comboListagem" layoutX="365.0" layoutY="55.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="244.0" />
    </children>
 </AnchorPane>

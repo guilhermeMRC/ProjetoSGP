@@ -321,7 +321,6 @@ public class TelaCadastroDisciplinasController implements Initializable {
     public void trazerPesquisa(String filtro){
         
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-        List<Disciplina> disciplinas = new ArrayList<Disciplina>();
         
         if(filtro.equals("")){
             carregarTabelaComTodos();

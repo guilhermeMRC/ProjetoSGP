@@ -6,6 +6,7 @@
 package modelo;
 
 import com.jfoenix.controls.JFXToggleButton;
+import java.io.Serializable;
 import java.util.List;
 import javafx.scene.control.ToggleButton;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import javax.persistence.Transient;
  */
 
 @Entity
-public class Sala {
+public class Sala implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
