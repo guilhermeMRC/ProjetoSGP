@@ -10,15 +10,14 @@ import com.jfoenix.controls.JFXToggleButton;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -34,7 +33,10 @@ public class Pergunta implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    
+    @Lob
     private String descricao;
+    
     private Integer tempo;
     private List<String> tags;
    

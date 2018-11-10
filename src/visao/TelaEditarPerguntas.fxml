@@ -51,24 +51,25 @@
             <TextField fx:id="campoAlternativaD" layoutX="63.0" layoutY="460.0" prefHeight="25.0" prefWidth="440.0" />
             <JFXComboBox fx:id="selecaoDificuldadePergunta" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="146.0" prefHeight="31.0" prefWidth="296.0" promptText="Nivel de dificuldade" />
             <JFXComboBox fx:id="selecaoDisciplina" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="212.0" prefHeight="31.0" prefWidth="296.0" promptText="Disciplina" />
-            <Label layoutX="14.0" layoutY="280.0" text="Alternativas">
+            <Label layoutX="14.0" layoutY="299.0" text="Alternativas">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <JFXButton fx:id="botaoEditar" layoutX="107.0" layoutY="551.0" onAction="#editarPergunta" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" styleClass="jfx-button-confirmar" stylesheets="@../css/estilo.css" text="Editar" textFill="#0a0a0a" />
-            <StackPane layoutX="522.0" layoutY="332.0" prefHeight="267.0" prefWidth="315.0">
+            <JFXButton fx:id="botaoEditar" layoutX="107.0" layoutY="551.0" onAction="#editarPergunta" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" style="-fx-background-color: #95C260;" text="Editar" textFill="WHITE" />
+            <StackPane layoutX="522.0" layoutY="332.0" prefHeight="252.0" prefWidth="315.0">
                <children>
                   <JFXChipView fx:id="campoTags" prefHeight="267.0" prefWidth="331.0" style="-fx-border-color: #CFCFCF; -fx-background-color: #fff;" />
                </children>
             </StackPane>
-            <Label layoutX="533.0" layoutY="282.0" text="Tags">
+            <Label layoutX="517.0" layoutY="300.0" text="Tags">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
             <JFXSlider fx:id="sliderTempoPergunta" blockIncrement="30.0" cache="true" layoutX="533.0" layoutY="89.0" majorTickUnit="30.0" max="180.0" min="30.0" minorTickCount="30" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="30.0" />
             <Label layoutX="533.0" layoutY="58.0" text="Tempo" />
+            <JFXButton fx:id="botaoIncluir" layoutX="627.0" layoutY="268.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #95C260;" text="Cadastrar Disciplina" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>

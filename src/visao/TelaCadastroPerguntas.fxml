@@ -6,7 +6,6 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextArea?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -61,9 +60,9 @@
                <font>
                   <Font name="Century Gothic Bold" size="12.0" />
                </font></JFXButton>
-            <StackPane layoutX="522.0" layoutY="332.0" prefHeight="267.0" prefWidth="315.0">
+            <StackPane layoutX="522.0" layoutY="332.0" prefHeight="252.0" prefWidth="315.0">
                <children>
-                  <JFXChipView fx:id="campoTags" prefHeight="267.0" prefWidth="331.0" style="-fx-border-color: #CFCFCF; -fx-background-color: #fff;" />
+                  <JFXChipView fx:id="campoTags" prefHeight="233.0" prefWidth="315.0" style="-fx-border-color: #CFCFCF; -fx-background-color: #fff;" />
                </children>
             </StackPane>
             <Label layoutX="531.0" layoutY="301.0" text="Tags">
@@ -76,11 +75,7 @@
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Label>
-            <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="533.0" layoutY="260.0" onAction="#inserirDisciplina" prefHeight="17.0" prefWidth="47.0" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css">
-               <graphic>
-                  <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
-               </graphic>
-            </JFXButton>
+            <JFXButton fx:id="botaoIncluir" layoutX="617.0" layoutY="263.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #95C260;" text="Cadastrar Disciplina" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>

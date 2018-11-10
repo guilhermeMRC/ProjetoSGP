@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import modelo.Alternativa;
@@ -41,7 +43,7 @@ import org.hibernate.mapping.Collection;
 public class TelaEditarPerguntasController implements Initializable {
 
     TelaListagemPerguntasController telaLPC;
-    
+
     @FXML
     private JFXTextArea campoPergunta;
 
@@ -86,83 +88,150 @@ public class TelaEditarPerguntasController implements Initializable {
 
     @FXML
     private JFXSlider sliderTempoPergunta;
-    
+
     private List<Dificuldade> dificuldades = new ArrayList();
     private ObservableList<Dificuldade> obsDificuldade;
     private PerguntaDAO perguntaDAO;
     private List<Disciplina> displinas = new ArrayList<>();
     private ObservableList<Disciplina> obsDisciplinas;
     Pergunta perguntaNova = new Pergunta();
-    
-    
-     @Override
+
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         carregarDificuldades();
         carregarDisciplinas();
-    }   
-  
-    public void receberParametros(TelaListagemPerguntasController tela, Pergunta pergunta){
-        
+    }
+
+    public void receberParametros(TelaListagemPerguntasController tela, Pergunta pergunta) {
+
         //estou setando o id por aqui 
         perguntaNova.setId(pergunta.getId());
         perguntaNova.setAlternativas(pergunta.getAlternativas());
         //System.out.println("aaa: " + disciplina);
         campoPergunta.setText(pergunta.getDescricao());
-        
+
         campoAlternativaA.setText(pergunta.getAlternativas().get(0).getDescricao());
-        if(pergunta.getAlternativas().get(0).isCorreto() == true) opcaoA.setSelected(true);
+        if (pergunta.getAlternativas().get(0).isCorreto() == true) {
+            opcaoA.setSelected(true);
+        }
 
         campoAlternativaB.setText(pergunta.getAlternativas().get(1).getDescricao());
-        if(pergunta.getAlternativas().get(1).isCorreto() == true) opcaoB.setSelected(true);
+        if (pergunta.getAlternativas().get(1).isCorreto() == true) {
+            opcaoB.setSelected(true);
+        }
 
         campoAlternativaC.setText(pergunta.getAlternativas().get(2).getDescricao());
-        if(pergunta.getAlternativas().get(2).isCorreto() == true) opcaoC.setSelected(true);
+        if (pergunta.getAlternativas().get(2).isCorreto() == true) {
+            opcaoC.setSelected(true);
+        }
 
         campoAlternativaD.setText(pergunta.getAlternativas().get(3).getDescricao());
-        if(pergunta.getAlternativas().get(3).isCorreto() == true) opcaoD.setSelected(true);
+        if (pergunta.getAlternativas().get(3).isCorreto() == true) {
+            opcaoD.setSelected(true);
+        }
 
         selecaoDificuldadePergunta.getSelectionModel().select(pergunta.getDificuldade());
-        
+
         /*só assim para conseguir mostrar a disciplina, 
         mas acho que tem algum jeito mais fácil de se fazer isso*/
-        
-        for(int i = 0; i < displinas.size(); i++){
-            if(displinas.get(i).getDescricao().equals(pergunta.getDisciplina().getDescricao())){
+        for (int i = 0; i < displinas.size(); i++) {
+            if (displinas.get(i).getDescricao().equals(pergunta.getDisciplina().getDescricao())) {
                 selecaoDisciplina.getSelectionModel().select(i);
             }
         }
-        
+
         sliderTempoPergunta.setValue(pergunta.getTempo());
-        
+
         telaLPC = tela;
     }
-    
+
+    @FXML
+    public void inserirDisciplina(ActionEvent event) {
+
+        Disciplina disciplina = new Disciplina();
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Cadastro de disciplina");
+        dialog.setHeaderText("Cadastrar disciplina");
+        dialog.setContentText("Informe o nome da disciplina:");
+
+        Optional<String> resultado = dialog.showAndWait();
+
+        //checa se apertou o botão ok (retorna um true) ou se apertou cancel(retorna false) 
+        if (resultado.isPresent()) {
+
+            /*checa se o textImput esta vindo vazio. Aqui diz que não 
+            é possível salvar vazio*/
+            if (resultado.get().equals("")) {
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Disciplina");
+                alert.setHeaderText("Cadastro de disciplina");
+                alert.setContentText("Não é possivel cadastrar uma disciplina sem nome!");
+                alert.show();
+
+            } else {
+                disciplina.setDescricao(resultado.get());
+                try {
+
+                    DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+
+                    disciplinaDAO.incluir(disciplina);
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Disciplina");
+                    alert.setHeaderText("Cadastro de disciplina");
+                    alert.setContentText("Disciplina cadastrada com sucesso!");
+                    alert.show();
+
+                    dialog.close();
+                    carregarDisciplinas();
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     @FXML
     public void editarPergunta(ActionEvent event) {
-        
+
         perguntaDAO = new PerguntaDAO();
-        
+
         Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
-        
+
         perguntaNova.setDescricao(campoPergunta.getText());
         perguntaNova.setDificuldade(selecaoDificuldadePergunta.getSelectionModel().getSelectedItem());
         perguntaNova.setDisciplina(disciplina);
         perguntaNova.setTempo(converterDoubleParaInteger(sliderTempoPergunta.getValue()));
-        
+
         perguntaNova.getAlternativas().get(0).setDescricao(campoAlternativaA.getText());
         perguntaNova.getAlternativas().get(1).setDescricao(campoAlternativaB.getText());
         perguntaNova.getAlternativas().get(2).setDescricao(campoAlternativaC.getText());
         perguntaNova.getAlternativas().get(3).setDescricao(campoAlternativaD.getText());
-        
+
         perguntaNova.getAlternativas().get(0).setCorreto(opcaoA.isSelected());
         perguntaNova.getAlternativas().get(1).setCorreto(opcaoB.isSelected());
         perguntaNova.getAlternativas().get(2).setCorreto(opcaoC.isSelected());
         perguntaNova.getAlternativas().get(3).setCorreto(opcaoD.isSelected());
-        
-        try {
-            
+
+        if (campoPergunta.getText().isEmpty() || (campoAlternativaA.getText().isEmpty()
+                || campoAlternativaB.getText().isEmpty() || campoAlternativaC.getText().isEmpty()
+                || campoAlternativaD.getText().isEmpty())
+                || selecaoDisciplina.getSelectionModel().isEmpty()
+        ) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Pergunta");
+            alert.setHeaderText("Cadastro de pergunta");
+            alert.setContentText("Não foi cadastrar a pergunta. Por favor, verifique se todos os campos estão preenchidos");
+            alert.show();
+        } else {
+
             perguntaDAO.atualizarComAlternativas(perguntaNova);
+
             Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
             mensagem.setTitle("Mensagem do sistema");
             mensagem.setContentText("Pergunta editada com sucesso!");
@@ -170,19 +239,15 @@ public class TelaEditarPerguntasController implements Initializable {
             Stage stage = new Stage();
             stage = (Stage) botaoEditar.getScene().getWindow();
             stage.close();
-                
-        } catch (Exception e) {
-            
-            System.out.println("Erro: " + e);
         }
     }
-    
-    public Integer converterDoubleParaInteger(Double valor){
-        
+
+    public Integer converterDoubleParaInteger(Double valor) {
+
         Integer tempo = valor.intValue();
         return tempo;
     }
-    
+
     public void carregarDificuldades() {
         dificuldades.add(Dificuldade.FACIL);
         dificuldades.add(Dificuldade.MEDIO);
@@ -194,18 +259,18 @@ public class TelaEditarPerguntasController implements Initializable {
     }
 
     public void carregarDisciplinas() {
-        
+
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         displinas = disciplinaDAO.listarDisciplinasAtivasOuDesativadas(true);
         obsDisciplinas = FXCollections.observableArrayList(displinas);
         selecaoDisciplina.getItems().addAll(obsDisciplinas);
     }
-    
+
     public Alternativa editarAlternativa(TextField alternativa, JFXRadioButton opcao) {
         Alternativa a = new Alternativa();
         a.setDescricao(alternativa.getText());
-       
-        if(opcao.isSelected()){
+
+        if (opcao.isSelected()) {
             a.setCorreto(true);
         }
         return a;

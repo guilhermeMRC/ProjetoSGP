@@ -61,7 +61,7 @@ public class TelaCadastraPerguntas implements Initializable {
 
     @FXML
     private JFXRadioButton opcaoA, opcaoB, opcaoC, opcaoD;
-    
+
     @FXML
     private JFXSlider sliderTempoPergunta;
 
@@ -73,24 +73,25 @@ public class TelaCadastraPerguntas implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        
         /*
         Esse campoTags.getSuggestions()..addAll("HELLO", "TROLL", "WFEWEF", "WEF")
         funciona para dar uma sugestão quando a pessoa for digitar a tag. 
         Se puderem colocar algumas tags dentro do método addAll sobre as disciplinas, vai ficar massa.
         Se puderem ver um jeito mais eficiente de informar as tags sem ter que ficar carregando um momento de
         mensagem na memoria do sistema vai ficar bem melhor.
-        */
+         */
         campoTags.getSuggestions().addAll("Baskara", "Tomas Edson", "Matemática Financeira", "Literatura");
         carregarDificuldades();
         carregarDisciplinas();
 
     }
-    
+
     @FXML
     public void inserirDisciplina(ActionEvent event) {
-        
+
         Disciplina disciplina = new Disciplina();
-        
+
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Cadastro de disciplina");
         dialog.setHeaderText("Cadastrar disciplina");
@@ -98,84 +99,104 @@ public class TelaCadastraPerguntas implements Initializable {
 
         Optional<String> resultado = dialog.showAndWait();
 
+        //checa se apertou o botão ok (retorna um true) ou se apertou cancel(retorna false) 
         if (resultado.isPresent()) {
-            try {
-                DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-                disciplina.setDescricao(resultado.get());
-                disciplinaDAO.incluir(disciplina);
-                dialog.close();
-                carregarDisciplinas();
-            } catch (Exception e) {
 
+            /*checa se o textImput esta vindo vazio. Aqui diz que não 
+            é possível salvar vazio*/
+            if (resultado.get().equals("")) {
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Disciplina");
+                alert.setHeaderText("Cadastro de disciplina");
+                alert.setContentText("Não é possivel cadastrar uma disciplina sem nome!");
+                alert.show();
+
+            } else {
+                disciplina.setDescricao(resultado.get());
+                try {
+
+                    DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+
+                    disciplinaDAO.incluir(disciplina);
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Disciplina");
+                    alert.setHeaderText("Cadastro de disciplina");
+                    alert.setContentText("Disciplina cadastrada com sucesso!");
+                    alert.show();
+
+                    dialog.close();
+                    carregarDisciplinas();
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     public void CadastrarPergunta() {
-      
+
         PerguntaDAO perguntaDAO = new PerguntaDAO();
-        
-        try {
-            
-            campoTags = new JFXChipView();
-            Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
-            List<String> listTags = new ArrayList();
-            Pergunta pergunta = new Pergunta();
-            
-            pergunta.setDescricao(campoPergunta.getText());
-            pergunta.setDificuldade(selecaoDificuldadePergunta.getSelectionModel().getSelectedItem());
-            
-            pergunta.setTempo(converterDoubleParaInteger(sliderTempoPergunta.getValue()));
-            
-            pergunta.setDisciplina(disciplina);
-            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaA,opcaoA));
-            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaB,opcaoB));
-            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaC,opcaoC));
-            pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD,opcaoD));
-            campoTags.getChips().forEach((tags) -> {
-                listTags.add(tags);
-                System.out.println(listTags.toString());
-            });
-            
-            
-            try {
-                perguntaDAO.incluirComAlternativas(pergunta);
-                Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
-                mensagem.setTitle("Cadastro de pergunta");
-                mensagem.setContentText("Pergunta cadastrada com sucesso!");
-                mensagem.showAndWait();
+        campoTags = new JFXChipView();
+        Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
+        List<String> listTags = new ArrayList();
+        Pergunta pergunta = new Pergunta();
 
-                limparCampos();
+        pergunta.setDescricao(campoPergunta.getText());
+        pergunta.setDificuldade(selecaoDificuldadePergunta.getSelectionModel().getSelectedItem());
 
-            } catch (Exception ex) {
-                Alert mensagemErro = new Alert(Alert.AlertType.WARNING);
-                mensagemErro.setTitle("Erro do sistema");
-                mensagemErro.setHeaderText("Erro ao cadastrar pergunta");
-                mensagemErro.setContentText("Não é possivel cadastrar uma pergunta!"
-                                          + "Verifique se todos os dados foram preenchidos corretamente!");
-                mensagemErro.showAndWait();
-            }
+        pergunta.setTempo(converterDoubleParaInteger(sliderTempoPergunta.getValue()));
 
-        } catch (Exception ex) {
-            Alert mensagemAviso = new Alert(Alert.AlertType.WARNING);
-            mensagemAviso.setTitle("Aviso do sistema");
-            mensagemAviso.setHeaderText("Erro ao cadastrar pergunta");
-            mensagemAviso.setContentText("Não é possivel cadastrar uma pergunta sem informar seus dados!");
-            mensagemAviso.showAndWait();
-            
+        pergunta.setDisciplina(disciplina);
+        pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaA, opcaoA));
+        pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaB, opcaoB));
+        pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaC, opcaoC));
+        pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD, opcaoD));
+
+        campoTags.getChips().forEach((tags) -> {
+            listTags.add(tags);
+            System.out.println(listTags.toString());
+        });
+
+        if (campoPergunta.getText().isEmpty() || (campoAlternativaA.getText().isEmpty()
+                || campoAlternativaB.getText().isEmpty() || campoAlternativaC.getText().isEmpty()
+                || campoAlternativaD.getText().isEmpty()) && (opcaoA.isSelected()
+                || opcaoB.isSelected() || opcaoC.isSelected() || opcaoD.isSelected())
+                || selecaoDificuldadePergunta.getSelectionModel().isEmpty() || selecaoDisciplina.getSelectionModel().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Pergunta");
+            alert.setHeaderText("Cadastro de pergunta");
+            alert.setContentText("Não foi cadastrar a pergunta. Por favor, verifique se todos os campos estão preenchidos");
+            alert.show();
+
+        } else {
+
+            perguntaDAO.incluirComAlternativas(pergunta);
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Cadastro de pergunta");
+            mensagem.setContentText("Pergunta cadastrada com sucesso!");
+            mensagem.showAndWait();
+
+            limparCampos();
+
         }
     }
 
+   
     public Alternativa cadastrarAlternativa(TextField alternativa, JFXRadioButton opcao) {
         //List<Alternativa> alternativas = new ArrayList();
         Alternativa a = new Alternativa();
-        
+
         a.setDescricao(alternativa.getText());
-    
-        if(opcao.isSelected()){
+
+        if (opcao.isSelected()) {
             a.setCorreto(true);
         }
-        
+
         return a;
     }
 
@@ -203,20 +224,19 @@ public class TelaCadastraPerguntas implements Initializable {
     }
 
     public void carregarDisciplinas() {
-        
+
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         selecaoDisciplina.getItems().clear();
         obsDisciplinas = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasAtivasOuDesativadas(true));
         selecaoDisciplina.getItems().addAll(obsDisciplinas);
     }
-    
+
     /*Método para converter o valor do slider (que vem como double) 
     em Integer porque foi mapeado no banco como Integer*/
-    public Integer converterDoubleParaInteger(Double valor){
-        
+    public Integer converterDoubleParaInteger(Double valor) {
+
         Integer tempo = valor.intValue();
         return tempo;
     }
-    
-    
+
 }
