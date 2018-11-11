@@ -85,11 +85,8 @@ public class TelaListagemPerguntasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        //ActionEvent event = new ActionEvent();
         carregarOpcaoListar();
         voltarEmListarTodos();
-        //comboListagem.getSelectionModel().select(0);
-        //escolherOpcao(event);
         
         campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
             

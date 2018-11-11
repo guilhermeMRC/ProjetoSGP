@@ -16,8 +16,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import modelo.Dificuldade;
 import modelo.Pergunta;
@@ -41,7 +43,10 @@ public class TelaCadastrarSalaController implements Initializable {
     private TableColumn<Pergunta, Integer> colunaTempo;
     @FXML
     private TableColumn<Pergunta, JFXCheckBox> colunaSala;
-
+    @FXML
+    private Label labelNumero;
+    @FXML
+    private TextField campoPesquisar;
     @FXML
     private JFXButton botaoCadastrar;
     @FXML
@@ -51,10 +56,19 @@ public class TelaCadastrarSalaController implements Initializable {
     private PerguntaDAO perguntaDAO;
     private SalaDAO salaDAO;
     private TelaListagemSalaController telaListagemSalaController;
+    private int cont = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gerarTabela();
+        contarPerguntasSelecionadas();
+        
+        //Ta dando uns problemas tem que ajustar isso
+        /*campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
+            
+            trazerPesquisa(campoPesquisar.getText());
+            
+        });*/
     }
 
     public void receberParametros(String nomeSala) {
@@ -88,6 +102,7 @@ public class TelaCadastrarSalaController implements Initializable {
             obsPerguntas.add(p);
         }*/
         
+        //faz com que só traga as perguntas habilitadas
         obsPerguntas.addAll(perguntaDAO.listarPerguntasAtivasOuDesativadas(true));
 
         return obsPerguntas;
@@ -95,6 +110,7 @@ public class TelaCadastrarSalaController implements Initializable {
 
     @FXML
     void cadastrarSala(ActionEvent event) {
+        
         List<Pergunta> perguntas = new ArrayList();
 
         for (Pergunta p : obsPerguntas) {
@@ -102,27 +118,113 @@ public class TelaCadastrarSalaController implements Initializable {
                 perguntas.add(p);
             }
         }
-
-        try {
-            Sala novaSala = new Sala();
-            novaSala.setDescricao(campoNomeSala.getText());
-            novaSala.setPerguntas(perguntas);
-
-            salaDAO = new SalaDAO();
-            salaDAO.incluir(novaSala);
-
-            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
-            mensagem.setTitle("Mensagem do sistema");
-            mensagem.setHeaderText("Cadastro de sala");
-            mensagem.setContentText("Sala cadastrada com sucesso!");
-            mensagem.show();
-
-        } catch (Exception ex) {
+        
+        /*Valida se o usuário não esta tentando cadastrar uma 
+        sala sem nome ou sem alguma pergunta marcada
+        como ainda está em teste deixar assim por enquanto 
+        porque depois vamos ter que verificar o numero de questões mínimas*/
+        if(campoNomeSala.getText().isEmpty() || perguntas.isEmpty()){
+            
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Aviso do sistema");
-            alert.setHeaderText("Erro ao tentar cadastrar sala");
-            alert.setContentText(ex.getLocalizedMessage());
+            alert.setHeaderText("Cadastro de Sala!");
+            alert.setContentText("Não é possivel cadastrar sala sem nome ou sem pergunta!");
             alert.showAndWait();
+            
+        }else {
+            
+            try {
+                Sala novaSala = new Sala();
+                novaSala.setDescricao(campoNomeSala.getText());
+                novaSala.setPerguntas(perguntas);
+
+                salaDAO = new SalaDAO();
+                salaDAO.incluir(novaSala);
+
+                Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+                mensagem.setTitle("Mensagem do sistema");
+                mensagem.setHeaderText("Cadastro de sala");
+                mensagem.setContentText("Sala cadastrada com sucesso!");
+                mensagem.showAndWait();
+                limparCampos();
+                
+
+            } catch (Exception ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Aviso do sistema");
+                alert.setHeaderText("Erro ao tentar cadastrar sala");
+                alert.setContentText(ex.getLocalizedMessage());
+                alert.showAndWait();
+            }
+            
         }
+ 
+    }
+    
+    //usado para fazer o lance do contador 
+    public void contarPerguntasSelecionadas() {
+
+        for (int i = 0; i < obsPerguntas.size(); i++) {
+            obsPerguntas.get(i).getCheckbox().setOnAction(this::handleButtonAction);
+        }
+
+    }
+    
+    public void handleButtonAction(ActionEvent event){
+        
+        for (Pergunta p : tabelaSalas.getItems()) {
+
+            if (p.getCheckbox() == event.getTarget()) {
+                
+                if(p.getCheckbox().isSelected() == true){
+                    cont = cont + 1;
+                    labelNumero.setText("N = " + cont);
+                    
+                }else {
+                    
+                    cont = cont - 1;
+                    labelNumero.setText("N = " + cont);
+                }
+                
+                break;
+            }
+
+        }
+        
+    }
+    
+    //método para limpar os campos após cadastrar
+    public void limparCampos(){
+        
+        campoNomeSala.clear();
+        cont = 0;
+        labelNumero.setText("N = " + cont);
+        
+        for(Pergunta p : tabelaSalas.getItems()){
+            
+            if(p.getCheckbox().isSelected()){
+                
+                p.getCheckbox().setSelected(false);
+            }
+        }
+    }
+    
+    public void trazerPesquisa(String filtro){
+        
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
+        
+        if(filtro.equals("")){
+            
+            carregarPerguntas();
+            
+        }else{
+            
+            /*Tenho que modificar a pesquisa no DAO para que traga 
+            apenas a pesquisa das perguntas habilitadas*/
+            
+            obsPerguntas  = FXCollections.observableArrayList(perguntaDAO.listarPerguntasPorDescricaoOuDificuldadeOuDisciplina(filtro));
+            tabelaSalas.getItems().setAll(obsPerguntas);
+        }
+        
     }
 }

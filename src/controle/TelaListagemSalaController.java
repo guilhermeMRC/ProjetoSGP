@@ -73,10 +73,8 @@ public class TelaListagemSalaController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
-        ActionEvent event = new ActionEvent();
         carregarOpcaoListar();
-        comboListagem.getSelectionModel().select(0);
-        escolherOpcao(event);
+        voltarEmListarTodos();
         
         campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
             
@@ -91,7 +89,7 @@ public class TelaListagemSalaController implements Initializable {
     é só dar um merge pelo método atualizar no PerguntaDAO*/
     private void handleButtonAction(ActionEvent event) {
 
-        //seto o PerguntaDAO que faz a conexão com o banco de dados
+        //seto o SalaDAO que faz a conexão com o banco de dados
         SalaDAO salaDAO = new SalaDAO();
 
         //esse for varre a tabela atrás do togglebutton que eu cliquei
@@ -99,13 +97,13 @@ public class TelaListagemSalaController implements Initializable {
 
             //aqui faz a checagem de qual tooglebutton eu apertei
             if (s.getTogglebutton() == event.getTarget()) {
-                //aqui joga as informações para uma pergunta instaciada como atributo la em cima na classe
+                //aqui joga as informações para uma sala instaciada como atributo la em cima na classe
                 sala = s;
                 break;
             }
 
         }
-
+        
         //aqui pega o valor do atributo habilitar 
         boolean status = sala.isHabilitar();
         
@@ -134,7 +132,7 @@ public class TelaListagemSalaController implements Initializable {
     }
     
     @FXML
-    void inserirSala(ActionEvent event) {
+    public void inserirSala(ActionEvent event) {
 
         FXMLLoader loader = new FXMLLoader();
 
@@ -146,7 +144,9 @@ public class TelaListagemSalaController implements Initializable {
         Optional<String> resultado = inputDialog.showAndWait();
 
         if (resultado.isPresent() && !resultado.get().isEmpty()) {
+            
             try {
+                
                 AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaCadastroSalas.fxml").openStream());
                 TelaCadastrarSalaController controller = (TelaCadastrarSalaController) loader.getController();
 
@@ -156,20 +156,23 @@ public class TelaListagemSalaController implements Initializable {
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
-                inicializarTabela();
+                voltarEmListarTodos();
+                
             } catch (IOException ex) {
                 Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
-                inicializarTabela();
+                voltarEmListarTodos();
             }
         } else {
             inputDialog.close();
         }
-        inicializarTabela();
+        voltarEmListarTodos();
     }
 
     @FXML
     public void alterarSala(ActionEvent event) {
+        
         try {
+            
             salaDAO = new SalaDAO();
             sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
             obsPerguntas = FXCollections.observableArrayList();
@@ -181,15 +184,17 @@ public class TelaListagemSalaController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
 
             try {
+                
                 AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaEditarPerguntasSala.fxml").openStream());
                 TelaEditarPerguntasSalaController controller = (TelaEditarPerguntasSalaController) loader.getController();
-
+                
                 controller.setPerguntas(obsPerguntas);
                 controller.setNomeSala(sala.getDescricao());
                 controller.setSala(sala);
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+                stage.setTitle("Editar Sala");
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             } catch (IOException ex) {
@@ -205,9 +210,11 @@ public class TelaListagemSalaController implements Initializable {
     }
 
     @FXML
-    void visualizarSala(ActionEvent event) {
+    public void visualizarSala(ActionEvent event) {
+        
         try{
-            salaDAO = new SalaDAO();
+            
+            SalaDAO salaDAO = new SalaDAO();
             sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
             obsPerguntas = FXCollections.observableArrayList();
 
@@ -215,6 +222,7 @@ public class TelaListagemSalaController implements Initializable {
                 obsPerguntas.add(p);
             }
 
+            
             FXMLLoader loader = new FXMLLoader();
 
             try {
@@ -226,17 +234,23 @@ public class TelaListagemSalaController implements Initializable {
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+                stage.setTitle("Visulaizar Sala");
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
+                
             } catch (IOException ex) {
                 Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         } catch(NullPointerException ex){
+            
+            ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Aviso do sistema");
             alert.setHeaderText("Erro ao tentar visualizar sala");
             alert.setContentText("Nenhuma sala foi selecionada");
             alert.show();
+            
         }
 
     }
@@ -307,7 +321,6 @@ public class TelaListagemSalaController implements Initializable {
         obsSalas = FXCollections.observableArrayList(salaDAO.listarSalasAtivasOuDesativadas(status));
         habilitarDesabilitarSala();
         tabelaSalas.setItems(obsSalas);
-        //tabelaDisciplinas.refresh();
         
     }
     
@@ -317,13 +330,21 @@ public class TelaListagemSalaController implements Initializable {
         
         if(filtro.equals("")){
             
-            inicializarTabela();
+            voltarEmListarTodos();
             
         }else{
             
             obsSalas  = FXCollections.observableArrayList(salaDAO.listarSalasPorDescricao(filtro));
             tabelaSalas.getItems().setAll(obsSalas);
         }
+        
+    }
+    
+    public void voltarEmListarTodos(){
+        
+        ActionEvent event = new ActionEvent();
+        comboListagem.getSelectionModel().select(0);
+        escolherOpcao(event);
         
     }
     

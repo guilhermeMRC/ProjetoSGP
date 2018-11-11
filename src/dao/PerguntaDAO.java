@@ -86,6 +86,31 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
         }
     }
     
+    public List<Pergunta> listarPerguntasHabilitadasPorDescricaoOuDificuldadeOuDisciplina(String filtro){
+        
+        List<Pergunta> lista = null;
+        String query = "from Pergunta p where p.habilitar = true " 
+                        + "having p.descricao like '%"+ filtro +"%' or "
+                        + "p.dificuldade like '%"+filtro+"%' or "
+                        + "p.disciplina.descricao like '%"+filtro+"%'"
+                        + "Order By p.descricao";
+        conectar();
+        
+        try {
+            
+            lista = getManager().createQuery(query, Pergunta.class).getResultList();
+            encerrar();
+            return lista;
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            encerrar();
+            return lista;
+            
+        }
+    }
+    
     public void incluirComAlternativas(Pergunta p) {
         try {
            

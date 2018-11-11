@@ -69,19 +69,15 @@ public class TelaCadastroDisciplinasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //estancio o evento para chamar no comboListagem por padrão
-        ActionEvent event = new ActionEvent();
+        
+       
 
         //carrega todas as opções no combobox (comboListagem)
         carregarOpcaoListar();
-
-        /*Pega a primeira opção para que venha por padrão 
-        a primeira opção que é a de listar todas*/
-        comboListagem.getSelectionModel().select(0);
-
-        //chama o evento do comboBox para checar qual é a escolha
-        escolherOpcao(event);
-
+        
+        //chamo esse método para que por padrão venha no listar todos
+        voltarEmListarTodos();
+        
         /*inicia o campoPesquisa com uma espécie de envento 
         que propicia usar o método trazerPesquisa. Esse método 
         pede uma String que no caso é o texto o próprio campo*/
@@ -180,7 +176,9 @@ public class TelaCadastroDisciplinasController implements Initializable {
                 alert.show();
 
             } else {
+                
                 disciplina.setDescricao(resultado.get());
+                
                 try {
 
                     DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
@@ -194,7 +192,8 @@ public class TelaCadastroDisciplinasController implements Initializable {
                     alert.show();
 
                     dialog.close();
-                    carregarTabelaComTodos();
+                    
+                    voltarEmListarTodos();
 
                 } catch (Exception e) {
 
@@ -242,7 +241,8 @@ public class TelaCadastroDisciplinasController implements Initializable {
                         alert.setContentText("Disciplina alterada com sucesso!");
                         alert.show();
 
-                        carregarTabelaComTodos();
+                        //carregarTabelaComTodos();
+                        voltarEmListarTodos();
 
                     } catch (Exception ex) {
 
@@ -343,7 +343,9 @@ public class TelaCadastroDisciplinasController implements Initializable {
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 
         if (filtro.equals("")) {
-            carregarTabelaComTodos();
+            
+            voltarEmListarTodos();
+            //carregarTabelaComTodos();
         } else {
 
             observableListDisciplina = FXCollections.observableArrayList(disciplinaDAO.listarDisciplinasPorDescricao(filtro));
@@ -351,12 +353,19 @@ public class TelaCadastroDisciplinasController implements Initializable {
         }
 
     }
-    /*public ObservableList<Disciplina> atualizaTabela() {
+    
+    public void voltarEmListarTodos(){
         
-        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-        ob
-        return FXCollections.observableArrayList(disciplinaDAO.listar());
+        //estancio o evento para chamar no comboListagem por padrão
+        ActionEvent event = new ActionEvent();
         
-    }*/
+        /*Pega a primeira opção para que venha por padrão 
+        a primeira opção que é a de listar todas*/
+        comboListagem.getSelectionModel().select(0);
+        
+        //chama o evento do comboBox para checar qual é a escolha
+        escolherOpcao(event);
+        
+    }
 
 }

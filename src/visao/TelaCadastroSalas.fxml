@@ -27,8 +27,10 @@
       <TextField fx:id="campoNomeSala" layoutX="35.0" layoutY="39.0" prefHeight="25.0" prefWidth="208.0" />
       <Label layoutX="35.0" layoutY="14.0" text="Nome da sala:">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <Label fx:id="labelNumero" layoutX="313.0" layoutY="44.0" prefHeight="21.0" prefWidth="59.0" text="N = 0" />
+      <TextField fx:id="campoPesquisar" layoutX="441.0" layoutY="39.0" prefHeight="31.0" prefWidth="238.0" promptText="Pesquisar..." />
    </children>
 </AnchorPane>
