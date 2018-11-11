@@ -29,7 +29,7 @@
       </Pane>
       <AnchorPane fx:id="rootPane" layoutX="-2.0" layoutY="59.0" onDragDetected="#fecharMenuLateral" prefHeight="496.0" prefWidth="963.0">
          <children>
-            <ImageView fitHeight="466.0" fitWidth="708.0" layoutX="137.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="466.0" fitWidth="708.0" layoutX="128.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagens/Logo%201.png" />
                </image>

@@ -157,24 +157,32 @@ public class TelaCadastraPerguntas implements Initializable {
         pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD, opcaoD));
 
         campoTags.getChips().forEach((tags) -> {
-            listTags.add(tags);
-            System.out.println(listTags.toString());
+                        //listTags.add(tags);
+            //System.out.println(listTags.toString());
         });
-
-        if (campoPergunta.getText().isEmpty() || (campoAlternativaA.getText().isEmpty()
-                || campoAlternativaB.getText().isEmpty() || campoAlternativaC.getText().isEmpty()
-                || campoAlternativaD.getText().isEmpty()) && (opcaoA.isSelected()
-                || opcaoB.isSelected() || opcaoC.isSelected() || opcaoD.isSelected())
-                || selecaoDificuldadePergunta.getSelectionModel().isEmpty() || selecaoDisciplina.getSelectionModel().isEmpty()) {
+        
+        /*Esse if serve para verificar os campos obrigatórios*/
+        if (campoPergunta.getText().isEmpty() 
+            || selecaoDificuldadePergunta.getSelectionModel().isEmpty() 
+            || selecaoDisciplina.getSelectionModel().isEmpty() 
+            || (opcaoA.isSelected() == false && 
+                opcaoB.isSelected() == false && 
+                opcaoC.isSelected() == false && 
+                opcaoD.isSelected() == false) 
+            || (campoAlternativaA.getText().isEmpty() || 
+                campoAlternativaB.getText().isEmpty() || 
+                campoAlternativaC.getText().isEmpty() || 
+                campoAlternativaD.getText().isEmpty())) {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Pergunta");
             alert.setHeaderText("Cadastro de pergunta");
-            alert.setContentText("Não foi cadastrar a pergunta. Por favor, verifique se todos os campos estão preenchidos");
+            alert.setContentText("Não foi possível cadastrar a pergunta. Por favor, verifique se todos os campos estão preenchidos");
             alert.show();
 
         } else {
 
+            System.out.println(pergunta.getTags().toString());
             perguntaDAO.incluirComAlternativas(pergunta);
             Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
             mensagem.setTitle("Cadastro de pergunta");
@@ -186,7 +194,6 @@ public class TelaCadastraPerguntas implements Initializable {
         }
     }
 
-   
     public Alternativa cadastrarAlternativa(TextField alternativa, JFXRadioButton opcao) {
         //List<Alternativa> alternativas = new ArrayList();
         Alternativa a = new Alternativa();

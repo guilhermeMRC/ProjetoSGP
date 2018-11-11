@@ -14,7 +14,6 @@
       <property name="show_sql" value="true"/>
       <property name="format_sql" value="true"/>
       <property name="use_sql_comments" value="true"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>

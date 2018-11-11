@@ -84,12 +84,13 @@ public class TelaListagemPerguntasController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        ActionEvent event = new ActionEvent();
+        
+        //ActionEvent event = new ActionEvent();
         carregarOpcaoListar();
-        comboListagem.getSelectionModel().select(0);
-        escolherOpcao(event);
-        //habilitarDesabilitarPergunta();
+        voltarEmListarTodos();
+        //comboListagem.getSelectionModel().select(0);
+        //escolherOpcao(event);
+        
         campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
             
             trazerPesquisa(campoPesquisar.getText());
@@ -102,19 +103,18 @@ public class TelaListagemPerguntasController implements Initializable {
     public void inserirPergunta(ActionEvent event) {
 
         carregarTela("/visao/TelaCadastroPerguntas.fxml","Cadastro de Pergunta");
-        carregarTabela();
+        voltarEmListarTodos();
+        //carregarTabela();
+        
     }
 
     @FXML
     public void alterarPergunta(ActionEvent event) {
 
         passarParametroTelaDisciplinaEdicao();
-        carregarTabela();
-    }
-
-    @FXML
-    public void excluirPergunta(ActionEvent event) {
-
+        voltarEmListarTodos();
+        //carregarTabela();
+        
     }
 
     /*Esse método é responsavel por iniciar o evento dos 
@@ -201,7 +201,6 @@ public class TelaListagemPerguntasController implements Initializable {
         obsPergunta = FXCollections.observableArrayList(perguntaDAO.listarPerguntasAtivasOuDesativadas(status));
         habilitarDesabilitarPergunta();
         tabelaPerguntas.setItems(obsPergunta);
-        //tabelaDisciplinas.refresh();
         
     }
     
@@ -241,28 +240,46 @@ public class TelaListagemPerguntasController implements Initializable {
 
         Optional<String> resultado = inputDialog.showAndWait();
         if (resultado.isPresent()) {
-            try {
-
-                Sala novaSala = new Sala();
-                novaSala.setDescricao(resultado.get());
-                novaSala.setPerguntas(perguntas);
-
-                SalaDAO salaDAO = new SalaDAO();
-                salaDAO.incluir(novaSala);
-
-                Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
-                mensagem.setTitle("Mensagem do sistema");
-                mensagem.setHeaderText("Cadastrar sala");
-                mensagem.setContentText("Sala cadastrada com sucesso!");
+            
+            /*Aqui checa se a sala tem nome e checa também se o usuário 
+            marcou alguma pergunta... ou seja não é possivel cadastrar 
+            sala sem pergunta e nem sem nome nessa tela*/
+            if(resultado.get().equals("") || perguntas.isEmpty()){
+                
+                Alert mensagem = new Alert(Alert.AlertType.ERROR);
+                mensagem.setTitle("Sala");
+                mensagem.setHeaderText("Cadastro de Sala");
+                mensagem.setContentText("Não é possivel cadastrar uma sala sem nome ou sem pergunta!");
                 mensagem.show();
+                
+            }else {
+                
+                try {
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                    Sala novaSala = new Sala();
+                    novaSala.setDescricao(resultado.get());
+                    novaSala.setPerguntas(perguntas);
+
+                    SalaDAO salaDAO = new SalaDAO();
+                    salaDAO.incluir(novaSala);
+
+                    Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+                    mensagem.setTitle("Mensagem do sistema");
+                    mensagem.setHeaderText("Cadastrar sala");
+                    mensagem.setContentText("Sala cadastrada com sucesso!");
+                    mensagem.showAndWait();
+               
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
+            
         } else {
+            
             inputDialog.close();
         }
-
+        
+        voltarEmListarTodos();
     }
 
     /*Método para passar uma pergunta de uma tela para outra*/
@@ -277,11 +294,13 @@ public class TelaListagemPerguntasController implements Initializable {
             pergunta.setDificuldade(tabelaPerguntas.getSelectionModel().getSelectedItem().getDificuldade());
             pergunta.setTempo(tabelaPerguntas.getSelectionModel().getSelectedItem().getTempo());
             pergunta.setTags(tabelaPerguntas.getSelectionModel().getSelectedItem().getTags());
+            pergunta.setHabilitar(tabelaPerguntas.getSelectionModel().getSelectedItem().isHabilitar());
 
             Stage stage2 = new Stage();
             FXMLLoader loader = new FXMLLoader();
 
             try {
+                
                 StackPane root = (StackPane) loader.load(getClass().getResource("/visao/TelaEditarPerguntas.fxml").openStream());
                 TelaEditarPerguntasController controller = (TelaEditarPerguntasController) loader.getController(); //carregando instancia da outra tela
 
@@ -293,12 +312,12 @@ public class TelaListagemPerguntasController implements Initializable {
                 stage2.setTitle("Editar Pergunta");
                 stage2.alwaysOnTopProperty();
                 stage2.initModality(Modality.APPLICATION_MODAL);
-                stage2.show();
-
+                stage2.showAndWait();
+                
             } catch (IOException ex) {
 
             }
-
+            
         } catch (NullPointerException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Aviso do sistema");
@@ -306,7 +325,7 @@ public class TelaListagemPerguntasController implements Initializable {
             alert.setContentText("Nenhuma pergunta foi selecionada");
             alert.show();
         }
-
+        
     }
     
     /*Método que carrega as opções para o checkBox*/
@@ -363,13 +382,21 @@ public class TelaListagemPerguntasController implements Initializable {
         
         if(filtro.equals("")){
             
-            carregarTabela();
+            voltarEmListarTodos();
             
         }else{
             
             obsPergunta  = FXCollections.observableArrayList(perguntaDAO.listarPerguntasPorDescricaoOuDificuldadeOuDisciplina(filtro));
             tabelaPerguntas.getItems().setAll(obsPergunta);
         }
+        
+    }
+    
+    public void voltarEmListarTodos(){
+        
+        ActionEvent event = new ActionEvent();
+        comboListagem.getSelectionModel().select(0);
+        escolherOpcao(event);
         
     }
 }

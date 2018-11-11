@@ -108,7 +108,8 @@ public class TelaEditarPerguntasController implements Initializable {
         //estou setando o id por aqui 
         perguntaNova.setId(pergunta.getId());
         perguntaNova.setAlternativas(pergunta.getAlternativas());
-        //System.out.println("aaa: " + disciplina);
+        perguntaNova.setHabilitar(pergunta.isHabilitar());
+        
         campoPergunta.setText(pergunta.getDescricao());
 
         campoAlternativaA.setText(pergunta.getAlternativas().get(0).getDescricao());
@@ -228,6 +229,7 @@ public class TelaEditarPerguntasController implements Initializable {
             alert.setHeaderText("Cadastro de pergunta");
             alert.setContentText("Não foi cadastrar a pergunta. Por favor, verifique se todos os campos estão preenchidos");
             alert.show();
+            
         } else {
 
             perguntaDAO.atualizarComAlternativas(perguntaNova);
@@ -239,6 +241,7 @@ public class TelaEditarPerguntasController implements Initializable {
             Stage stage = new Stage();
             stage = (Stage) botaoEditar.getScene().getWindow();
             stage.close();
+            
         }
     }
 

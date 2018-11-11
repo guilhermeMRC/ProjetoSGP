@@ -51,10 +51,10 @@
             <Insets />
          </VBox.margin>
          <graphic>
-            <FontAwesomeIconView fontSmoothingType="LCD" glyphName="OBJECT_GROUP" />
+            <FontAwesomeIconView fontSmoothingType="LCD" glyphName="OBJECT_GROUP" size="16" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="botaosobre" alignment="BASELINE_LEFT" onAction="#telas" prefHeight="31.0" prefWidth="205.0" text="Sobre">
+      <JFXButton fx:id="botaosobre" alignment="BASELINE_LEFT" graphicTextGap="10.0" onAction="#telas" prefHeight="31.0" prefWidth="205.0" text="Sobre">
          <graphic>
             <FontAwesomeIconView glyphName="INFO_CIRCLE" size="16" />
          </graphic>

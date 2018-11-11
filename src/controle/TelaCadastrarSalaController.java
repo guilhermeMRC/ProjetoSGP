@@ -63,7 +63,8 @@ public class TelaCadastrarSalaController implements Initializable {
 
     public void gerarTabela() {
         colunaPergunta.setCellValueFactory(new PropertyValueFactory("descricao"));
-
+        colunaPergunta.setStyle("-fx-alignment: CENTER;");
+        
         colunaDisciplina.setCellValueFactory(new PropertyValueFactory("disciplina"));
         colunaDisciplina.setStyle("-fx-alignment: CENTER;");
 
@@ -83,9 +84,11 @@ public class TelaCadastrarSalaController implements Initializable {
     public ObservableList<Pergunta> carregarPerguntas() {
         perguntaDAO = new PerguntaDAO();
 
-        for (Pergunta p : perguntaDAO.listar()) {
+        /*for (Pergunta p : perguntaDAO.listarPerguntasAtivasOuDesativadas(true)) {
             obsPerguntas.add(p);
-        }
+        }*/
+        
+        obsPerguntas.addAll(perguntaDAO.listarPerguntasAtivasOuDesativadas(true));
 
         return obsPerguntas;
     }

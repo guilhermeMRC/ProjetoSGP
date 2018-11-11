@@ -8,26 +8,26 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="ParenteContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastroDisciplinasController">
+<AnchorPane fx:id="ParenteContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastroDisciplinasController">
    <children>
-      <TableView fx:id="tabelaDisciplinas" layoutX="34.0" layoutY="100.0" prefHeight="373.0" prefWidth="767.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="100.0">
+      <TableView fx:id="tabelaDisciplinas" layoutX="12.0" layoutY="94.0" prefHeight="388.0" prefWidth="933.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="94.0">
          <columns>
             <TableColumn fx:id="colunaId" prefWidth="75.0" text="#" />
-            <TableColumn fx:id="colunaDisciplina" minWidth="0.0" prefWidth="554.0" text="DISCIPLINA" />
-            <TableColumn fx:id="colunaHabilitarDesabilitar" prefWidth="137.0" text="Habilitar" />
+            <TableColumn fx:id="colunaDisciplina" minWidth="0.0" prefWidth="737.0" text="DISCIPLINA" />
+            <TableColumn fx:id="colunaHabilitarDesabilitar" prefWidth="120.0" text="HABILITAR" />
          </columns>
       </TableView>
-      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="663.0" layoutY="58.0" onAction="#inserirDisciplina" prefHeight="24.0" prefWidth="60.0" style="-fx-background-color: #5CB85C;" text="Button" AnchorPane.bottomAnchor="471.0" AnchorPane.leftAnchor="663.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="58.0">
+      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="772.0" layoutY="39.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="75.0" style="-fx-background-color: #5CB85C;" text="Button">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="741.0" layoutY="58.0" onAction="#alterarDisciplina" prefHeight="24.0" prefWidth="60.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" AnchorPane.bottomAnchor="471.0" AnchorPane.leftAnchor="741.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="58.0">
+      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="869.0" layoutY="39.0" onAction="#alterarDisciplina" prefHeight="31.0" prefWidth="75.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
          </graphic>
       </JFXButton>
-      <TextField fx:id="campoPesquisar" layoutX="34.0" layoutY="57.0" prefHeight="31.0" prefWidth="252.0" promptText="Pesquisar..." />
-      <JFXComboBox fx:id="comboListagem" layoutX="387.0" layoutY="57.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="206.0" promptText="Selecione uma opção..." />
+      <TextField fx:id="campoPesquisar" layoutX="20.0" layoutY="39.0" prefHeight="31.0" prefWidth="281.0" promptText="Pesquisar..." AnchorPane.topAnchor="42.0" />
+      <JFXComboBox fx:id="comboListagem" layoutX="393.0" layoutY="39.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="206.0" promptText="Selecione uma opção..." />
    </children>
 </AnchorPane>
