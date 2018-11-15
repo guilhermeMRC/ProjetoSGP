@@ -19,7 +19,7 @@
             <TableColumn fx:id="colunaSala" prefWidth="71.0" text="SALA" />
         </columns>
       </TableView>
-      <JFXButton fx:id="botaoCadastrar" layoutX="248.0" layoutY="513.0" onAction="#cadastrarSala" prefHeight="25.0" prefWidth="217.0" style="-fx-background-color: #95C260;" text="Cadastrar" textFill="WHITE">
+      <JFXButton fx:id="botaoCadastrar" layoutX="248.0" layoutY="513.0" onAction="#cadastrarSala" prefHeight="25.0" prefWidth="217.0" style="-fx-background-color: #6bb133;" text="Cadastrar" textFill="WHITE">
          <font>
             <Font name="Century Gothic Bold" size="12.0" />
          </font>

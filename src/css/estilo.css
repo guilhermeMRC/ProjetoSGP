@@ -21,3 +21,7 @@
 .jfx-button-excluir{
     -fx-background-color:#e57373; 
 }
+
+.jfx-hamburger StackPane {
+	-fx-background-color: #fff;
+}
