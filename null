@@ -1,0 +1,221 @@
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: localhost    Database: bancosgp
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.1.29-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `bancosgp`
+--
+
+/*!40000 DROP DATABASE IF EXISTS `bancosgp`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bancosgp` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `bancosgp`;
+
+--
+-- Table structure for table `alternativa`
+--
+
+DROP TABLE IF EXISTS `alternativa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `alternativa` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `CORRETO` tinyint(1) DEFAULT '0',
+  `DESCRICAO` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alternativa`
+--
+
+LOCK TABLES `alternativa` WRITE;
+/*!40000 ALTER TABLE `alternativa` DISABLE KEYS */;
+INSERT INTO `alternativa` VALUES (1,1,'aaaa'),(2,0,'bbbb'),(3,0,'cccc'),(4,0,'dddd'),(5,0,'a'),(6,0,'b'),(7,1,'c'),(8,0,'d'),(9,0,'aa'),(10,0,'bb'),(11,1,'cc'),(12,0,'dd'),(13,0,'aaaa'),(14,0,'bbbb'),(15,0,'cccc'),(16,1,'dddd'),(17,0,'q'),(18,0,'f'),(19,1,'g'),(20,0,'h'),(21,0,'a'),(22,0,'b'),(23,1,'c'),(24,0,'d'),(25,0,'a'),(26,0,'b'),(27,0,'c'),(28,0,'d'),(29,0,'a1'),(30,0,'a2'),(31,0,'a3'),(32,0,'a4'),(33,0,'a21'),(34,0,'a22'),(35,1,'a23'),(36,0,'a24'),(37,0,'aaa'),(38,0,'bbb'),(39,1,'ccc'),(40,0,'ddd'),(41,0,'a'),(42,0,'b'),(43,0,'c'),(44,0,'d'),(45,0,'a'),(46,0,'b'),(47,0,'c'),(48,0,'d'),(49,0,'a'),(50,0,'b'),(51,0,'c'),(52,0,'d'),(53,0,''),(54,1,''),(55,0,''),(56,0,''),(57,1,'aaa'),(58,0,'bbb'),(59,0,'cccc'),(60,0,'ddd'),(61,1,'a'),(62,0,''),(63,0,''),(64,0,''),(65,0,'a'),(66,1,'b'),(67,0,'c'),(68,0,'d'),(69,1,'a'),(70,0,'b'),(71,0,'c'),(72,0,'d'),(73,1,'a'),(74,0,'b'),(75,0,'c'),(76,0,'d'),(77,0,'a'),(78,1,'b'),(79,0,'c'),(80,0,'d'),(81,0,'e'),(82,0,'ef'),(83,0,'ed'),(84,1,'rt'),(85,0,'aa'),(86,0,'bb'),(87,1,'cc'),(88,0,'dd'),(89,0,'a'),(90,0,'b'),(91,0,'c'),(92,1,'d'),(93,0,'aa'),(94,0,'bb'),(95,1,'cc'),(96,0,'dd'),(97,1,'Legi√£o Urbana'),(98,0,'Detonaltas'),(99,0,'Titans '),(100,0,'Jota Quest');
+/*!40000 ALTER TABLE `alternativa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `disciplina`
+--
+
+DROP TABLE IF EXISTS `disciplina`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `disciplina` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` varchar(255) DEFAULT NULL,
+  `HABILITAR` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `disciplina`
+--
+
+LOCK TABLES `disciplina` WRITE;
+/*!40000 ALTER TABLE `disciplina` DISABLE KEYS */;
+INSERT INTO `disciplina` VALUES (1,'Matem√°tica',1),(2,'Portugues',1),(3,'F√≠sica',1),(4,'Geografia',1),(5,'Hist√≥ria',1),(6,'Conhecimentos Gerais',1),(7,'Qu√≠mica',1),(8,'Introducao a Inform√°tica',1),(9,'Artes',1);
+/*!40000 ALTER TABLE `disciplina` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pergunta`
+--
+
+DROP TABLE IF EXISTS `pergunta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pergunta` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` longtext,
+  `DIFICULDADE` varchar(255) DEFAULT NULL,
+  `HABILITAR` tinyint(1) DEFAULT '0',
+  `TAGS` longblob,
+  `TEMPO` int(11) DEFAULT NULL,
+  `DISCIPLINA_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_PERGUNTA_DISCIPLINA_ID` (`DISCIPLINA_ID`),
+  CONSTRAINT `FK_PERGUNTA_DISCIPLINA_ID` FOREIGN KEY (`DISCIPLINA_ID`) REFERENCES `disciplina` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pergunta`
+--
+
+LOCK TABLES `pergunta` WRITE;
+/*!40000 ALTER TABLE `pergunta` DISABLE KEYS */;
+INSERT INTO `pergunta` VALUES (1,'Quem descobriu o Brasil t? ','FACIL',0,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,5),(2,'funfa teste a nova funcao aaaa','DIFICIL',0,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,1),(3,'testando...','MEDIO',0,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,3),(4,'testando a atualizacao da tabela pos edicao funda','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,4),(5,'Edicao com atualizacao de tabela','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,6),(6,'teste asdasdssasd','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,5),(7,'aaaaaaaaa','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,6),(8,'teste	','DIFICIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',90,4),(9,'teste	565','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',60,1),(10,'teste se vai atualizar ','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,1),(11,'ajsdjashjah	','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,1),(12,'sdasdawew','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,2),(13,'plppjpjp','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,1),(14,'test	asdasda','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,1),(15,'testando essa merda aqui da pergunta 15','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',90,1),(16,'teste','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,1),(17,'aaaasdsadwe','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',120,5),(18,'asdasda','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',89,3),(19,'teste','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',30,1),(20,'sdasdasd','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',104,1),(21,'testando essa porra	','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',150,4),(22,'rrrrrr','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',92,1),(23,'qualquer pergunta ','MEDIO',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',60,2),(24,'pergunta pergunta?','DIFICIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',150,5),(25,'\"√© preciso amar as pessoas como se n√£o houvesse amanh√£\". O trecho anterior √© referente a qual m√∫sica?','FACIL',1,'¨\Ì\0sr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0x',60,6);
+/*!40000 ALTER TABLE `pergunta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pergunta_alternativa`
+--
+
+DROP TABLE IF EXISTS `pergunta_alternativa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pergunta_alternativa` (
+  `Pergunta_ID` bigint(20) NOT NULL,
+  `alternativas_ID` bigint(20) NOT NULL,
+  PRIMARY KEY (`Pergunta_ID`,`alternativas_ID`),
+  KEY `FK_PERGUNTA_ALTERNATIVA_alternativas_ID` (`alternativas_ID`),
+  CONSTRAINT `FK_PERGUNTA_ALTERNATIVA_Pergunta_ID` FOREIGN KEY (`Pergunta_ID`) REFERENCES `pergunta` (`ID`),
+  CONSTRAINT `FK_PERGUNTA_ALTERNATIVA_alternativas_ID` FOREIGN KEY (`alternativas_ID`) REFERENCES `alternativa` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pergunta_alternativa`
+--
+
+LOCK TABLES `pergunta_alternativa` WRITE;
+/*!40000 ALTER TABLE `pergunta_alternativa` DISABLE KEYS */;
+INSERT INTO `pergunta_alternativa` VALUES (1,1),(1,2),(1,3),(1,4),(2,5),(2,6),(2,7),(2,8),(3,9),(3,10),(3,11),(3,12),(4,13),(4,14),(4,15),(4,16),(5,17),(5,18),(5,19),(5,20),(6,21),(6,22),(6,23),(6,24),(7,25),(7,26),(7,27),(7,28),(8,29),(8,30),(8,31),(8,32),(9,33),(9,34),(9,35),(9,36),(10,37),(10,38),(10,39),(10,40),(11,41),(11,42),(11,43),(11,44),(12,45),(12,46),(12,47),(12,48),(13,49),(13,50),(13,51),(13,52),(14,53),(14,54),(14,55),(14,56),(15,57),(15,58),(15,59),(15,60),(16,61),(16,62),(16,63),(16,64),(17,65),(17,66),(17,67),(17,68),(18,69),(18,70),(18,71),(18,72),(19,73),(19,74),(19,75),(19,76),(20,77),(20,78),(20,79),(20,80),(21,81),(21,82),(21,83),(21,84),(22,85),(22,86),(22,87),(22,88),(23,89),(23,90),(23,91),(23,92),(24,93),(24,94),(24,95),(24,96),(25,97),(25,98),(25,99),(25,100);
+/*!40000 ALTER TABLE `pergunta_alternativa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sala`
+--
+
+DROP TABLE IF EXISTS `sala`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sala` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` varchar(255) DEFAULT NULL,
+  `HABILITAR` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sala`
+--
+
+LOCK TABLES `sala` WRITE;
+/*!40000 ALTER TABLE `sala` DISABLE KEYS */;
+INSERT INTO `sala` VALUES (1,'sala testekok',0),(2,'sala teste 2',1),(3,'sala Portugues',1),(4,'assd',1),(5,'teste vazio',1),(6,'dasdsas',1),(7,'testando',1),(8,'sdasd',1),(9,'asdasd',1),(10,'asdas',1),(11,'sdasda',1),(12,'sadasda',1),(13,'eee',1),(14,'Teste gerar sala',1);
+/*!40000 ALTER TABLE `sala` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sala_pergunta`
+--
+
+DROP TABLE IF EXISTS `sala_pergunta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sala_pergunta` (
+  `Sala_ID` bigint(20) NOT NULL,
+  `pergunta_ID` bigint(20) NOT NULL,
+  PRIMARY KEY (`Sala_ID`,`pergunta_ID`),
+  KEY `FK_SALA_PERGUNTA_pergunta_ID` (`pergunta_ID`),
+  CONSTRAINT `FK_SALA_PERGUNTA_Sala_ID` FOREIGN KEY (`Sala_ID`) REFERENCES `sala` (`ID`),
+  CONSTRAINT `FK_SALA_PERGUNTA_pergunta_ID` FOREIGN KEY (`pergunta_ID`) REFERENCES `pergunta` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sala_pergunta`
+--
+
+LOCK TABLES `sala_pergunta` WRITE;
+/*!40000 ALTER TABLE `sala_pergunta` DISABLE KEYS */;
+INSERT INTO `sala_pergunta` VALUES (1,4),(1,5),(1,6),(1,7),(2,1),(2,2),(2,4),(2,5),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(4,5),(4,6),(4,8),(4,9),(4,13),(4,16),(4,17),(5,4),(5,5),(5,6),(5,7),(7,4),(8,4),(8,5),(8,6),(8,7),(8,10),(8,11),(8,12),(8,14),(8,17),(8,18),(8,20),(8,22),(8,23),(8,24),(9,5),(9,6),(9,7),(9,9),(9,10),(9,11),(9,12),(9,13),(9,14),(9,15),(9,22),(9,23),(9,24),(10,4),(10,5),(10,6),(10,8),(11,4),(11,7),(11,9),(11,10),(11,11),(11,12),(11,13),(12,4),(12,6),(12,7),(12,9),(12,10),(12,12),(12,13),(12,14),(13,4),(13,5),(13,6),(13,9),(13,10),(14,4),(14,5),(14,6),(14,7),(14,9),(14,10),(14,13),(14,14),(14,15);
+/*!40000 ALTER TABLE `sala_pergunta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sequence`
+--
+
+DROP TABLE IF EXISTS `sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sequence` (
+  `SEQ_NAME` varchar(50) NOT NULL,
+  `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
+  PRIMARY KEY (`SEQ_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sequence`
+--
+
+LOCK TABLES `sequence` WRITE;
+/*!40000 ALTER TABLE `sequence` DISABLE KEYS */;
+INSERT INTO `sequence` VALUES ('SEQ_GEN',0);
+/*!40000 ALTER TABLE `sequence` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-11-15  1:01:48

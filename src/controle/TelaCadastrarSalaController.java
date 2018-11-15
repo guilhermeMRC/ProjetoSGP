@@ -61,14 +61,13 @@ public class TelaCadastrarSalaController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gerarTabela();
-        contarPerguntasSelecionadas();
         
         //Ta dando uns problemas tem que ajustar isso
-        /*campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
+        campoPesquisar.addEventFilter(KeyEvent.ANY, eve -> {
             
             trazerPesquisa(campoPesquisar.getText());
             
-        });*/
+        });
     }
 
     public void receberParametros(String nomeSala) {
@@ -76,6 +75,9 @@ public class TelaCadastrarSalaController implements Initializable {
     }
 
     public void gerarTabela() {
+        
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
+                
         colunaPergunta.setCellValueFactory(new PropertyValueFactory("descricao"));
         colunaPergunta.setStyle("-fx-alignment: CENTER;");
         
@@ -91,20 +93,24 @@ public class TelaCadastrarSalaController implements Initializable {
         colunaSala.setCellValueFactory(new PropertyValueFactory("checkbox"));
         colunaSala.setStyle("-fx-alignment: CENTER;");
 
+        //obsPerguntas.addAll(perguntaDAO.listarPerguntasAtivasOuDesativadas(true));
+        //contarPerguntasSelecionadas();
         tabelaSalas.setItems(carregarPerguntas());
 
     }
 
     public ObservableList<Pergunta> carregarPerguntas() {
-        perguntaDAO = new PerguntaDAO();
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
 
         /*for (Pergunta p : perguntaDAO.listarPerguntasAtivasOuDesativadas(true)) {
             obsPerguntas.add(p);
         }*/
         
         //faz com que só traga as perguntas habilitadas
-        obsPerguntas.addAll(perguntaDAO.listarPerguntasAtivasOuDesativadas(true));
-
+        
+        obsPerguntas = FXCollections.observableArrayList(perguntaDAO.listarPerguntasAtivasOuDesativadas(true));;
+        contarPerguntasSelecionadas();
+        
         return obsPerguntas;
     }
 
@@ -211,19 +217,26 @@ public class TelaCadastrarSalaController implements Initializable {
     
     public void trazerPesquisa(String filtro){
         
-        PerguntaDAO perguntaDAO = new PerguntaDAO();
+        //PerguntaDAO perguntaDAO = new PerguntaDAO();
         
         if(filtro.equals("")){
             
-            carregarPerguntas();
+            //gerarTabela();
+            tabelaSalas.setItems(obsPerguntas);
             
         }else{
             
-            /*Tenho que modificar a pesquisa no DAO para que traga 
-            apenas a pesquisa das perguntas habilitadas*/
+            ObservableList<Pergunta> pergs = FXCollections.observableArrayList();
             
-            obsPerguntas  = FXCollections.observableArrayList(perguntaDAO.listarPerguntasPorDescricaoOuDificuldadeOuDisciplina(filtro));
-            tabelaSalas.getItems().setAll(obsPerguntas);
+            for(Pergunta p : obsPerguntas){
+                
+                if(p.getDescricao().toLowerCase().contains(filtro.toLowerCase())){
+                    pergs.add(p);
+                }
+                
+            }
+            
+            tabelaSalas.setItems(pergs);
         }
         
     }

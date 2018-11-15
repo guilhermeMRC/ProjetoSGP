@@ -222,7 +222,6 @@ public class TelaListagemSalaController implements Initializable {
                 obsPerguntas.add(p);
             }
 
-            
             FXMLLoader loader = new FXMLLoader();
 
             try {
@@ -243,8 +242,7 @@ public class TelaListagemSalaController implements Initializable {
             }
             
         } catch(NullPointerException ex){
-            
-            ex.printStackTrace();
+             
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Aviso do sistema");
             alert.setHeaderText("Erro ao tentar visualizar sala");

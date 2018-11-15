@@ -16,7 +16,7 @@ public class TelaMenuLateralController implements Initializable{
     
     
     @FXML
-    private JFXButton botaoInicio, botaoPergunta, botaoDisciplina, botaoSalas, botaosobre;
+    private JFXButton botaoInicio, botaoPergunta, botaoDisciplina, botaoSalas, botaoBackupBanco, botaosobre;
     private CallBack callBack;
     
     public void setCallBack(CallBack callBack){
@@ -43,6 +43,9 @@ public class TelaMenuLateralController implements Initializable{
                 break;
             case "Salas":
                 callBack.changeScenes("/visao/TelaListagemSalas.fxml");
+                break;
+            case "Backup":
+                callBack.changeScenes("/visao/TelaBackupERestauracao.fxml");
                 break;
             case "Sobre":
                 callBack.changeScenes("/visao/TelaSobre.fxml");
