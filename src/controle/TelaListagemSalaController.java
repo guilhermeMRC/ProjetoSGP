@@ -33,6 +33,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.Pergunta;
@@ -66,7 +68,7 @@ public class TelaListagemSalaController implements Initializable {
     private Sala sala;
     private SalaDAO salaDAO;
     private ObservableList<Pergunta> obsPerguntas;
-    private TelaListagemSalaController telaListagemSalaController;
+    private TelaListagemSalaController telaListagemSala;
     private ObservableList<Sala> obsSalas;
     private ObservableList<String> obsOpcaoListagem;
     
@@ -174,6 +176,7 @@ public class TelaListagemSalaController implements Initializable {
         try {
             
             salaDAO = new SalaDAO();
+            sala = new Sala();
             sala = salaDAO.listarPorId(tabelaSalas.getSelectionModel().getSelectedItem().getId());
             obsPerguntas = FXCollections.observableArrayList();
 
@@ -185,16 +188,17 @@ public class TelaListagemSalaController implements Initializable {
 
             try {
                 
-                AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaEditarPerguntasSala.fxml").openStream());
+                BorderPane root = (BorderPane) loader.load(getClass().getResource("/visao/TelaEditarPerguntasSala.fxml").openStream());
                 TelaEditarPerguntasSalaController controller = (TelaEditarPerguntasSalaController) loader.getController();
                 
                 controller.setPerguntas(obsPerguntas);
                 controller.setNomeSala(sala.getDescricao());
-                controller.setSala(sala);
+                controller.setSala(telaListagemSala,sala);
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Editar Sala");
+                stage.setMaximized(true);
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             } catch (IOException ex) {
@@ -345,5 +349,5 @@ public class TelaListagemSalaController implements Initializable {
         escolherOpcao(event);
         
     }
-    
+         
 }

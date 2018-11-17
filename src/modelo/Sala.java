@@ -8,6 +8,7 @@ package modelo;
 import com.jfoenix.controls.JFXToggleButton;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javafx.scene.control.ToggleButton;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -96,6 +97,13 @@ public class Sala implements Serializable{
     public void setPergunta(List<Pergunta> pergunta) {
         this.pergunta = pergunta;
     }
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.pergunta);
+        return hash;
+    }
+
 }

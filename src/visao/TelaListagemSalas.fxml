@@ -23,7 +23,7 @@
             <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="876.0" layoutY="42.0" onAction="#alterarSala" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css">
+      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="876.0" layoutY="42.0" onAction="#alterarSala" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" text="asdas">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
          </graphic>
