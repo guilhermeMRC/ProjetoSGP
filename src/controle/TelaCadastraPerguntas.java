@@ -25,9 +25,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import modelo.Alternativa;
 import modelo.Disciplina;
 import modelo.Pergunta;
@@ -65,15 +68,19 @@ public class TelaCadastraPerguntas implements Initializable {
     @FXML
     private JFXSlider sliderTempoPergunta;
 
+    @FXML
+    private Label labelCaracteres;
+
     private List<Dificuldade> dificuldades = new ArrayList();
     private ObservableList<Dificuldade> obsDificuldade;
     //private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
     //private PerguntaDAO perguntaDAO = new PerguntaDAO();
     private ObservableList<Disciplina> obsDisciplinas;
+    private int contadorCaracteres = 700;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+
         /*
         Esse campoTags.getSuggestions()..addAll("HELLO", "TROLL", "WFEWEF", "WEF")
         funciona para dar uma sugestão quando a pessoa for digitar a tag. 
@@ -84,7 +91,8 @@ public class TelaCadastraPerguntas implements Initializable {
         campoTags.getSuggestions().addAll("Baskara", "Tomas Edson", "Matemática Financeira", "Literatura");
         carregarDificuldades();
         carregarDisciplinas();
-
+        labelCaracteres.setText("Caracteres: 700");
+        contatCaracteresPergunta();
     }
 
     @FXML
@@ -157,22 +165,22 @@ public class TelaCadastraPerguntas implements Initializable {
         pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD, opcaoD));
 
         campoTags.getChips().forEach((tags) -> {
-                        //listTags.add(tags);
+            //listTags.add(tags);
             //System.out.println(listTags.toString());
         });
-        
+
         /*Esse if serve para verificar os campos obrigatórios*/
-        if (campoPergunta.getText().isEmpty() 
-            || selecaoDificuldadePergunta.getSelectionModel().isEmpty() 
-            || selecaoDisciplina.getSelectionModel().isEmpty() 
-            || (opcaoA.isSelected() == false && 
-                opcaoB.isSelected() == false && 
-                opcaoC.isSelected() == false && 
-                opcaoD.isSelected() == false) 
-            || (campoAlternativaA.getText().isEmpty() || 
-                campoAlternativaB.getText().isEmpty() || 
-                campoAlternativaC.getText().isEmpty() || 
-                campoAlternativaD.getText().isEmpty())) {
+        if (campoPergunta.getText().isEmpty()
+                || selecaoDificuldadePergunta.getSelectionModel().isEmpty()
+                || selecaoDisciplina.getSelectionModel().isEmpty()
+                || (opcaoA.isSelected() == false
+                && opcaoB.isSelected() == false
+                && opcaoC.isSelected() == false
+                && opcaoD.isSelected() == false)
+                || (campoAlternativaA.getText().isEmpty()
+                || campoAlternativaB.getText().isEmpty()
+                || campoAlternativaC.getText().isEmpty()
+                || campoAlternativaD.getText().isEmpty())) {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Pergunta");
@@ -244,6 +252,28 @@ public class TelaCadastraPerguntas implements Initializable {
 
         Integer tempo = valor.intValue();
         return tempo;
+    }
+
+    private void contatCaracteresPergunta() {
+
+        campoPergunta.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+
+            if (event.getCode() == KeyCode.BACK_SPACE) {
+                if (contadorCaracteres == 700 || campoPergunta.getText().isEmpty()) {
+                    contadorCaracteres = 700;
+                } else {
+                    contadorCaracteres += 1;
+                    labelCaracteres.setText("Caracteres: " + contadorCaracteres);
+                }
+            } else {
+                if (contadorCaracteres == 0) {
+                    contadorCaracteres = 0;
+                } else {
+                    contadorCaracteres -= 1;
+                    labelCaracteres.setText("Caracteres: " + contadorCaracteres);
+                }
+            }
+        });
     }
 
 }

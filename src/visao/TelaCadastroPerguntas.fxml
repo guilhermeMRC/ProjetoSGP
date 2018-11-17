@@ -76,6 +76,7 @@
                   <Font name="System Bold" size="15.0" />
                </font></Label>
             <JFXButton fx:id="botaoIncluir" layoutX="617.0" layoutY="263.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #95C260;" text="Cadastrar Disciplina" textFill="WHITE" />
+            <Label fx:id="labelCaracteres" layoutX="12.0" layoutY="255.0" text="Caracteres:" />
          </children>
       </AnchorPane>
    </children>
