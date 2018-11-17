@@ -69,9 +69,6 @@ public class TelaCadastroDisciplinasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        
-       
-
         //carrega todas as opções no combobox (comboListagem)
         carregarOpcaoListar();
         

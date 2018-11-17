@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXToggleButton;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javafx.scene.control.ToggleButton;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -145,11 +146,11 @@ public class Pergunta implements Serializable{
         if(isHabilitar() == true){
             //this.togglebutton.setText("Desabilitar");
             this.togglebutton.setSelected(true);
-            this.checkbox.setDisable(false);
+            //this.checkbox.setDisable(false);
         }else{
             //this.togglebutton.setText("Habilitar");
             this.togglebutton.setSelected(false);
-            this.checkbox.setDisable(true);
+            //this.checkbox.setDisable(true);
         }
         return togglebutton;
     }
@@ -161,5 +162,5 @@ public class Pergunta implements Serializable{
     public void addAlternativa(Alternativa alt){
         getAlternativas().add(alt);
     }
-    
+
 }

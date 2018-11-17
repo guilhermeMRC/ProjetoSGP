@@ -8,7 +8,10 @@ package controle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import dao.PerguntaDAO;
+import dao.SalaDAO;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.Dificuldade;
 import modelo.Pergunta;
+import modelo.Sala;
 
 /**
  *
@@ -81,13 +85,30 @@ public class TelaPesquisarPerguntaController implements Initializable{
         tabelaPerguntas.setItems(carregarPerguntas());
     }
     
+    //mexi aqui dia 16/11/2018 00:45
     public ObservableList<Pergunta> carregarPerguntas(){
-        perguntaDAO = new PerguntaDAO();
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
+        SalaDAO salaDAO = new SalaDAO();
+        Sala sala = salaDAO.listarPorId(1L);
         
-        for(Pergunta p : perguntaDAO.listar()){
-            obsPerguntas.add(p);
+        List<Pergunta> listaTotalPerguntas = new ArrayList<>();
+        listaTotalPerguntas.addAll(perguntaDAO.listar());
+        List<Pergunta> listaPerguntaSala = new ArrayList<>();
+        listaPerguntaSala.addAll(sala.getPerguntas());
+        
+        for(Pergunta p : listaPerguntaSala){
+            for(Pergunta ps : listaTotalPerguntas){
+                if(p.getId().equals(ps.getId())){
+                    
+                    listaTotalPerguntas.remove(ps);
+                    break;
+                }
+            }
         }
         
+        System.out.println(listaTotalPerguntas);
+        
+        obsPerguntas.setAll(listaTotalPerguntas);
         return obsPerguntas;
     }
     
@@ -100,6 +121,7 @@ public class TelaPesquisarPerguntaController implements Initializable{
                 perguntas.add(p);
             }
         }
+        
         setPerguntas(perguntas);
     }
 }
