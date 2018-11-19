@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1022.0" prefWidth="1905.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaEditarPerguntasSalaController">
+<BorderPane fx:id="borderPanePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1022.0" prefWidth="1905.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaEditarPerguntasSalaController">
    <bottom>
       <AnchorPane prefHeight="145.0" prefWidth="1905.0" BorderPane.alignment="CENTER">
          <children>
@@ -45,18 +44,15 @@
                         <TableColumn fx:id="colunaHabilitar" minWidth="0.0" prefWidth="114.0" text="HABILITAR" />
                         <TableColumn fx:id="colunaSelecionar" prefWidth="104.0">
                            <graphic>
-                              <JFXCheckBox ellipsisString="" prefHeight="21.0" prefWidth="81.0" text="TODOS" />
+                              <JFXCheckBox fx:id="checkboxSelecionarTodosEsquerda" ellipsisString="" onAction="#selecionarTodasPerguntasSala" prefHeight="21.0" prefWidth="81.0" text="TODOS" />
                            </graphic>
                         </TableColumn>
                      </columns>
                   </TableView>
-                  <JFXButton layoutX="856.0" layoutY="49.0" onAction="#removerPergunta" prefHeight="31.0" prefWidth="73.0" style="-fx-background-color: #A22;" text="-" />
-                  <JFXButton layoutX="772.0" layoutY="49.0" onAction="#addPergunta" prefHeight="29.0" prefWidth="73.0" style="-fx-background-color: #5CB85C;" text="+" />
-                  <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="425.0" layoutY="49.0" onAction="#inserirPergunta" style="-fx-background-color: #5CB85C;" text="Button">
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="835.0" layoutY="49.0" onAction="#removerPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #A22; -fx-background-radius: 20;" text=" ">
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
-                     </graphic>
-                  </JFXButton>
+                        <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="15" />
+                     </graphic></JFXButton>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="959.0">
@@ -69,11 +65,15 @@
                         <TableColumn fx:id="colunaTempoTD" prefWidth="116.0" text="TEMPO (SEGs)" />
                         <TableColumn fx:id="colunaSelecionarTD" prefWidth="96.0">
                            <graphic>
-                              <JFXCheckBox text="TODOS" />
+                              <JFXCheckBox fx:id="checkboxSelecionarTodosDireita" onAction="#selecionarTodasPerguntasNaoSala" text="TODOS" />
                            </graphic>
                         </TableColumn>
                      </columns>
                   </TableView>
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="52.0" onAction="#addPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #5CB85C; -fx-background-radius: 20;" text=" ">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15" />
+                     </graphic></JFXButton>
                </children>
             </AnchorPane>
         </items>

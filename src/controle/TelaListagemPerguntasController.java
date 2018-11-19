@@ -201,14 +201,14 @@ public class TelaListagemPerguntasController implements Initializable {
         
     }
     
-    public void carregarTela(String arq, String titlo) {
+    public void carregarTela(String arq, String titulo) {
 
         try {
 
             Parent root = FXMLLoader.load(getClass().getResource(arq));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle(titlo);
+            stage.setTitle(titulo);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 

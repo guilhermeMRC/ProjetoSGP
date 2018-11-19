@@ -7,23 +7,19 @@ package controle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.skins.JFXChipViewSkin;
 import java.io.File;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
-import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 
 
 /**
@@ -111,7 +107,8 @@ public class TelaBackupERestauracaoController implements Initializable {
             try {
             
                 Runtime runtime = Runtime.getRuntime();
-                p=runtime.exec("C:/Program Files/MySQL/MySQL Workbench 6.3 CE/mysqldump.exe -uroot --add-drop-database -B bancosgp -r" + pathExport);
+                //p=runtime.exec("C:/Program Files/MySQL/MySQL Workbench 6.3 CE/mysqldump.exe -uroot --add-drop-database -B bancosgp -r" + pathExport);
+                p=runtime.exec("./Utilitarios para Backup/mysqldump.exe -uroot --add-drop-database -B bancosgp -r" + pathExport);
 
                 int processComplete = p.waitFor();
                 if(processComplete == 0){
@@ -157,7 +154,14 @@ public class TelaBackupERestauracaoController implements Initializable {
         String user = "root";
         String pass = "";
         String[] restoreCmd = new String[]{
-          "C:/Program Files/MySQL/MySQL Workbench 6.3 CE/mysql.exe",
+          /*"C:/Program Files/MySQL/MySQL Workbench 6.3 CE/mysql.exe",
+            "--user="+user,
+            "--password="+pass,
+            "-e","source "+pathImport  
+            
+            "./mysql/bin/mysql.exe",*/
+            
+            "./Utilitarios para Backup/mysql.exe",
             "--user="+user,
             "--password="+pass,
             "-e","source "+pathImport  

@@ -194,13 +194,14 @@ public class TelaListagemSalaController implements Initializable {
                 controller.setPerguntas(obsPerguntas);
                 controller.setNomeSala(sala.getDescricao());
                 controller.setSala(telaListagemSala,sala);
-
+                
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Editar Sala");
                 stage.setMaximized(true);
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
+                
             } catch (IOException ex) {
                 Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -349,5 +350,6 @@ public class TelaListagemSalaController implements Initializable {
         escolherOpcao(event);
         
     }
-         
+
+      
 }
