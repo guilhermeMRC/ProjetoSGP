@@ -52,6 +52,7 @@ public abstract class GenericDAO<T> {
             manager.persist(c);
             encerrar();
         } catch (Exception e) {
+            
             e.printStackTrace();
         }
     }

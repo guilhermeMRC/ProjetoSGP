@@ -164,10 +164,11 @@ public class TelaCadastraPerguntas implements Initializable {
         pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaC, opcaoC));
         pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD, opcaoD));
 
-        campoTags.getChips().forEach((tags) -> {
+        listTags.addAll(campoTags.getChips());
+        /*campoTags.getChips().forEach((tags) -> {
             //listTags.add(tags);
             //System.out.println(listTags.toString());
-        });
+        });*/
 
         /*Esse if serve para verificar os campos obrigatórios*/
         if (campoPergunta.getText().isEmpty()
@@ -190,7 +191,6 @@ public class TelaCadastraPerguntas implements Initializable {
 
         } else {
 
-            System.out.println(pergunta.getTags().toString());
             perguntaDAO.incluirComAlternativas(pergunta);
             Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
             mensagem.setTitle("Cadastro de pergunta");
@@ -225,7 +225,7 @@ public class TelaCadastraPerguntas implements Initializable {
         sliderTempoPergunta.setValue(30);
         selecaoDificuldadePergunta.getSelectionModel().clearSelection();
         selecaoDisciplina.getSelectionModel().clearSelection();
-        campoTags.getChips().clear();
+        campoTags = new JFXChipView<>();
     }
 
     public void carregarDificuldades() {

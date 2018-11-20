@@ -10,16 +10,21 @@ import javafx.scene.control.TableView;
 import com.jfoenix.controls.JFXCheckBox;
 import dao.PerguntaDAO;
 import dao.SalaDAO;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import modelo.Dificuldade;
 import modelo.Pergunta;
@@ -102,13 +107,7 @@ public class TelaCadastrarSalaController implements Initializable {
     public ObservableList<Pergunta> carregarPerguntas() {
         PerguntaDAO perguntaDAO = new PerguntaDAO();
 
-        /*for (Pergunta p : perguntaDAO.listarPerguntasAtivasOuDesativadas(true)) {
-            obsPerguntas.add(p);
-        }*/
-        
-        //faz com que só traga as perguntas habilitadas
-        
-        obsPerguntas = FXCollections.observableArrayList(perguntaDAO.listarPerguntasAtivasOuDesativadas(true));;
+        obsPerguntas = FXCollections.observableArrayList(perguntaDAO.listar());
         contarPerguntasSelecionadas();
         
         return obsPerguntas;
@@ -117,50 +116,94 @@ public class TelaCadastrarSalaController implements Initializable {
     @FXML
     void cadastrarSala(ActionEvent event) {
         
+        SalaDAO salaDAO = new SalaDAO();
         List<Pergunta> perguntas = new ArrayList();
-
+        
+        int contador = 0;
+        
         for (Pergunta p : obsPerguntas) {
             if (p.getCheckbox().isSelected()) {
                 perguntas.add(p);
             }
+            
         }
         
         /*Valida se o usuário não esta tentando cadastrar uma 
         sala sem nome ou sem alguma pergunta marcada
         como ainda está em teste deixar assim por enquanto 
         porque depois vamos ter que verificar o numero de questões mínimas*/
-        if(campoNomeSala.getText().isEmpty() || perguntas.isEmpty()){
+        if(campoNomeSala.getText().isEmpty()){
             
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Aviso do sistema");
             alert.setHeaderText("Cadastro de Sala!");
-            alert.setContentText("Não é possivel cadastrar sala sem nome ou sem pergunta!");
+            alert.setContentText("Não é possivel cadastrar sala sem nome!");
             alert.showAndWait();
             
         }else {
             
-            try {
+            boolean validacao = false;
+            for(Sala s : salaDAO.listar()){
+                
+                if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())) validacao = true;
+                break;
+                
+            }
+            
+            for(Pergunta per : perguntas){
+                
+                if(per.getDificuldade().equals(Dificuldade.DIFICIL)) {
+                    contador ++;
+                }
+                  
+            }
+            
+            if((perguntas.size() < 5) || (contador < 3) || validacao == true){
+                
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Aviso do sistema");
+                alert.setHeaderText("Cadastro de Sala!");
+                alert.setContentText("Não é possivel cadastrar! A sala deve conter um nome diferente das outras "
+                                    + "já cadastradas e no minimo 5 perguntas das quais 3 devem ser Dificeis.");
+                alert.showAndWait();
+                
+            }else {
+                
+                salaDAO = new SalaDAO();
                 Sala novaSala = new Sala();
                 novaSala.setDescricao(campoNomeSala.getText());
                 novaSala.setPerguntas(perguntas);
-
-                salaDAO = new SalaDAO();
-                salaDAO.incluir(novaSala);
-
-                Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
-                mensagem.setTitle("Mensagem do sistema");
-                mensagem.setHeaderText("Cadastro de sala");
-                mensagem.setContentText("Sala cadastrada com sucesso!");
-                mensagem.showAndWait();
-                limparCampos();
                 
+                try {
+                    
+                    salaDAO.incluir(novaSala);
 
-            } catch (Exception ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Aviso do sistema");
-                alert.setHeaderText("Erro ao tentar cadastrar sala");
-                alert.setContentText(ex.getLocalizedMessage());
-                alert.showAndWait();
+                    Alert mensagem = new Alert(Alert.AlertType.NONE);
+
+                    FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+                    icone.setGlyphSize(50);
+
+                    Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+                    icone.setFill(paint);
+
+                    mensagem.setGraphic(icone);
+                    mensagem.setTitle("Mensagem do sistema");
+                    mensagem.setHeaderText("Cadastrar sala");
+                    mensagem.setContentText("Sala cadastrada com sucesso!");
+                    mensagem.getOnCloseRequest();
+                    mensagem.getButtonTypes().add(ButtonType.OK);
+                    mensagem.showAndWait();
+                    
+                    limparCampos();
+
+                } catch (Exception ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Aviso do sistema");
+                    alert.setHeaderText("Erro ao tentar cadastrar sala");
+                    alert.setContentText(ex.getLocalizedMessage());
+                    alert.showAndWait();
+                }
+            
             }
             
         }

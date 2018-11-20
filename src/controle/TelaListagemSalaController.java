@@ -201,6 +201,7 @@ public class TelaListagemSalaController implements Initializable {
                 stage.setMaximized(true);
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
+                voltarEmListarTodos();
                 
             } catch (IOException ex) {
                 Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);

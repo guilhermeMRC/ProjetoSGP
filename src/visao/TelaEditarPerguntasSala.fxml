@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPanePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1022.0" prefWidth="1905.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaEditarPerguntasSalaController">
+<BorderPane fx:id="borderPanePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="808.0" prefWidth="1322.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaEditarPerguntasSalaController">
    <bottom>
-      <AnchorPane prefHeight="145.0" prefWidth="1905.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="118.0" prefWidth="1322.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="botaoSalvar" layoutX="785.0" layoutY="36.0" onAction="#EditarSala" prefHeight="25.0" prefWidth="336.0" style="-fx-background-color: #95C260;" text="Salvar" textFill="WHITE">
+            <JFXButton fx:id="botaoSalvar" alignment="CENTER" layoutX="522.0" layoutY="36.0" onAction="#EditarSala" prefHeight="30.0" prefWidth="278.0" style="-fx-background-color: #95C260; -fx-background-radius: 20;" text="Editar" textFill="WHITE" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="600.0">
                <font>
                   <Font name="Century Gothic Bold" size="12.0" />
                </font>
@@ -25,31 +25,31 @@
       </AnchorPane>
    </bottom>
    <center>
-      <SplitPane dividerPositions="0.5002627430373096" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <TextField fx:id="campoNomeSala" layoutX="14.0" layoutY="49.0" prefHeight="31.0" prefWidth="242.0" />
                   <Label layoutX="14.0" layoutY="23.0" text="Nome da sala:">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="tabelaSalas" layoutX="14.0" layoutY="93.0" prefHeight="768.0" prefWidth="915.0">
+                  <TableView fx:id="tabelaSalas" layoutX="14.0" layoutY="93.0" prefHeight="546.0" prefWidth="720.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="93.0">
                      <columns>
-                        <TableColumn fx:id="colunaPergunta" prefWidth="377.0000305175781" text="PERGUNTA" />
-                        <TableColumn fx:id="colunaDisciplina" prefWidth="121.0" text="DISCIPLINA" />
-                        <TableColumn fx:id="colunaDificuldade" prefWidth="115.0" text="DIFICULDADE" />
-                        <TableColumn fx:id="colunaTempo" prefWidth="89.0" text="TEMPO (SEGs)" />
-                        <TableColumn fx:id="colunaHabilitar" minWidth="0.0" prefWidth="114.0" text="HABILITAR" />
-                        <TableColumn fx:id="colunaSelecionar" prefWidth="104.0">
+                        <TableColumn fx:id="colunaPergunta" prefWidth="412.0" text="PERGUNTA" />
+                        <TableColumn fx:id="colunaDisciplina" prefWidth="89.0" text="DISCIPLINA" />
+                        <TableColumn fx:id="colunaDificuldade" prefWidth="120.0" text="DIFICULDADE" />
+                        <TableColumn fx:id="colunaTempo" prefWidth="100.0" text="TEMPO (SEGs)" />
+                        <TableColumn fx:id="colunaHabilitar" minWidth="0.0" prefWidth="100.0" text="HABILITAR" />
+                        <TableColumn fx:id="colunaSelecionar" prefWidth="100.0">
                            <graphic>
                               <JFXCheckBox fx:id="checkboxSelecionarTodosEsquerda" ellipsisString="" onAction="#selecionarTodasPerguntasSala" prefHeight="21.0" prefWidth="81.0" text="TODOS" />
                            </graphic>
                         </TableColumn>
                      </columns>
                   </TableView>
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="835.0" layoutY="49.0" onAction="#removerPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #A22; -fx-background-radius: 20;" text=" ">
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="543.0" layoutY="49.0" onAction="#removerPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #A22; -fx-background-radius: 20;" text=" " AnchorPane.rightAnchor="19.0">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="15" />
                      </graphic></JFXButton>
@@ -57,20 +57,20 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="959.0">
                <children>
-                  <TableView fx:id="tabelaPerguntasNaoEscolhidas" layoutX="23.0" layoutY="93.0" prefHeight="768.0" prefWidth="917.0">
+                  <TableView fx:id="tabelaPerguntasNaoEscolhidas" layoutX="17.0" layoutY="91.0" prefHeight="546.0" prefWidth="720.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0">
                      <columns>
                         <TableColumn fx:id="colunaPerguntaTD" prefWidth="428.0" text="PERGUNTA" />
                         <TableColumn fx:id="colunaDisciplinaTD" prefWidth="131.0" text="DISCIPLINA" />
                         <TableColumn fx:id="colunaDificuldadeTD" prefWidth="145.0" text="DIFICULDADE" />
                         <TableColumn fx:id="colunaTempoTD" prefWidth="116.0" text="TEMPO (SEGs)" />
-                        <TableColumn fx:id="colunaSelecionarTD" prefWidth="96.0">
+                        <TableColumn fx:id="colunaSelecionarTD" prefWidth="102.0">
                            <graphic>
                               <JFXCheckBox fx:id="checkboxSelecionarTodosDireita" onAction="#selecionarTodasPerguntasNaoSala" text="TODOS" />
                            </graphic>
                         </TableColumn>
                      </columns>
                   </TableView>
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="52.0" onAction="#addPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #5CB85C; -fx-background-radius: 20;" text=" ">
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="48.0" onAction="#addPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #5CB85C; -fx-background-radius: 20;" text=" " AnchorPane.leftAnchor="17.0">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15" />
                      </graphic></JFXButton>

@@ -211,6 +211,7 @@ public class TelaListagemPerguntasController implements Initializable {
             stage.setTitle(titulo);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+            
 
         } catch (IOException e) {
 
