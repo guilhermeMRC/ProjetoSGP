@@ -30,6 +30,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 import modelo.Alternativa;
 import modelo.Disciplina;
@@ -76,7 +77,7 @@ public class TelaCadastraPerguntas implements Initializable {
     //private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
     //private PerguntaDAO perguntaDAO = new PerguntaDAO();
     private ObservableList<Disciplina> obsDisciplinas;
-    private int contadorCaracteres = 700;
+    private int contadorCaracteres = 100;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,7 +92,7 @@ public class TelaCadastraPerguntas implements Initializable {
         campoTags.getSuggestions().addAll("Baskara", "Tomas Edson", "Matemática Financeira", "Literatura");
         carregarDificuldades();
         carregarDisciplinas();
-        labelCaracteres.setText("Caracteres: 700");
+        labelCaracteres.setText("Caracteres: 100");
         contatCaracteresPergunta();
     }
 
@@ -148,7 +149,7 @@ public class TelaCadastraPerguntas implements Initializable {
     public void CadastrarPergunta() {
 
         PerguntaDAO perguntaDAO = new PerguntaDAO();
-        campoTags = new JFXChipView();
+        //campoTags = new JFXChipView();
         Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
         List<String> listTags = new ArrayList();
         Pergunta pergunta = new Pergunta();
@@ -165,11 +166,8 @@ public class TelaCadastraPerguntas implements Initializable {
         pergunta.addAlternativa(cadastrarAlternativa(campoAlternativaD, opcaoD));
 
         listTags.addAll(campoTags.getChips());
-        /*campoTags.getChips().forEach((tags) -> {
-            //listTags.add(tags);
-            //System.out.println(listTags.toString());
-        });*/
-
+        pergunta.setTags(listTags);
+        
         /*Esse if serve para verificar os campos obrigatórios*/
         if (campoPergunta.getText().isEmpty()
                 || selecaoDificuldadePergunta.getSelectionModel().isEmpty()
@@ -216,6 +214,7 @@ public class TelaCadastraPerguntas implements Initializable {
     }
 
     public void limparCampos() {
+        
         campoPergunta.clear();
         campoAlternativaA.clear();
         campoAlternativaB.clear();
@@ -225,7 +224,8 @@ public class TelaCadastraPerguntas implements Initializable {
         sliderTempoPergunta.setValue(30);
         selecaoDificuldadePergunta.getSelectionModel().clearSelection();
         selecaoDisciplina.getSelectionModel().clearSelection();
-        campoTags = new JFXChipView<>();
+        campoTags.getChips().clear();
+        
     }
 
     public void carregarDificuldades() {
@@ -257,19 +257,63 @@ public class TelaCadastraPerguntas implements Initializable {
     private void contatCaracteresPergunta() {
 
         campoPergunta.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-
-            if (event.getCode() == KeyCode.BACK_SPACE) {
-                if (contadorCaracteres == 700 || campoPergunta.getText().isEmpty()) {
-                    contadorCaracteres = 700;
+            
+            //Trabalhando nessa função---- ainda esta bugando
+            System.out.println(campoPergunta.getText().length());
+            
+            if (event.getCode() == KeyCode.BACK_SPACE || 
+                event.getCode() == KeyCode.DELETE ||
+                event.getCode() == KeyCode.TAB ||
+                event.getCode() == KeyCode.ENTER   
+                ) {
+                
+                if (campoPergunta.getText().isEmpty()) {
+                    contadorCaracteres = 100;
+                    labelCaracteres.setText("Caracteres: " + contadorCaracteres);
                 } else {
-                    contadorCaracteres += 1;
+                    contadorCaracteres = 100;
+                    contadorCaracteres = contadorCaracteres - (campoPergunta.getText().length()-1);
                     labelCaracteres.setText("Caracteres: " + contadorCaracteres);
                 }
-            } else {
+            } else if(event.getCode() == KeyCode.F1 ||
+                      event.getCode() == KeyCode.F2 ||
+                      event.getCode() == KeyCode.F4 ||
+                      event.getCode() == KeyCode.F5 ||
+                      event.getCode() == KeyCode.F6 ||
+                      event.getCode() == KeyCode.F7 ||
+                      event.getCode() == KeyCode.F8 ||
+                      event.getCode() == KeyCode.F9 ||
+                      event.getCode() == KeyCode.F10 ||
+                      event.getCode() == KeyCode.F11 ||
+                      event.getCode() == KeyCode.F12 ||
+                      event.getCode() == KeyCode.ALT ||
+                      event.getCode() == KeyCode.CAPS ||
+                      event.getCode() == KeyCode.ALT_GRAPH ||
+                      event.getCode() == KeyCode.ESCAPE || 
+                      event.getCode() == KeyCode.LEFT ||
+                      event.getCode() == KeyCode.RIGHT ||
+                      event.getCode() == KeyCode.UP ||
+                      event.getCode() == KeyCode.DOWN ||
+                      event.getCode() == KeyCode.CONTROL ||
+                      event.getCode() == KeyCode.SHIFT ||
+                      event.getCode() == KeyCode.INSERT || 
+                      event.getCode() == KeyCode.PAGE_UP ||
+                      event.getCode() == KeyCode.PAGE_DOWN ||
+                      event.getCode() == KeyCode.HOME ||
+                      event.getCode() == KeyCode.END ||
+                      event.getCode() == KeyCode.NUM_LOCK ||
+                      event.getCode() == KeyCode.PRINTSCREEN ||
+                      event.getCode() == KeyCode.COPY ||
+                      event.getCode() == KeyCode.PASTE) {
+                      
+                      
+            }else {
+                
                 if (contadorCaracteres == 0) {
                     contadorCaracteres = 0;
                 } else {
-                    contadorCaracteres -= 1;
+                    contadorCaracteres = 100;
+                    contadorCaracteres = contadorCaracteres - (campoPergunta.getText().length() + 1);
                     labelCaracteres.setText("Caracteres: " + contadorCaracteres);
                 }
             }

@@ -35,7 +35,7 @@ public class Sala implements Serializable{
     private ToggleButton togglebutton = new JFXToggleButton();
     
     @ManyToMany
-    private List<Pergunta> pergunta;
+    private List<Pergunta> perguntas;
     
     public Sala(){
         
@@ -58,11 +58,11 @@ public class Sala implements Serializable{
     }
 
     public List<Pergunta> getPerguntas() {
-        return pergunta;
+        return perguntas;
     }
 
     public void setPerguntas(List<Pergunta> perguntas) {
-        this.pergunta = perguntas;
+        this.perguntas = perguntas;
     }
 
     public boolean isHabilitar() {
@@ -90,19 +90,11 @@ public class Sala implements Serializable{
         this.togglebutton = toggleButton;
     }
 
-    public List<Pergunta> getPergunta() {
-        return pergunta;
-    }
-
-    public void setPergunta(List<Pergunta> pergunta) {
-        this.pergunta = pergunta;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.pergunta);
+        hash = 29 * hash + Objects.hashCode(this.perguntas);
         return hash;
     }
 

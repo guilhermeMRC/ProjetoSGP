@@ -6,11 +6,13 @@
 package controle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXChip;
 import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.skins.JFXChipViewSkin;
 import dao.DisciplinaDAO;
 import dao.PerguntaDAO;
 import java.net.URL;
@@ -19,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.BiFunction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -143,7 +146,9 @@ public class TelaEditarPerguntasController implements Initializable {
         }
 
         sliderTempoPergunta.setValue(pergunta.getTempo());
-
+        
+        campoTags.getChips().addAll(pergunta.getTags());
+                
         telaLPC = tela;
     }
 
@@ -201,6 +206,7 @@ public class TelaEditarPerguntasController implements Initializable {
     public void editarPergunta(ActionEvent event) {
 
         perguntaDAO = new PerguntaDAO();
+        List<String> listTags = new ArrayList<>();
 
         Disciplina disciplina = selecaoDisciplina.getSelectionModel().getSelectedItem();
 
@@ -218,6 +224,9 @@ public class TelaEditarPerguntasController implements Initializable {
         perguntaNova.getAlternativas().get(1).setCorreto(opcaoB.isSelected());
         perguntaNova.getAlternativas().get(2).setCorreto(opcaoC.isSelected());
         perguntaNova.getAlternativas().get(3).setCorreto(opcaoD.isSelected());
+        
+        listTags.addAll(campoTags.getChips());
+        perguntaNova.setTags(listTags);
 
         if (campoPergunta.getText().isEmpty() || (campoAlternativaA.getText().isEmpty()
                 || campoAlternativaB.getText().isEmpty() || campoAlternativaC.getText().isEmpty()
