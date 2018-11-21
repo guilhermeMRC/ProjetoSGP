@@ -172,7 +172,7 @@ public class TelaListagemPerguntasController implements Initializable {
         colunaId.setStyle("-fx-alignment: CENTER;");
 
         colunaPergunta.setCellValueFactory(new PropertyValueFactory("descricao"));
-        colunaPergunta.setStyle("-fx-alignment: CENTER;");
+        colunaPergunta.setStyle("-fx-alignment: LEFT;");
         
         colunaDificuldade.setCellValueFactory(new PropertyValueFactory("dificuldade"));
         colunaDificuldade.setStyle("-fx-alignment: CENTER;");
@@ -221,9 +221,11 @@ public class TelaListagemPerguntasController implements Initializable {
 
     @FXML
     public void criarSala(ActionEvent event) {
-
+        
+        int contador = 0;
         ObservableList<Pergunta> perguntas = FXCollections.observableArrayList();
-
+        
+        //Varre as perguntas atrás de qual está marcada pelo checkbox
         for (Pergunta p : obsPergunta) {
             if (p.getCheckbox().isSelected()) {
                 perguntas.add(p);
@@ -238,15 +240,20 @@ public class TelaListagemPerguntasController implements Initializable {
         Optional<String> resultado = inputDialog.showAndWait();
         if (resultado.isPresent()) {
             
+            for(Pergunta pd : perguntas) {
+                if(pd.getDificuldade().equals(Dificuldade.DIFICIL)) contador++;
+            }
+            
             /*Aqui checa se a sala tem nome e checa também se o usuário 
             marcou alguma pergunta... ou seja não é possivel cadastrar 
             sala sem pergunta e nem sem nome nessa tela*/
-            if(resultado.get().equals("") || perguntas.isEmpty()){
+            if(resultado.get().equals("") || perguntas.size() < 5 || contador < 3){
                 
                 Alert mensagem = new Alert(Alert.AlertType.ERROR);
                 mensagem.setTitle("Sala");
                 mensagem.setHeaderText("Cadastro de Sala");
-                mensagem.setContentText("Não é possivel cadastrar uma sala sem nome ou sem pergunta!");
+                mensagem.setContentText("Não é possivel cadastrar uma sala! Sala deve conter "
+                                        + "ter um nome e no mínimo 5 perguntas das quais 3 difíceis.");
                 mensagem.show();
                 
             }else {

@@ -16,7 +16,7 @@
    <bottom>
       <AnchorPane prefHeight="118.0" prefWidth="1322.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="botaoSalvar" alignment="CENTER" layoutX="522.0" layoutY="36.0" onAction="#EditarSala" prefHeight="30.0" prefWidth="278.0" style="-fx-background-radius: 5;" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Editar" textFill="WHITE" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="600.0">
+            <JFXButton fx:id="botaoSalvar" alignment="CENTER" layoutX="522.0" layoutY="36.0" onAction="#EditarSala" prefHeight="30.0" prefWidth="278.0" style="-fx-background-color: #0f0;" text="Editar" textFill="WHITE" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="600.0">
                <font>
                   <Font name="Century Gothic Bold" size="12.0" />
                </font>
@@ -29,6 +29,10 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="543.0" layoutY="49.0" onAction="#removerPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #F00;" text=" " AnchorPane.rightAnchor="19.0">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="15" />
+                     </graphic></JFXButton>
                   <TextField fx:id="campoNomeSala" layoutX="14.0" layoutY="49.0" prefHeight="31.0" prefWidth="242.0" />
                   <Label layoutX="14.0" layoutY="23.0" text="Nome da sala:">
                      <font>
@@ -49,14 +53,14 @@
                         </TableColumn>
                      </columns>
                   </TableView>
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="543.0" layoutY="49.0" onAction="#removerPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-radius: 5;" styleClass="jfx-button-excluir" stylesheets="@../css/estilo.css" text=" " AnchorPane.rightAnchor="19.0">
-                     <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="15" />
-                     </graphic></JFXButton>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="959.0">
                <children>
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="48.0" onAction="#addPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #0F0;" text=" " AnchorPane.leftAnchor="17.0">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15" />
+                     </graphic></JFXButton>
                   <TableView fx:id="tabelaPerguntasNaoEscolhidas" layoutX="17.0" layoutY="91.0" prefHeight="546.0" prefWidth="720.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="93.0">
                      <columns>
                         <TableColumn fx:id="colunaPerguntaTD" prefWidth="428.0" text="PERGUNTA" />
@@ -70,10 +74,6 @@
                         </TableColumn>
                      </columns>
                   </TableView>
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="48.0" onAction="#addPergunta" prefHeight="31.0" prefWidth="94.0" style="-fx-background-radius: 5;" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text=" " AnchorPane.leftAnchor="17.0">
-                     <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15" />
-                     </graphic></JFXButton>
                </children>
             </AnchorPane>
         </items>

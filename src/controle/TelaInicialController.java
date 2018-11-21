@@ -73,9 +73,9 @@ public class TelaInicialController implements Initializable,CallBack {
     }
     
     @FXML
-    void fecharMenuLateral(ActionEvent event) {
-          drawer.close();
-          drawer.setVisible(false);
+    public void fecharMenuLateral(ActionEvent event) {
+        drawer.close();
+        drawer.setVisible(false);
     }
     
     @FXML
