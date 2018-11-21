@@ -11,7 +11,7 @@
    <children>
       <SplitPane dividerPositions="0.5" layoutX="15.0" layoutY="102.0" orientation="VERTICAL" prefHeight="380.0" prefWidth="933.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="963.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="963.0" style="-fx-background-color: #fff;">
                <children>
                   <JFXTextField fx:id="textFieldPathSalvar" editable="false" layoutX="195.0" layoutY="84.0" prefHeight="31.0" prefWidth="496.0" />
                   <JFXButton fx:id="botaoBrowseSalvar" layoutX="728.0" layoutY="84.0" onAction="#selecionarCaminhoBackup" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #6bb133;" text="Procurar" textFill="WHITE" />
@@ -24,7 +24,7 @@
                   </Label>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="963.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="963.0" style="-fx-background-color: #fff;">
                <children>
                   <JFXTextField fx:id="textFieldPathCarregar" editable="false" layoutX="193.0" layoutY="77.0" prefHeight="31.0" prefWidth="496.0" />
                   <JFXButton fx:id="botaoBrowseProcurar" layoutX="726.0" layoutY="77.0" onAction="#SelecionarArquivo" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #6bb133;" text="Procurar" textFill="WHITE" />

@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="496.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaSobreController">
    <children>
-      <Label layoutX="195.0" layoutY="14.0" text="SOBRE">
+      <Label layoutX="191.0" layoutY="14.0" text="SOBRE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <JFXTextArea fx:id="textoSobre" editable="false" layoutX="191.0" layoutY="49.0" prefHeight="439.0" prefWidth="582.0" />
+      <Label layoutX="194.0" layoutY="232.0" text="Desenvolvido pela equipe:" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="194.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/cw.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="191.0" layoutY="49.0" prefHeight="68.0" prefWidth="588.0" text="O SGP e todo o o jogo #VemProIFF possuem código fonte aberto. Para mais informações acesse a página do projeto ou os repositórios no GitHub." wrapText="true" />
+      <Label layoutX="199.0" layoutY="117.0" text="Página do Projeto" />
+      <Label layoutX="199.0" layoutY="143.0" text="Repositório do SGP" />
+      <Label layoutX="199.0" layoutY="168.0" text="Repositório do #VemProIFF" />
    </children>
 </AnchorPane>

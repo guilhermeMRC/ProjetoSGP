@@ -1,4 +1,4 @@
-/* 
+﻿/* 
     Created on : 29/09/2018, 15:13:58
     Author     : gnunes
 */
@@ -11,15 +11,19 @@
 
 /* Botões Adcionar, Alterar e Excluir */
 .jfx-button-adcionar{
-    -fx-background-color:#9ccc65; 
+    -fx-background-color: #6bb133; 
 }
 
 .jfx-button-alterar{
-    -fx-background-color:#fff176; 
+    -fx-background-color:#ffeb3a; 
 }
 
 .jfx-button-excluir{
-    -fx-background-color:#e57373; 
+    -fx-background-color:#ff3232; 
+}
+
+.jfx-button-gerar{
+    -fx-background-color:#40a4f7;
 }
 
 .jfx-hamburger StackPane {

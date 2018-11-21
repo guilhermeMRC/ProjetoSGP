@@ -56,7 +56,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <JFXButton fx:id="botaoCadastrar" layoutX="107.0" layoutY="551.0" onAction="#CadastrarPergunta" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" style="-fx-background-color: #95C260;" text="Cadastrar" textFill="WHITE">
+            <JFXButton fx:id="botaoCadastrar" layoutX="107.0" layoutY="551.0" onAction="#CadastrarPergunta" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" style="-fx-background-color: #6bb133;;" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Cadastrar" textFill="WHITE">
                <font>
                   <Font name="Century Gothic Bold" size="12.0" />
                </font></JFXButton>
@@ -75,7 +75,7 @@
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Label>
-            <JFXButton fx:id="botaoIncluir" layoutX="617.0" layoutY="263.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #95C260;" text="Cadastrar Disciplina" textFill="WHITE" />
+            <JFXButton fx:id="botaoIncluir" layoutX="617.0" layoutY="263.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #6bb133;" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Cadastrar Disciplina" textFill="WHITE" />
             <Label fx:id="labelCaracteres" layoutX="12.0" layoutY="255.0" text="Caracteres:" />
          </children>
       </AnchorPane>

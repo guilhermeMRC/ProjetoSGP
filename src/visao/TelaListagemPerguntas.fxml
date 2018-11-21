@@ -32,9 +32,9 @@
          </graphic>
       </JFXButton>
       <TextField fx:id="campoPesquisar" layoutX="15.0" layoutY="42.0" prefHeight="31.0" prefWidth="306.0" promptText="Pesquisar..." />
-      <JFXButton fx:id="botaoGerarSala" layoutX="650.0" layoutY="42.0" onAction="#criarSala" prefHeight="31.0" prefWidth="116.0" style="-fx-background-color: #90caf9;" text="Gerar Sala" textFill="WHITE">
+      <JFXButton fx:id="botaoGerarSala" layoutX="650.0" layoutY="42.0" onAction="#criarSala" prefHeight="31.0" prefWidth="116.0" styleClass="jfx-button-gerar" stylesheets="@../css/estilo.css" text="Gerar Sala" textFill="WHITE">
          <font>
-            <Font name="Century Gothic Bold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
       <JFXComboBox fx:id="comboListagem" layoutX="358.0" layoutY="42.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="248.0" />

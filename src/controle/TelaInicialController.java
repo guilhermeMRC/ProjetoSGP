@@ -65,7 +65,7 @@ public class TelaInicialController implements Initializable,CallBack {
     @Override
     public void changeScenes(String tela) {
         try {
-            AnchorPane pane = FXMLLoader.load(getClass().getResource(tela));
+            AnchorPane pane = (AnchorPane) FXMLLoader.load(getClass().getResource(tela));
             rootPane.getChildren().setAll(pane);
         } catch (IOException ex) {
             Logger.getLogger(TelaInicialController.class.getName()).log(Level.SEVERE, null, ex);
