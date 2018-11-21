@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -8,20 +9,73 @@
 
 <AnchorPane id="AnchorPane" prefHeight="496.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaSobreController">
    <children>
-      <Label layoutX="191.0" layoutY="14.0" text="SOBRE">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="194.0" layoutY="232.0" text="Desenvolvido pela equipe:" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="194.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="611.0" fitWidth="963.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/sobre.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="412.0" fitWidth="566.0" layoutX="199.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/sobrebalao.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="519.0" layoutY="291.0" text="Desenvolvido pela equipe:" />
+      <ImageView fx:id="logocw" fitHeight="68.0" fitWidth="177.0" layoutX="553.0" layoutY="316.0" onMouseClicked="#abrePaginaProjeto" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagens/cw.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
-      <Label layoutX="191.0" layoutY="49.0" prefHeight="68.0" prefWidth="588.0" text="O SGP e todo o o jogo #VemProIFF possuem código fonte aberto. Para mais informações acesse a página do projeto ou os repositórios no GitHub." wrapText="true" />
-      <Label layoutX="199.0" layoutY="117.0" text="Página do Projeto" />
-      <Label layoutX="199.0" layoutY="143.0" text="Repositório do SGP" />
-      <Label layoutX="199.0" layoutY="168.0" text="Repositório do #VemProIFF" />
+      <Label layoutX="218.0" layoutY="112.0" prefHeight="68.0" prefWidth="529.0" text="O SGP e todo o jogo #VemProIFF possuem código fonte aberto. Para mais informações acesse a página do projeto ou os repositórios no GitHub." wrapText="true">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Label layoutX="261.0" layoutY="180.0" onMouseClicked="#abrePaginaProjeto" text="Página do Projeto">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Label>
+      <Label layoutX="261.0" layoutY="211.0" onMouseClicked="#abreRepositorioSGP" text="Repositório do SGP">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Label>
+      <Label layoutX="261.0" layoutY="240.0" onMouseClicked="#abreRepositorioJogo" text="Repositório do #VemProIFF">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Label>
+      <ImageView fx:id="linkProjeto" fitHeight="27.0" fitWidth="60.0" layoutX="228.0" layoutY="175.0" onMouseClicked="#abrePaginaProjeto" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/link.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="linkSGP" fitHeight="27.0" fitWidth="60.0" layoutX="228.0" layoutY="206.0" onMouseClicked="#abreRepositorioSGP" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/link.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="linkJogo" fitHeight="27.0" fitWidth="60.0" layoutX="228.0" layoutY="235.0" onMouseClicked="#abreRepositorioJogo" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/link.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>
