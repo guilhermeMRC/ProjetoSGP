@@ -32,6 +32,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import modelo.Alternativa;
 import modelo.Disciplina;
 import modelo.Pergunta;
@@ -77,7 +79,7 @@ public class TelaCadastraPerguntas implements Initializable {
     //private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
     //private PerguntaDAO perguntaDAO = new PerguntaDAO();
     private ObservableList<Disciplina> obsDisciplinas;
-    private int contadorCaracteres = 100;
+    public int contadorCaracteres = 100;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -167,7 +169,7 @@ public class TelaCadastraPerguntas implements Initializable {
 
         listTags.addAll(campoTags.getChips());
         pergunta.setTags(listTags);
-        
+
         /*Esse if serve para verificar os campos obrigatórios*/
         if (campoPergunta.getText().isEmpty()
                 || selecaoDificuldadePergunta.getSelectionModel().isEmpty()
@@ -214,7 +216,7 @@ public class TelaCadastraPerguntas implements Initializable {
     }
 
     public void limparCampos() {
-        
+
         campoPergunta.clear();
         campoAlternativaA.clear();
         campoAlternativaB.clear();
@@ -225,7 +227,7 @@ public class TelaCadastraPerguntas implements Initializable {
         selecaoDificuldadePergunta.getSelectionModel().clearSelection();
         selecaoDisciplina.getSelectionModel().clearSelection();
         campoTags.getChips().clear();
-        
+
     }
 
     public void carregarDificuldades() {
@@ -257,11 +259,24 @@ public class TelaCadastraPerguntas implements Initializable {
     private void contatCaracteresPergunta() {
 
         campoPergunta.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            
+
             //Trabalhando nessa função---- ainda esta bugando
             System.out.println(campoPergunta.getText().length());
-            
-            if (event.getCode() == KeyCode.BACK_SPACE || 
+
+            contadorCaracteres--;
+            labelCaracteres.setText("Caracteres: " + contadorCaracteres);
+
+            if(campoPergunta.getText().length() == 100){
+                campoPergunta.setEditable(false);
+                contadorCaracteres = 0;
+                campoPergunta.setFocusColor(Paint.valueOf("#bf1b18"));
+                
+                if(event.getCode() == KeyCode.BACK_SPACE){
+                    campoPergunta.setEditable(true);
+                }
+            }
+
+            /*if (event.getCode() == KeyCode.BACK_SPACE || 
                 event.getCode() == KeyCode.DELETE ||
                 event.getCode() == KeyCode.TAB ||
                 event.getCode() == KeyCode.ENTER   
@@ -316,7 +331,7 @@ public class TelaCadastraPerguntas implements Initializable {
                     contadorCaracteres = contadorCaracteres - (campoPergunta.getText().length() + 1);
                     labelCaracteres.setText("Caracteres: " + contadorCaracteres);
                 }
-            }
+            }*/
         });
     }
 
