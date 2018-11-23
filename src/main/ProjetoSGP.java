@@ -33,6 +33,7 @@ public class ProjetoSGP extends Application {
         stage.setTitle("Sistema de Gerenciamento de Perguntas");
         stage.initStyle(StageStyle.UNDECORATED);
         gerarBD();
+        alterarEncoding();
         stage.show();
     }
 
@@ -51,6 +52,25 @@ public class ProjetoSGP extends Application {
 
             Connection connection = DriverManager.getConnection(url, user, password); //Criando a comunicação com o banco
             String sql = "CREATE DATABASE IF NOT EXISTS bancosgp"; //Criando a query de criação do bancosgp caso ele não exista na máquina
+            
+            Statement statement = (Statement) connection.createStatement();
+            statement.executeUpdate(sql); //Executando a query
+            statement.close();
+            connection.close();
+            
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    private void alterarEncoding(){
+         try{
+            String user = "root"; //Nome de usuário
+            String password = ""; //Senha do mysql
+            String url = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull"; //URL de comunicação com o MYSQL
+
+            Connection connection = DriverManager.getConnection(url, user, password); //Criando a comunicação com o banco
+            String sql = "ALTER DATABASE bancosgp CHARSET = UTF8 COLLATE = utf8_general_ci;"; //Criando a query de criação do bancosgp caso ele não exista na máquina
             
             Statement statement = (Statement) connection.createStatement();
             statement.executeUpdate(sql); //Executando a query
