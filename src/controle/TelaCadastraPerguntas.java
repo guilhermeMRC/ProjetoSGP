@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,12 +30,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import modelo.Alternativa;
 import modelo.Disciplina;
 import modelo.Pergunta;
@@ -94,8 +92,12 @@ public class TelaCadastraPerguntas implements Initializable {
         campoTags.getSuggestions().addAll("Baskara", "Tomas Edson", "Matemática Financeira", "Literatura");
         carregarDificuldades();
         carregarDisciplinas();
-        labelCaracteres.setText("Caracteres: 100");
-        contatCaracteresPergunta();
+        labelCaracteres.setText("Caracteres: 700");
+        limitarCampos(campoAlternativaA, 100);
+        limitarCampos(campoAlternativaB, 100);
+        limitarCampos(campoAlternativaC, 100);
+        limitarCampos(campoAlternativaD, 100);
+        limitarCampos(campoPergunta, 700);
     }
 
     @FXML
@@ -255,84 +257,21 @@ public class TelaCadastraPerguntas implements Initializable {
         Integer tempo = valor.intValue();
         return tempo;
     }
-
-    private void contatCaracteresPergunta() {
-
-        campoPergunta.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-
-            //Trabalhando nessa função---- ainda esta bugando
-            System.out.println(campoPergunta.getText().length());
-
-            contadorCaracteres--;
-            labelCaracteres.setText("Caracteres: " + contadorCaracteres);
-
-            if(campoPergunta.getText().length() == 100){
-                campoPergunta.setEditable(false);
-                contadorCaracteres = 0;
-                campoPergunta.setFocusColor(Paint.valueOf("#bf1b18"));
+    
+    private void limitarCampos(TextInputControl textAtual, int max){
+        textAtual.textProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(textAtual.getText().length() >= max){
+                    textAtual.setText(String.copyValueOf(textAtual.getText().toCharArray(), 0, max));
+                }
                 
-                if(event.getCode() == KeyCode.BACK_SPACE){
-                    campoPergunta.setEditable(true);
+                if(textAtual.getClass() == JFXTextArea.class){
+                    contadorCaracteres = max - textAtual.getText().length();
+                    labelCaracteres.setText("Caracteres: " + contadorCaracteres);
                 }
             }
-
-            /*if (event.getCode() == KeyCode.BACK_SPACE || 
-                event.getCode() == KeyCode.DELETE ||
-                event.getCode() == KeyCode.TAB ||
-                event.getCode() == KeyCode.ENTER   
-                ) {
-                
-                if (campoPergunta.getText().isEmpty()) {
-                    contadorCaracteres = 100;
-                    labelCaracteres.setText("Caracteres: " + contadorCaracteres);
-                } else {
-                    contadorCaracteres = 100;
-                    contadorCaracteres = contadorCaracteres - (campoPergunta.getText().length()-1);
-                    labelCaracteres.setText("Caracteres: " + contadorCaracteres);
-                }
-            } else if(event.getCode() == KeyCode.F1 ||
-                      event.getCode() == KeyCode.F2 ||
-                      event.getCode() == KeyCode.F4 ||
-                      event.getCode() == KeyCode.F5 ||
-                      event.getCode() == KeyCode.F6 ||
-                      event.getCode() == KeyCode.F7 ||
-                      event.getCode() == KeyCode.F8 ||
-                      event.getCode() == KeyCode.F9 ||
-                      event.getCode() == KeyCode.F10 ||
-                      event.getCode() == KeyCode.F11 ||
-                      event.getCode() == KeyCode.F12 ||
-                      event.getCode() == KeyCode.ALT ||
-                      event.getCode() == KeyCode.CAPS ||
-                      event.getCode() == KeyCode.ALT_GRAPH ||
-                      event.getCode() == KeyCode.ESCAPE || 
-                      event.getCode() == KeyCode.LEFT ||
-                      event.getCode() == KeyCode.RIGHT ||
-                      event.getCode() == KeyCode.UP ||
-                      event.getCode() == KeyCode.DOWN ||
-                      event.getCode() == KeyCode.CONTROL ||
-                      event.getCode() == KeyCode.SHIFT ||
-                      event.getCode() == KeyCode.INSERT || 
-                      event.getCode() == KeyCode.PAGE_UP ||
-                      event.getCode() == KeyCode.PAGE_DOWN ||
-                      event.getCode() == KeyCode.HOME ||
-                      event.getCode() == KeyCode.END ||
-                      event.getCode() == KeyCode.NUM_LOCK ||
-                      event.getCode() == KeyCode.PRINTSCREEN ||
-                      event.getCode() == KeyCode.COPY ||
-                      event.getCode() == KeyCode.PASTE) {
-                      
-                      
-            }else {
-                
-                if (contadorCaracteres == 0) {
-                    contadorCaracteres = 0;
-                } else {
-                    contadorCaracteres = 100;
-                    contadorCaracteres = contadorCaracteres - (campoPergunta.getText().length() + 1);
-                    labelCaracteres.setText("Caracteres: " + contadorCaracteres);
-                }
-            }*/
+            
         });
     }
-
 }
