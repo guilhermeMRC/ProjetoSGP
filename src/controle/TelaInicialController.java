@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -58,8 +59,11 @@ public class TelaInicialController implements Initializable,CallBack {
     }
     
     @FXML
-    void minimizarAplicacao(ActionEvent event){
+    public void minimizarAplicacao(ActionEvent event){
         
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+        stage.setIconified(true);
+
     }
     
     @Override

@@ -20,7 +20,7 @@
                   <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="16" />
                </graphic>
             </JFXButton>
-            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="838.0" layoutY="14.0" text="Button">
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="838.0" layoutY="14.0" onAction="#minimizarAplicacao" text="Button">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="17" />
                </graphic>
