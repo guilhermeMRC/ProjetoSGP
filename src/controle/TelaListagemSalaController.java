@@ -156,6 +156,7 @@ public class TelaListagemSalaController implements Initializable {
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
+                stage.setTitle("Cadastro de Sala");
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
                 voltarEmListarTodos();
@@ -260,6 +261,7 @@ public class TelaListagemSalaController implements Initializable {
     }
 
     public void inicializarTabela() {
+        
         SalaDAO salaDAO = new SalaDAO();
         
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
@@ -272,7 +274,6 @@ public class TelaListagemSalaController implements Initializable {
         colunaIHabilitarDesabilitar.setStyle("-fx-alignment: CENTER;");
         
         obsSalas = FXCollections.observableArrayList(salaDAO.listar());
-        
         habilitarDesabilitarSala();
         tabelaSalas.setItems(obsSalas);
     }

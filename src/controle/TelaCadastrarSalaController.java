@@ -56,6 +56,8 @@ public class TelaCadastrarSalaController implements Initializable {
     private JFXButton botaoCadastrar;
     @FXML
     private TextField campoNomeSala;
+    @FXML
+    private JFXCheckBox checkboxSelecionarTodos;
 
     private ObservableList<Pergunta> obsPerguntas = FXCollections.observableArrayList();
     private PerguntaDAO perguntaDAO;
@@ -81,11 +83,9 @@ public class TelaCadastrarSalaController implements Initializable {
 
     public void gerarTabela() {
         
-        PerguntaDAO perguntaDAO = new PerguntaDAO();
-                
         colunaPergunta.setCellValueFactory(new PropertyValueFactory("descricao"));
-        colunaPergunta.setStyle("-fx-alignment: CENTER;");
-        
+        colunaPergunta.setStyle("-fx-alignment: LEFT;");
+   
         colunaDisciplina.setCellValueFactory(new PropertyValueFactory("disciplina"));
         colunaDisciplina.setStyle("-fx-alignment: CENTER;");
 
@@ -143,6 +143,7 @@ public class TelaCadastrarSalaController implements Initializable {
         }else {
             
             boolean validacao = false;
+            
             for(Sala s : salaDAO.listar()){
                 
                 if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())) validacao = true;
@@ -282,5 +283,27 @@ public class TelaCadastrarSalaController implements Initializable {
             tabelaSalas.setItems(pergs);
         }
         
+    }
+    
+    @FXML
+    public void selecionarTodasPerguntas(ActionEvent event) {
+
+        if(checkboxSelecionarTodos.isSelected()){
+            
+            for(Pergunta p : obsPerguntas){
+                p.getCheckbox().setSelected(true);
+                
+            }
+            cont = obsPerguntas.size();
+            labelNumero.setText("N = " + cont);
+            
+        }else {
+            
+            for(Pergunta p : obsPerguntas){
+                p.getCheckbox().setSelected(false);
+            }
+            cont = 0;
+            labelNumero.setText("N = " + cont);
+        }
     }
 }

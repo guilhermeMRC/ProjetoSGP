@@ -4,12 +4,19 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="496.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaBackupERestauracaoController">
    <children>
-      <SplitPane dividerPositions="0.5" layoutX="15.0" layoutY="102.0" orientation="VERTICAL" prefHeight="380.0" prefWidth="933.0">
+      <ImageView fitHeight="496.0" fitWidth="963.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/sobre.png" />
+         </image>
+      </ImageView>
+      <SplitPane dividerPositions="0.5" layoutX="15.0" layoutY="90.0" orientation="VERTICAL" prefHeight="380.0" prefWidth="933.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="963.0" style="-fx-background-color: #fff;">
                <children>

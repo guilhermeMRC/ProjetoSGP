@@ -68,6 +68,8 @@ public class TelaListagemPerguntasController implements Initializable {
     private TableColumn<Pergunta, Disciplina> colunaDisciplina;
     @FXML
     private JFXButton botaoIncluir, botaoAlterar, botaoExcluir, criarSala;
+    @FXML
+    private JFXCheckBox checkboxSelecionarTodos;
     
     @FXML
     private JFXComboBox<String> comboListagem;
@@ -75,12 +77,12 @@ public class TelaListagemPerguntasController implements Initializable {
     @FXML
     private TextField campoPesquisar;
 
-    private PerguntaDAO perguntaDAO;
+    //private PerguntaDAO perguntaDAO;
     private Pergunta pergunta;
     private TelaListagemPerguntasController telaListarPerguntas;
 
-    private ObservableList<String> obsOpcaoListagem = FXCollections.observableArrayList();
-    private ObservableList<Pergunta> obsPergunta = FXCollections.observableArrayList();
+    private ObservableList<String> obsOpcaoListagem;// = FXCollections.observableArrayList();
+    private ObservableList<Pergunta> obsPergunta; //= FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -120,25 +122,48 @@ public class TelaListagemPerguntasController implements Initializable {
     é só dar um merge pelo método atualizar no PerguntaDAO*/
     private void handleButtonAction(ActionEvent event) {
 
-        //seto o PerguntaDAO que faz a conexão com o banco de dados
         PerguntaDAO perguntaDAO = new PerguntaDAO();
+        
+        for(Pergunta p : tabelaPerguntas.getItems()){
+            
+            if(p.getTogglebutton() == event.getTarget()) {
+                
+                pergunta = p;
+                break;
+            }
+        }
+        
+        boolean status = pergunta.isHabilitar();
+        
+        if(status == true){
+            
+            pergunta.setHabilitar(false);
+            perguntaDAO.atualizarComAlternativas(pergunta);
+            
+        }else {
+            
+            pergunta.setHabilitar(true);
+            perguntaDAO.atualizarComAlternativas(pergunta);
+            
+        }
+        
+        escolherOpcao(event);
+        
+        /*PerguntaDAO perguntaDAO = new PerguntaDAO();
 
-        //esse for varre a tabela atrás do togglebutton que eu cliquei
         for (Pergunta p : tabelaPerguntas.getItems()) {
 
-            //aqui faz a checagem de qual tooglebutton eu apertei
+            
             if (p.getTogglebutton() == event.getTarget()) {
-                //aqui joga as informações para uma pergunta instaciada como atributo la em cima na classe
+                
                 pergunta = p;
                 break;
             }
 
         }
 
-        //aqui pega o valor do atributo habilitar 
         boolean status = pergunta.isHabilitar();
         
-        //aqui ele checa e atualiza no banco
         if (status == true) {
 
             pergunta.setHabilitar(false);
@@ -151,7 +176,7 @@ public class TelaListagemPerguntasController implements Initializable {
 
         }
         
-        escolherOpcao(event);
+        escolherOpcao(event);*/
     }
 
     /*Método que faz o togglebuttons aparecerem na
@@ -166,13 +191,14 @@ public class TelaListagemPerguntasController implements Initializable {
     }
 
     public void carregarTabela() {
-        perguntaDAO = new PerguntaDAO();
+        
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
         
         colunaId.setCellValueFactory(new PropertyValueFactory("id"));
         colunaId.setStyle("-fx-alignment: CENTER;");
 
         colunaPergunta.setCellValueFactory(new PropertyValueFactory("descricao"));
-        colunaPergunta.setStyle("-fx-alignment: LEFT;");
+        colunaPergunta.setStyle("-fx-alignment: CENTER;");
         
         colunaDificuldade.setCellValueFactory(new PropertyValueFactory("dificuldade"));
         colunaDificuldade.setStyle("-fx-alignment: CENTER;");
@@ -189,6 +215,7 @@ public class TelaListagemPerguntasController implements Initializable {
         obsPergunta = FXCollections.observableArrayList(perguntaDAO.listar());
         habilitarDesabilitarPergunta();
         tabelaPerguntas.setItems(obsPergunta);
+        
     }
     
     public void trazerPerguntasOnOuOff(boolean status) {
@@ -402,5 +429,24 @@ public class TelaListagemPerguntasController implements Initializable {
         comboListagem.getSelectionModel().select(0);
         escolherOpcao(event);
         
+    }
+    
+    @FXML
+    public void selecionarTodasPerguntas(ActionEvent event) {
+
+        if(checkboxSelecionarTodos.isSelected()){
+            
+            for(Pergunta p : obsPergunta){
+                p.getCheckbox().setSelected(true);
+                
+            }
+            
+        }else {
+            
+            for(Pergunta p : obsPergunta){
+                p.getCheckbox().setSelected(false);
+            }
+            
+        }
     }
 }

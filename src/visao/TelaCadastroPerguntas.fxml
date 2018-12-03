@@ -13,16 +13,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastraPerguntas">
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaCadastraPerguntas">
    <children>
-      <AnchorPane prefHeight="640.0" prefWidth="890.0" style="-fx-background-color: #f7f7f7;">
+      <AnchorPane prefHeight="642.0" prefWidth="890.0" style="-fx-background-color: #f7f7f7;">
          <children>
-            <JFXTextArea fx:id="campoPergunta" focusColor="#429344" labelFloat="true" layoutX="14.0" layoutY="62.0" prefHeight="181.0" prefWidth="492.0" promptText="Descrição da pergunta" style="-fx-background-color: #fff;" wrapText="true">
+            <JFXTextArea fx:id="campoPergunta" focusColor="#429344" labelFloat="true" layoutX="12.0" layoutY="31.0" prefHeight="194.0" prefWidth="514.0" promptText="Descrição da pergunta" style="-fx-background-color: #fff;" wrapText="true" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="364.0">
                <font>
                   <Font size="15.0" />
                </font>
             </JFXTextArea>
-            <JFXRadioButton fx:id="opcaoA" layoutX="12.0" layoutY="336.0" text="A)">
+            <JFXRadioButton fx:id="opcaoA" layoutX="14.0" layoutY="364.0" text="A)" AnchorPane.leftAnchor="14.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -30,53 +30,53 @@
                   <ToggleGroup fx:id="Alternativas" />
                </toggleGroup>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="opcaoB" layoutX="12.0" layoutY="379.0" text="B)" toggleGroup="$Alternativas">
+            <JFXRadioButton fx:id="opcaoB" layoutX="14.0" layoutY="407.0" text="B)" toggleGroup="$Alternativas" AnchorPane.leftAnchor="14.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="opcaoC" layoutX="12.0" layoutY="424.0" text="C)" toggleGroup="$Alternativas">
+            <JFXRadioButton fx:id="opcaoC" layoutX="14.0" layoutY="452.0" text="C)" toggleGroup="$Alternativas" AnchorPane.leftAnchor="14.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="opcaoD" layoutX="12.0" layoutY="464.0" text="D)" toggleGroup="$Alternativas">
+            <JFXRadioButton fx:id="opcaoD" layoutX="14.0" layoutY="492.0" text="D)" toggleGroup="$Alternativas" AnchorPane.leftAnchor="14.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXRadioButton>
-            <TextField fx:id="campoAlternativaA" layoutX="63.0" layoutY="332.0" prefHeight="25.0" prefWidth="440.0" />
-            <TextField fx:id="campoAlternativaB" layoutX="63.0" layoutY="375.0" prefHeight="25.0" prefWidth="440.0" />
-            <TextField fx:id="campoAlternativaC" layoutX="63.0" layoutY="420.0" prefHeight="25.0" prefWidth="440.0" />
-            <TextField fx:id="campoAlternativaD" layoutX="63.0" layoutY="460.0" prefHeight="25.0" prefWidth="440.0" />
-            <JFXComboBox fx:id="selecaoDificuldadePergunta" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="146.0" prefHeight="31.0" prefWidth="296.0" promptText="Nivel de dificuldade" />
-            <JFXComboBox fx:id="selecaoDisciplina" focusColor="#429344" labelFloat="true" layoutX="533.0" layoutY="212.0" prefHeight="31.0" prefWidth="296.0" promptText="Disciplina" />
-            <Label layoutX="10.0" layoutY="301.0" text="Alternativas">
+            <TextField fx:id="campoAlternativaA" layoutX="65.0" layoutY="360.0" prefHeight="31.0" prefWidth="466.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="359.0" />
+            <TextField fx:id="campoAlternativaB" layoutX="65.0" layoutY="403.0" prefHeight="31.0" prefWidth="466.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="359.0" />
+            <TextField fx:id="campoAlternativaC" layoutX="65.0" layoutY="448.0" prefHeight="31.0" prefWidth="466.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="359.0" />
+            <TextField fx:id="campoAlternativaD" layoutX="65.0" layoutY="488.0" prefHeight="31.0" prefWidth="466.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="359.0" />
+            <JFXComboBox fx:id="selecaoDificuldadePergunta" focusColor="#429344" labelFloat="true" layoutX="569.0" layoutY="111.0" prefHeight="46.0" prefWidth="315.0" promptText="Nivel de dificuldade" AnchorPane.rightAnchor="16.0" />
+            <JFXComboBox fx:id="selecaoDisciplina" focusColor="#429344" labelFloat="true" layoutX="569.0" layoutY="177.0" prefHeight="46.0" prefWidth="315.0" promptText="Disciplina" AnchorPane.rightAnchor="16.0" />
+            <Label layoutX="13.0" layoutY="318.0" text="Alternativas" AnchorPane.leftAnchor="13.0">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <JFXButton fx:id="botaoCadastrar" layoutX="107.0" layoutY="551.0" onAction="#CadastrarPergunta" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" style="-fx-background-color: #6bb133;;" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Cadastrar" textFill="WHITE">
+            <JFXButton fx:id="botaoCadastrar" layoutX="132.0" layoutY="576.0" onAction="#CadastrarPergunta" prefHeight="34.0" prefWidth="329.0" ripplerFill="#2f2727" style="-fx-background-color: #6bb133;;" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Cadastrar" textFill="WHITE" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="429.0">
                <font>
                   <Font name="Century Gothic Bold" size="12.0" />
                </font></JFXButton>
-            <StackPane layoutX="522.0" layoutY="332.0" prefHeight="252.0" prefWidth="315.0">
+            <StackPane layoutX="559.0" layoutY="358.0" prefHeight="252.0" prefWidth="315.0" AnchorPane.rightAnchor="16.0">
                <children>
                   <JFXChipView fx:id="campoTags" prefHeight="233.0" prefWidth="315.0" style="-fx-border-color: #CFCFCF; -fx-background-color: #fff;" />
                </children>
             </StackPane>
-            <Label layoutX="531.0" layoutY="301.0" text="Tags">
+            <Label layoutX="559.0" layoutY="318.0" text="Tags" AnchorPane.rightAnchor="298.0">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <JFXSlider fx:id="sliderTempoPergunta" blockIncrement="30.0" cache="true" layoutX="533.0" layoutY="89.0" majorTickUnit="30.0" max="180.0" min="30.0" minorTickCount="30" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="30.0" />
-            <Label layoutX="533.0" layoutY="58.0" text="Tempo">
+            <JFXSlider fx:id="sliderTempoPergunta" blockIncrement="30.0" cache="true" layoutX="559.0" layoutY="52.0" majorTickUnit="30.0" max="180.0" min="30.0" minorTickCount="30" prefHeight="46.0" prefWidth="315.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="30.0" AnchorPane.rightAnchor="16.0" />
+            <Label layoutX="561.0" layoutY="31.0" text="Tempo" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="31.0">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Label>
-            <JFXButton fx:id="botaoIncluir" layoutX="617.0" layoutY="263.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #6bb133;" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Cadastrar Disciplina" textFill="WHITE" />
-            <Label fx:id="labelCaracteres" layoutX="12.0" layoutY="255.0" text="Caracteres:" />
+            <JFXButton fx:id="botaoIncluir" layoutX="646.0" layoutY="240.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #6bb133;" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Cadastrar Disciplina" textFill="WHITE" AnchorPane.rightAnchor="84.0" />
+            <Label fx:id="labelCaracteres" layoutX="12.0" layoutY="245.0" text="Caracteres:" AnchorPane.leftAnchor="12.0" />
          </children>
       </AnchorPane>
    </children>

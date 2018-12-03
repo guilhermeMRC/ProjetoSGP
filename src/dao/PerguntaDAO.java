@@ -6,8 +6,14 @@
 package dao;
 
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 import modelo.Alternativa;
 import modelo.Pergunta;
+import modelo.Sala;
 
 /**
  *
@@ -137,4 +143,21 @@ public class PerguntaDAO extends GenericDAO<Pergunta>{
         }
     }
      
+     
+     public List<Pergunta> retornarPerguntasForaDaSala(Long idSala){
+         getManager().getTransaction().begin();
+            CriteriaBuilder cb = getManager().getCriteriaBuilder();
+            CriteriaQuery<Pergunta> cq = cb.createQuery(Pergunta.class);
+            Root<Pergunta> rootP = cq.from(Pergunta.class);
+            
+            Join<Pergunta, Sala> join = rootP.join("sala");
+            Path<Long> salaIdAtual = join.get("id");
+            
+            cq.where(cb.isFalse(salaIdAtual.in(idSala)));
+            cq.distinct(true);
+            List<Pergunta> perguntas = getManager().createQuery(cq).getResultList();
+            getManager().getTransaction().commit();
+            return perguntas;
+            
+     }
 }

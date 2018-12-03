@@ -19,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -60,6 +61,9 @@ public class Pergunta implements Serializable{
     
     @Transient
     private ToggleButton togglebutton = new JFXToggleButton();
+    
+    @ManyToMany(mappedBy = "perguntas")
+    private List<Sala> sala = new ArrayList<Sala>();
     
     public Pergunta (){
         this.tags = new ArrayList();
@@ -144,13 +148,12 @@ public class Pergunta implements Serializable{
     esta desabilitada o checkbox agora desabilita*/
     public ToggleButton getTogglebutton() {
         if(isHabilitar() == true){
-            //this.togglebutton.setText("Desabilitar");
             this.togglebutton.setSelected(true);
-            //this.checkbox.setDisable(false);
+            
         }else{
-            //this.togglebutton.setText("Habilitar");
+            
             this.togglebutton.setSelected(false);
-            //this.checkbox.setDisable(true);
+            
         }
         return togglebutton;
     }
@@ -162,5 +165,38 @@ public class Pergunta implements Serializable{
     public void addAlternativa(Alternativa alt){
         getAlternativas().add(alt);
     }
+
+    public List<Sala> getSala() {
+        return sala;
+    }
+
+    public void setSala(List<Sala> sala) {
+        this.sala = sala;
+    }
+
+    /*@Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pergunta other = (Pergunta) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }*/
 
 }

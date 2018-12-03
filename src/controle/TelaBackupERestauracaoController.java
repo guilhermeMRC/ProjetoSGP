@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -84,6 +85,7 @@ public class TelaBackupERestauracaoController implements Initializable {
         } catch (Exception e) {
             
             e.printStackTrace();
+            
         }
         
     } 
@@ -144,6 +146,7 @@ public class TelaBackupERestauracaoController implements Initializable {
         } catch (Exception e) {
             
             e.printStackTrace();
+            
         }
         
     }
@@ -187,7 +190,7 @@ public class TelaBackupERestauracaoController implements Initializable {
                 if(procCom == 0){
 
                     labelMensagemImport.setText("Importado com Sucesso!");
-                    textFieldPathSalvar.setText("");
+                    textFieldPathCarregar.setText("");
 
                 }else {
 

@@ -176,6 +176,7 @@ public class TelaEditarPerguntasSalaController implements Initializable{
     /*Gera a tabela com Perguntas que podem ser escolhidas 
     ela é projetada na direita da tela*/
     public void gerarTabelaComPerguntasNaoEscolhidas(){
+        PerguntaDAO perguntaDAO = new PerguntaDAO();
         
         colunaPerguntaTD.setCellValueFactory(new PropertyValueFactory("descricao"));
 
@@ -231,116 +232,36 @@ public class TelaEditarPerguntasSalaController implements Initializable{
 
             try {
 
-                    salaDAO.atualizar(novaSala);
+                salaDAO.atualizar(novaSala);
 
-                    //Editando a mensagem usando o FontAwesomeIconView
-                    Alert mensagem = new Alert(Alert.AlertType.NONE);
+                //Editando a mensagem usando o FontAwesomeIconView
+                Alert mensagem = new Alert(Alert.AlertType.NONE);
 
-                    FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
-                    icone.setGlyphSize(50);
+                FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+                icone.setGlyphSize(50);
 
-                    Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
-                    icone.setFill(paint);
+                Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+                icone.setFill(paint);
 
-                    mensagem.setGraphic(icone);
-                    mensagem.setTitle("Mensagem do sistema");
-                    mensagem.setHeaderText("Atualizar sala");
-                    mensagem.setContentText("sala Editada com sucesso!");
-                    mensagem.getOnCloseRequest();
-                    mensagem.getButtonTypes().add(ButtonType.OK);
-                    mensagem.showAndWait();
-
-                    /*Seta um stage e com o getWindow pega a sena da tela
-                    ai é só chamar o close() para fechar a tela*/
-                    Stage stage = (Stage) borderPanePrincipal.getScene().getWindow();
-                    stage.close();
-
-                } catch (Exception e) { //acho que não precisa desse try Catch
-
-                    e.printStackTrace();
-                }
-            }
-            
-            
-        
-        /*Checa se a sala tem um mínimo de salas cadastradas.
-        Nesse caso coloquei menor que 5 para poder testar
-        if(novaSala.getPerguntas().size() < 5){
-            
-            /*Mensagem que checa se a sala tiver menos que a
-            quantidade estipulada, lança a mensagem e nada acontece
-            Alert mensagem = new Alert(Alert.AlertType.ERROR);
-            mensagem.setTitle("Mensagem do sistema");
-            mensagem.setHeaderText("Atualizar sala");
-            mensagem.setContentText("Sala não pode ser editada com menos de 5 perguntas");
-            mensagem.show();
-            
-        }else {
-            
-            /*Se caso passar a condição à cima, vai cair nesse 
-            else que tem um contador que servirá para contar o
-            número de perguntas com a dificuldade DIFICIL
-            int contador = 0;
-            
-            for(Pergunta p : novaSala.getPerguntas()){
-                
-                /*Aqui o for corre cada pergunta. Se a pergunta 
-                conter dificuldade DIFICIL o cantador contará mais um
-                marcando assim as perguntas com a referida dificuldade
-                if(p.getDificuldade().equals(Dificuldade.DIFICIL)){
-                    
-                    contador ++;
-                }
-            }
-            
-            /*Se o contador conter um número menor que o determinado
-            (Aqui determinei 3 para testar) o programa exibirá uma 
-            mensagem dizendo que não é possivel editar a sala e nada acontece
-            if(contador < 3){
-                
-                Alert mensagem = new Alert(Alert.AlertType.ERROR);
+                mensagem.setGraphic(icone);
                 mensagem.setTitle("Mensagem do sistema");
                 mensagem.setHeaderText("Atualizar sala");
-                mensagem.setContentText("Sala não pode ser editada com menos de 3 perguntas dificeis!");
-                mensagem.show();
-                
-            }else {
-                
-                /*Se chegar aqui o programa vai atualizar 
-                normalmente
-                try {
-                
-                    salaDAO.atualizar(novaSala);
-                    
-                    /*Editando a mensagem usando o FontAwesomeIconView
-                    Alert mensagem = new Alert(Alert.AlertType.NONE);
-                    
-                    FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
-                    icone.setGlyphSize(50);
-                    
-                    Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
-                    icone.setFill(paint);
-                    
-                    mensagem.setGraphic(icone);
-                    mensagem.setTitle("Mensagem do sistema");
-                    mensagem.setHeaderText("Atualizar sala");
-                    mensagem.setContentText("sala Editada com sucesso!");
-                    mensagem.getOnCloseRequest();
-                    mensagem.getButtonTypes().add(ButtonType.OK);
-                    mensagem.showAndWait();
-                    
-                    /*Seta um stage e com o getWindow pega a sena da tela
-                    ai é só chamar o close() para fechar a tela
-                    Stage stage = (Stage) borderPanePrincipal.getScene().getWindow();
-                    stage.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                
+                mensagem.setContentText("sala Editada com sucesso!");
+                mensagem.getOnCloseRequest();
+                mensagem.getButtonTypes().add(ButtonType.OK);
+                mensagem.showAndWait();
+
+                /*Seta um stage e com o getWindow pega a sena da tela
+                ai é só chamar o close() para fechar a tela*/
+                Stage stage = (Stage) borderPanePrincipal.getScene().getWindow();
+                stage.close();
+
+            } catch (Exception e) { //acho que não precisa desse try Catch
+
+                e.printStackTrace();
             }
-            
-        }*/
-        
+        }
+         
     }
     
     /*Esse método é o evento do botão que adiciona perguntas 
@@ -362,6 +283,7 @@ public class TelaEditarPerguntasSalaController implements Initializable{
                 
                 p.getCheckbox().setSelected(false);
                 perguntas.add(p);
+                //perguntasNaoEscolhidas.remove(p);
                 
             }else {
                 
@@ -399,6 +321,7 @@ public class TelaEditarPerguntasSalaController implements Initializable{
             if(p.getCheckbox().isSelected()){
                 
                 perguntas.remove(p);
+                //perguntasNaoEscolhidas.add(p);
                 
             }else {
                 
@@ -417,15 +340,19 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         }
         
         atualizarTabelas();
-        /*
-        gerarTabela();
-        trazerPerguntasNaoSelecionadas();
-        gerarTabelaComPerguntasNaoEscolhidas();*/
+        
     }
     
     public void trazerPerguntasNaoSelecionadas() {
         PerguntaDAO perguntaDAO = new PerguntaDAO();
+        //perguntasNaoEscolhidas.setAll(perguntaDAO.retornarPerguntasForaDaSala(novaSala.getId()));
         perguntasNaoEscolhidas.setAll(perguntaDAO.listar());
+        
+        /*não funciona se equals e o hash code estiver implementado 
+        porém ao implementar ele esta dando problemas na outra tela. 
+        O tooglebutto da telaListagemPerguntas não esta funcionando
+        corretamente*/
+        //perguntasNaoEscolhidas.removeAll(perguntas);
         
         for(Pergunta ps : perguntas){
             
@@ -439,6 +366,10 @@ public class TelaEditarPerguntasSalaController implements Initializable{
             }
         }
         
+        /*System.out.println(perguntasNaoEscolhidas.size());
+        PerguntaDAO perguntaDAO2 = new PerguntaDAO();
+        System.out.println(perguntaDAO2.retornarPerguntasForaDaSala(novaSala.getId()).size());*/
+       
     }
     
     public void setNomeSala(String nomeSala){
@@ -459,10 +390,8 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         
         perguntas.setAll(novaSala.getPerguntas());
         
-        atualizarTabelas();
-        /*gerarTabela();
         trazerPerguntasNaoSelecionadas();
-        gerarTabelaComPerguntasNaoEscolhidas();*/
+        atualizarTabelas();
         
         telaLSC = TelaListagemSala;
     }
