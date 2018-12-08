@@ -149,34 +149,6 @@ public class TelaListagemPerguntasController implements Initializable {
         
         escolherOpcao(event);
         
-        /*PerguntaDAO perguntaDAO = new PerguntaDAO();
-
-        for (Pergunta p : tabelaPerguntas.getItems()) {
-
-            
-            if (p.getTogglebutton() == event.getTarget()) {
-                
-                pergunta = p;
-                break;
-            }
-
-        }
-
-        boolean status = pergunta.isHabilitar();
-        
-        if (status == true) {
-
-            pergunta.setHabilitar(false);
-            perguntaDAO.atualizarComAlternativas(pergunta);
-
-        } else {
-
-            pergunta.setHabilitar(true);
-            perguntaDAO.atualizarComAlternativas(pergunta);
-
-        }
-        
-        escolherOpcao(event);*/
     }
 
     /*Método que faz o togglebuttons aparecerem na
@@ -214,6 +186,7 @@ public class TelaListagemPerguntasController implements Initializable {
 
         obsPergunta = FXCollections.observableArrayList(perguntaDAO.listar());
         habilitarDesabilitarPergunta();
+        tabelaPerguntas.getItems().clear();
         tabelaPerguntas.setItems(obsPergunta);
         
     }
@@ -310,6 +283,7 @@ public class TelaListagemPerguntasController implements Initializable {
             inputDialog.close();
         }
         
+        checkboxSelecionarTodos.setSelected(false);
         voltarEmListarTodos();
     }
 

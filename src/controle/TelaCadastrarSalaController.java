@@ -77,9 +77,9 @@ public class TelaCadastrarSalaController implements Initializable {
         });
     }
 
-    public void receberParametros(String nomeSala) {
+    /*public void receberParametros(String nomeSala) {
         campoNomeSala.setText(nomeSala);
-    }
+    }*/
 
     public void gerarTabela() {
         

@@ -174,10 +174,10 @@ public class Pergunta implements Serializable{
         this.sala = sala;
     }
 
-    /*@Override
+    @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -197,6 +197,7 @@ public class Pergunta implements Serializable{
             return false;
         }
         return true;
-    }*/
+    }
 
+    
 }

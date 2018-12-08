@@ -352,9 +352,9 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         porém ao implementar ele esta dando problemas na outra tela. 
         O tooglebutto da telaListagemPerguntas não esta funcionando
         corretamente*/
-        //perguntasNaoEscolhidas.removeAll(perguntas);
+        perguntasNaoEscolhidas.removeAll(perguntas);
         
-        for(Pergunta ps : perguntas){
+        /*for(Pergunta ps : perguntas){
             
             for(Pergunta pt : perguntasNaoEscolhidas){
                 
@@ -364,7 +364,7 @@ public class TelaEditarPerguntasSalaController implements Initializable{
                 }
                 
             }
-        }
+        }*/
         
         /*System.out.println(perguntasNaoEscolhidas.size());
         PerguntaDAO perguntaDAO2 = new PerguntaDAO();

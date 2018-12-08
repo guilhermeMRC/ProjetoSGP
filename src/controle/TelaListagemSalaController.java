@@ -138,36 +138,24 @@ public class TelaListagemSalaController implements Initializable {
 
         FXMLLoader loader = new FXMLLoader();
 
-        TextInputDialog inputDialog = new TextInputDialog();
-        inputDialog.setTitle("Cadastro de sala");
-        inputDialog.setHeaderText("Cadastrar sala");
-        inputDialog.setContentText("Informe o nome da sala: ");
-
-        Optional<String> resultado = inputDialog.showAndWait();
-
-        if (resultado.isPresent() && !resultado.get().isEmpty()) {
-            
-            try {
+        try {
                 
-                AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaCadastroSalas.fxml").openStream());
-                TelaCadastrarSalaController controller = (TelaCadastrarSalaController) loader.getController();
+            AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaCadastroSalas.fxml").openStream());
+            TelaCadastrarSalaController controller = (TelaCadastrarSalaController) loader.getController();
 
-                controller.receberParametros(resultado.get());
-
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Cadastro de Sala");
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-                voltarEmListarTodos();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Cadastro de Sala");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            voltarEmListarTodos();
                 
-            } catch (IOException ex) {
-                Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
-                voltarEmListarTodos();
-            }
-        } else {
-            inputDialog.close();
+        } catch (IOException ex) {
+
+            Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
+            voltarEmListarTodos();
         }
+        
         voltarEmListarTodos();
     }
 
