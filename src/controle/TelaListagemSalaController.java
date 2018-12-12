@@ -8,11 +8,12 @@ package controle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import dao.SalaDAO;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,13 +29,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.Pergunta;
@@ -196,11 +197,12 @@ public class TelaListagemSalaController implements Initializable {
                 Logger.getLogger(TelaListagemSalaController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (NullPointerException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Aviso do sistema");
-            alert.setHeaderText("Erro ao tentar editar sala");
-            alert.setContentText("Nenhuma sala foi selecionada");
-            alert.show();
+            
+            menssagem(Alert.AlertType.INFORMATION, 
+                      "Sala", 
+                      "Selecionar sala", 
+                      "Nenhuma sala foi selecionada!");
+            
         }
     }
 
@@ -220,6 +222,7 @@ public class TelaListagemSalaController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
 
             try {
+                
                 AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/visao/TelaVisualizarPerguntasSala.fxml").openStream());
                 TelaVisualizarPerguntasSalaController controller = (TelaVisualizarPerguntasSalaController) loader.getController();
 
@@ -238,11 +241,10 @@ public class TelaListagemSalaController implements Initializable {
             
         } catch(NullPointerException ex){
              
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Aviso do sistema");
-            alert.setHeaderText("Erro ao tentar visualizar sala");
-            alert.setContentText("Nenhuma sala foi selecionada");
-            alert.show();
+            menssagem(Alert.AlertType.INFORMATION, 
+                      "Sala", 
+                      "Selecionar sala", 
+                      "Nenhuma sala foi selecionada!");
             
         }
 
@@ -338,6 +340,37 @@ public class TelaListagemSalaController implements Initializable {
         ActionEvent event = new ActionEvent();
         comboListagem.getSelectionModel().select(0);
         escolherOpcao(event);
+        
+    }
+    
+    public void menssagem(Alert.AlertType tipo, String title, String header, String Content){
+        
+        Alert mensagem = new Alert(tipo);
+        
+        if(tipo == Alert.AlertType.NONE){
+            
+            FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+            icone.setGlyphSize(50);
+
+            Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+            icone.setFill(paint);
+
+            mensagem.setGraphic(icone);
+            mensagem.setTitle(title);
+            mensagem.setHeaderText(header);
+            mensagem.setContentText(Content);
+            mensagem.getOnCloseRequest();
+            mensagem.getButtonTypes().add(ButtonType.OK);
+            mensagem.showAndWait();
+            
+            
+        }else {
+            
+            mensagem.setTitle(title);
+            mensagem.setHeaderText(header);
+            mensagem.setContentText(Content);
+            mensagem.showAndWait();
+        }
         
     }
 

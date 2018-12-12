@@ -6,22 +6,20 @@
 package controle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXChip;
 import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.skins.JFXChipViewSkin;
 import dao.DisciplinaDAO;
 import dao.PerguntaDAO;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.BiFunction;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,17 +28,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import modelo.Alternativa;
 import modelo.Dificuldade;
 import modelo.Disciplina;
 import modelo.Pergunta;
-import org.hibernate.mapping.Collection;
 
 /**
  * FXML Controller class
@@ -186,11 +186,9 @@ public class TelaEditarPerguntasController implements Initializable {
             é possível salvar vazio*/
             if (resultado.get().equals("")) {
 
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Disciplina");
-                alert.setHeaderText("Cadastro de disciplina");
-                alert.setContentText("Não é possivel cadastrar uma disciplina sem nome!");
-                alert.show();
+                menssagem(Alert.AlertType.ERROR, "Disciplina", 
+                          "Cadastrar Disciplina", 
+                          "Não foi póssivel cadastrar disciplina sem nome!");
 
             } else {
                 disciplina.setDescricao(resultado.get());
@@ -200,11 +198,9 @@ public class TelaEditarPerguntasController implements Initializable {
 
                     disciplinaDAO.incluir(disciplina);
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Disciplina");
-                    alert.setHeaderText("Cadastro de disciplina");
-                    alert.setContentText("Disciplina cadastrada com sucesso!");
-                    alert.show();
+                    menssagem(Alert.AlertType.NONE, "Disciplina", 
+                              "Cadastrar Disciplina", 
+                              "Disciplina cadastrada com sucesso!");
 
                     dialog.close();
                     carregarDisciplinas();
@@ -248,20 +244,22 @@ public class TelaEditarPerguntasController implements Initializable {
                 || campoAlternativaD.getText().isEmpty())
                 || selecaoDisciplina.getSelectionModel().isEmpty()
         ) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Pergunta");
-            alert.setHeaderText("Editar pergunta");
-            alert.setContentText("Não foi editar pergunta! Por favor, verifique se todos os campos estão preenchidos.");
-            alert.show();
+            
+            menssagem(Alert.AlertType.ERROR, 
+                    "Pergunta", 
+                    "Alterar pergunta", 
+                    "Não foi possível alterar pergunta! "
+                    + "Por favor, verifique se todos os campos estão preenchidos.");
             
         } else {
 
             perguntaDAO.atualizarComAlternativas(perguntaNova);
 
-            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
-            mensagem.setTitle("Mensagem do sistema");
-            mensagem.setContentText("Pergunta editada com sucesso!");
-            mensagem.showAndWait();
+            menssagem(Alert.AlertType.NONE, 
+                     "Pergunta", 
+                     "Alterar pergunta",
+                     "Pergunta alterada com sucesso!");
+            
             Stage stage = new Stage();
             stage = (Stage) botaoEditar.getScene().getWindow();
             stage.close();
@@ -318,5 +316,36 @@ public class TelaEditarPerguntasController implements Initializable {
             }
             
         });
+    }
+    
+    public void menssagem(Alert.AlertType tipo, String title, String header, String Content){
+        
+        Alert mensagem = new Alert(tipo);
+        
+        if(tipo == Alert.AlertType.NONE){
+            
+            FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+            icone.setGlyphSize(50);
+
+            Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+            icone.setFill(paint);
+
+            mensagem.setGraphic(icone);
+            mensagem.setTitle(title);
+            mensagem.setHeaderText(header);
+            mensagem.setContentText(Content);
+            mensagem.getOnCloseRequest();
+            mensagem.getButtonTypes().add(ButtonType.OK);
+            mensagem.showAndWait();
+            
+            
+        }else {
+            
+            mensagem.setTitle(title);
+            mensagem.setHeaderText(header);
+            mensagem.setContentText(Content);
+            mensagem.showAndWait();
+        }
+        
     }
 }

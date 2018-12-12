@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controle.TelaVisualizarPerguntasSalaController">
    <children>
-      <TableView fx:id="tabelaSalas" layoutX="35.0" layoutY="79.0" prefHeight="404.0" prefWidth="644.0">
+      <TableView fx:id="tabelaSalas" layoutX="35.0" layoutY="79.0" prefHeight="404.0" prefWidth="644.0" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="79.0">
          <columns>
             <TableColumn fx:id="colunaPergunta" prefWidth="225.0" text="PERGUNTA" />
             <TableColumn fx:id="colunaDisciplina" prefWidth="200.0" text="DISCIPLINA" />
@@ -17,8 +17,8 @@
             <TableColumn fx:id="colunaTempo" prefWidth="117.0" text="TEMPO (SEGs)" />
          </columns>
       </TableView>
-      <TextField fx:id="campoNomeSala" layoutX="35.0" layoutY="39.0" prefHeight="25.0" prefWidth="208.0" />
-      <Label layoutX="35.0" layoutY="14.0" text="Nome da sala:">
+      <TextField fx:id="campoNomeSala" layoutX="35.0" layoutY="39.0" prefHeight="25.0" prefWidth="208.0" AnchorPane.leftAnchor="35.0" />
+      <Label layoutX="35.0" layoutY="14.0" text="Nome da sala:" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
