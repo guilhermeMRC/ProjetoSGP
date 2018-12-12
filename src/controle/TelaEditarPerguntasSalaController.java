@@ -304,6 +304,7 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         
         //Daqui para baixo atualiza as tabelas
         atualizarTabelas();
+        checkboxSelecionarTodosDireita.setSelected(false);
         /*gerarTabela();
         trazerPerguntasNaoSelecionadas();
         gerarTabelaComPerguntasNaoEscolhidas();*/
@@ -340,18 +341,14 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         }
         
         atualizarTabelas();
-        
+        checkboxSelecionarTodosEsquerda.setSelected(false);
     }
     
     public void trazerPerguntasNaoSelecionadas() {
         PerguntaDAO perguntaDAO = new PerguntaDAO();
-        //perguntasNaoEscolhidas.setAll(perguntaDAO.retornarPerguntasForaDaSala(novaSala.getId()));
+        
         perguntasNaoEscolhidas.setAll(perguntaDAO.listar());
         
-        /*não funciona se equals e o hash code estiver implementado 
-        porém ao implementar ele esta dando problemas na outra tela. 
-        O tooglebutto da telaListagemPerguntas não esta funcionando
-        corretamente*/
         perguntasNaoEscolhidas.removeAll(perguntas);
         
         /*for(Pergunta ps : perguntas){

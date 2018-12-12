@@ -32,21 +32,24 @@
                </graphic></TableColumn>
          </columns>
       </TableView>
-      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="785.0" layoutY="42.0" onAction="#inserirPergunta" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css">
+      <JFXButton fx:id="botaoIncluir" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="785.0" layoutY="42.0" onAction="#inserirPergunta" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css">
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15" />
          </graphic>
       </JFXButton>
       <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="875.0" layoutY="42.0" onAction="#alterarPergunta" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css">
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
+            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" size="15" />
          </graphic>
       </JFXButton>
       <TextField fx:id="campoPesquisar" layoutX="15.0" layoutY="42.0" prefHeight="31.0" prefWidth="306.0" promptText="Pesquisar..." />
-      <JFXButton fx:id="botaoGerarSala" layoutX="650.0" layoutY="42.0" onAction="#criarSala" prefHeight="31.0" prefWidth="116.0" styleClass="jfx-button-gerar" stylesheets="@../css/estilo.css" text="Gerar Sala" textFill="WHITE">
+      <JFXButton fx:id="botaoGerarSala" contentDisplay="GRAPHIC_ONLY" layoutX="693.0" layoutY="42.0" onAction="#criarSala" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-gerar" stylesheets="@../css/estilo.css" text=" ">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="15" wrappingWidth="12.928571701049805" />
+         </graphic>
       </JFXButton>
       <JFXComboBox fx:id="comboListagem" layoutX="358.0" layoutY="42.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="248.0" />
    </children>

@@ -7,6 +7,8 @@ package controle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.File;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -16,7 +18,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -33,177 +38,139 @@ public class TelaBackupERestauracaoController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    String pathExport = null;
-    String pathImport = null;
-    String nomeArquivo;
     
-    @FXML
-    private JFXButton botaoBrowseSalvar;
-
+    String pathImport = null;
+    
     @FXML
     private JFXButton botaoExportar;
     
     @FXML
-    private JFXButton botaoBrowseProcurar;
-
-    @FXML
     private JFXButton botaoImportar;
     
-    @FXML
-    private JFXTextField textFieldPathSalvar;
-    
-    @FXML
-    private JFXTextField textFieldPathCarregar;
-    
-    @FXML
-    private Label labelMensagemExport;
-    
-    @FXML
-    private Label labelMensagemImport;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }    
     
-    /*Função que Seleciona onde vai salvar o arquivo do banco de Dados*/
-    @FXML
-    public void selecionarCaminhoBackup(ActionEvent event) {
-        
-        Window meuWindows = new Stage();
-        FileChooser fc = new FileChooser();
-        
-        String data = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        
-        try {
-            File f = fc.showSaveDialog(meuWindows); 
-            pathExport = f.getAbsolutePath();
-            pathExport = pathExport.replace('\\', '/');
-            pathExport = pathExport + "_" + data + ".sql"; 
-            textFieldPathSalvar.setText(pathExport);
-            
-        } catch (Exception e) {
-            
-            e.printStackTrace();
-            
-        }
-        
-    } 
-
     @FXML
     public void exportarBackup(ActionEvent event) {
         
-        Process p = null;
-        
-        if (textFieldPathSalvar.getText().isEmpty()) {
-            
-            Alert mensagem = new Alert(Alert.AlertType.ERROR);
-            mensagem.setTitle("Alerta");
-            mensagem.setHeaderText("Erro ao exportar o Banco de Dados!");
-            mensagem.setContentText("Não é possivel exportar um banco sem selecionar arquivo!");
-            mensagem.show();
-            labelMensagemExport.setText("Mensagem");
-            
-        } else {
-            
-            try {
-            
-                Runtime runtime = Runtime.getRuntime();
-                //p=runtime.exec("C:/Program Files/MySQL/MySQL Workbench 6.3 CE/mysqldump.exe -uroot --add-drop-database -B bancosgp -r" + pathExport);
-                p=runtime.exec("./Utilitarios para Backup/mysqldump.exe -uroot --add-drop-database -B bancosgp -r" + pathExport);
-
-                int processComplete = p.waitFor();
-                if(processComplete == 0){
-
-                    labelMensagemExport.setText("Backup Criado com Sucesso!");
-                    textFieldPathSalvar.setText("");
-
-                }else{
-
-                    labelMensagemExport.setText("Não foi possível criar o backup!");
-                }
-            } catch (Exception e) {
-
-                e.printStackTrace();
-            }
-            
-        }
-        
-    }
-    
-    @FXML
-    public void SelecionarArquivo(ActionEvent event) {
-        
-        Window meuWindows = new Stage();
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("sql","*.sql"));
         try {
-            File f = fc.showOpenDialog(meuWindows); 
-            pathImport = f.getAbsolutePath();
-            pathImport = pathImport.replace('\\', '/');
-            textFieldPathCarregar.setText(pathImport);
-            
-        } catch (Exception e) {
-            
-            e.printStackTrace();
-            
-        }
-        
-    }
 
+            Process p = null;
+
+            String data = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+            String arquivoPathPadrao = "./Backup/backup_"+ data + ".sql";
+            
+
+            Runtime runtime = Runtime.getRuntime();
+            //p=runtime.exec("C:/Program Files/MySQL/MySQL Workbench 6.3 CE/mysqldump.exe -uroot --add-drop-database -B bancosgp -r" + pathExport);
+            p=runtime.exec("./Utilitarios para Backup/mysqldump.exe -u root --add-drop-database -B bancosgp -r " + arquivoPathPadrao);
+
+            int processComplete = p.waitFor();
+            
+            if(processComplete == 0){
+
+                Alert mensagem = new Alert(Alert.AlertType.NONE);
+
+                FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+                icone.setGlyphSize(50);
+
+                Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+                icone.setFill(paint);
+
+                mensagem.setGraphic(icone);
+                mensagem.setTitle("Mensagem do sistema");
+                mensagem.setHeaderText("Exportar Banco de Dados");
+                mensagem.setContentText("Banco de dados exportado com sucesso! "
+                                        + "Você pode conferir o arquivo na pasta ./Backup.");
+                mensagem.getOnCloseRequest();
+                mensagem.getButtonTypes().add(ButtonType.OK);
+                mensagem.showAndWait();
+
+            }else{
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Mensagem do sistema");
+                alert.setHeaderText("Exportar Banco de Dados");
+                alert.setContentText("Erro! Não foi possível exportar o banco.");
+                alert.show();
+            }
+
+        } catch (Exception e) {
+
+        }
+            
+    }
+        
+    /*Esse botão ele importa o arquivo de backup formato .sql
+    eu usei um método da classe FileChooser para que ja abra na pasta 
+    de backup do projeto, mas pode ficar a cargo do usuário trafegar 
+    por outras pastas*/
+    
     @FXML
     public void ImportarBackup(ActionEvent event) {
 
-        String user = "root";
-        String pass = "";
-        String[] restoreCmd = new String[]{
-          /*"C:/Program Files/MySQL/MySQL Workbench 6.3 CE/mysql.exe",
-            "--user="+user,
-            "--password="+pass,
-            "-e","source "+pathImport  
-            
-            "./mysql/bin/mysql.exe",*/
-            
-            "./Utilitarios para Backup/mysql.exe",
-            "--user="+user,
-            "--password="+pass,
-            "-e","source "+pathImport  
-        };
+        Window meuWindows = new Stage();
+        File file = new  File("./Backup");
         
-        Process processo;
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Importar banco de dados");
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("sql","*.sql"));
+        fc.setInitialDirectory(file);
         
-        if(textFieldPathCarregar.getText().isEmpty()){
-                Alert mensagem = new Alert(Alert.AlertType.ERROR);
-                mensagem.setTitle("Alerta");
-                mensagem.setHeaderText("Erro ao Importar o Banco de Dados!");
-                mensagem.setContentText("Não é possivel importar um banco sem selecionar arquivo!");
-                mensagem.show();
-                labelMensagemImport.setText("Mensagem");
+        File f = fc.showOpenDialog(meuWindows); 
+        pathImport = f.getAbsolutePath();
+        pathImport = pathImport.replace('\\', '/');
+        
+        try {
             
-        }else {
+            String user = "root";
+            String pass = "";
+            String[] restoreCmd = new String[]{
+                "./Utilitarios para Backup/mysql.exe",
+                "--user="+user,
+                "--password="+pass,
+                "-e","source "+pathImport  
+            };
             
-            try {
-          
-                processo = Runtime.getRuntime().exec(restoreCmd);
-                int procCom = processo.waitFor();
-
-                if(procCom == 0){
-
-                    labelMensagemImport.setText("Importado com Sucesso!");
-                    textFieldPathCarregar.setText("");
-
-                }else {
-
-                    labelMensagemImport.setText("Arquivo não Importado!");
-                }
+            Process processo;
             
-            } catch (Exception e) {
+            processo = Runtime.getRuntime().exec(restoreCmd);
+            int procCom = processo.waitFor();
 
-                e.printStackTrace();
+            if(procCom == 0){
+                
+                Alert mensagem = new Alert(Alert.AlertType.NONE);
+
+                FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+                icone.setGlyphSize(50);
+
+                Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+                icone.setFill(paint);
+
+                mensagem.setGraphic(icone);
+                mensagem.setTitle("Mensagem do sistema");
+                mensagem.setHeaderText("Importar banco de dados");
+                mensagem.setContentText("Banco de dados importado com sucesso! ");
+                mensagem.getOnCloseRequest();
+                mensagem.getButtonTypes().add(ButtonType.OK);
+                mensagem.showAndWait();
+                
+                
+            }else {
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Mensagem do sistema");
+                alert.setHeaderText("Importar banco de dados");
+                alert.setContentText("Erro! Não foi possível importar o banco.");
+                alert.show();
             }
-
+            
+        } catch (Exception e) {
+            
         }
-       
+
     }
 
 }

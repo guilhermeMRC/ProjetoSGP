@@ -70,6 +70,7 @@
             <JFXSlider fx:id="sliderTempoPergunta" blockIncrement="30.0" cache="true" layoutX="533.0" layoutY="89.0" majorTickUnit="30.0" max="180.0" min="30.0" minorTickCount="30" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="30.0" />
             <Label layoutX="533.0" layoutY="58.0" text="Tempo" />
             <JFXButton fx:id="botaoIncluir" layoutX="627.0" layoutY="268.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #6bb133;" text="Cadastrar Disciplina" textFill="WHITE" />
+            <Label fx:id="labelCaracteres" layoutX="11.0" layoutY="254.0" text="Caracteres:" />
          </children>
       </AnchorPane>
    </children>

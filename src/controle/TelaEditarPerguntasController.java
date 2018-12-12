@@ -22,13 +22,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.BiFunction;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
@@ -91,19 +95,30 @@ public class TelaEditarPerguntasController implements Initializable {
 
     @FXML
     private JFXSlider sliderTempoPergunta;
+    
+    @FXML
+    private Label labelCaracteres; 
 
     private List<Dificuldade> dificuldades = new ArrayList();
     private ObservableList<Dificuldade> obsDificuldade;
     private PerguntaDAO perguntaDAO;
     private List<Disciplina> displinas = new ArrayList<>();
     private ObservableList<Disciplina> obsDisciplinas;
-    Pergunta perguntaNova = new Pergunta();
+    private Pergunta perguntaNova = new Pergunta();
+    public int contadorCaracteres = 100;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         carregarDificuldades();
         carregarDisciplinas();
+        
+        labelCaracteres.setText("Caracteres: 700");
+        limitarCampos(campoAlternativaA, 100);
+        limitarCampos(campoAlternativaB, 100);
+        limitarCampos(campoAlternativaC, 100);
+        limitarCampos(campoAlternativaD, 100);
+        limitarCampos(campoPergunta, 700);
     }
 
     public void receberParametros(TelaListagemPerguntasController tela, Pergunta pergunta) {
@@ -235,8 +250,8 @@ public class TelaEditarPerguntasController implements Initializable {
         ) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Pergunta");
-            alert.setHeaderText("Cadastro de pergunta");
-            alert.setContentText("Não foi cadastrar a pergunta. Por favor, verifique se todos os campos estão preenchidos");
+            alert.setHeaderText("Editar pergunta");
+            alert.setContentText("Não foi editar pergunta! Por favor, verifique se todos os campos estão preenchidos.");
             alert.show();
             
         } else {
@@ -286,5 +301,22 @@ public class TelaEditarPerguntasController implements Initializable {
             a.setCorreto(true);
         }
         return a;
+    }
+    
+    private void limitarCampos(TextInputControl textAtual, int max){
+        textAtual.textProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(textAtual.getText().length() >= max){
+                    textAtual.setText(String.copyValueOf(textAtual.getText().toCharArray(), 0, max));
+                }
+                
+                if(textAtual.getClass() == JFXTextArea.class){
+                    contadorCaracteres = max - textAtual.getText().length();
+                    labelCaracteres.setText("Caracteres: " + contadorCaracteres);
+                }
+            }
+            
+        });
     }
 }

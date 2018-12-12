@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
@@ -20,11 +19,8 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="963.0" style="-fx-background-color: #fff;">
                <children>
-                  <JFXTextField fx:id="textFieldPathSalvar" editable="false" layoutX="195.0" layoutY="84.0" prefHeight="31.0" prefWidth="496.0" />
-                  <JFXButton fx:id="botaoBrowseSalvar" layoutX="728.0" layoutY="84.0" onAction="#selecionarCaminhoBackup" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #6bb133;" text="Procurar" textFill="WHITE" />
-                  <JFXButton fx:id="botaoExportar" layoutX="195.0" layoutY="135.0" onAction="#exportarBackup" prefHeight="31.0" prefWidth="98.0" style="-fx-background-color: #6bb133;" text="Exportar" textFill="WHITE" />
-                  <Label fx:id="labelMensagemExport" layoutX="355.0" layoutY="129.0" prefHeight="21.0" prefWidth="307.0" text="Mensagem" />
-                  <Label alignment="CENTER" layoutX="195.0" layoutY="14.0" prefHeight="36.0" prefWidth="175.0" text="Exportar Banco" textFill="#4e9750">
+                  <JFXButton fx:id="botaoExportar" layoutX="195.0" layoutY="124.0" onAction="#exportarBackup" prefHeight="31.0" prefWidth="548.0" style="-fx-background-color: #6bb133;" text="Exportar" textFill="WHITE" AnchorPane.leftAnchor="195.0" AnchorPane.rightAnchor="195.0" />
+                  <Label alignment="CENTER" layoutX="49.0" layoutY="14.0" prefHeight="36.0" prefWidth="175.0" text="Exportar Banco" textFill="#4e9750">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -33,11 +29,8 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="963.0" style="-fx-background-color: #fff;">
                <children>
-                  <JFXTextField fx:id="textFieldPathCarregar" editable="false" layoutX="193.0" layoutY="77.0" prefHeight="31.0" prefWidth="496.0" />
-                  <JFXButton fx:id="botaoBrowseProcurar" layoutX="726.0" layoutY="77.0" onAction="#SelecionarArquivo" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #6bb133;" text="Procurar" textFill="WHITE" />
-                  <JFXButton fx:id="botaoImportar" layoutX="193.0" layoutY="134.0" onAction="#ImportarBackup" prefHeight="31.0" prefWidth="98.0" style="-fx-background-color: #6bb133;" text="Importar" textFill="WHITE" />
-                  <Label fx:id="labelMensagemImport" layoutX="351.0" layoutY="139.0" prefHeight="21.0" prefWidth="307.0" text="Mensagem" />
-                  <Label alignment="CENTER" layoutX="193.0" layoutY="14.0" prefHeight="36.0" prefWidth="175.0" text="Importar Banco" textFill="#4e9750">
+                  <JFXButton fx:id="botaoImportar" layoutX="195.0" layoutY="124.0" onAction="#ImportarBackup" prefHeight="31.0" prefWidth="541.0" style="-fx-background-color: #6bb133;" text="Importar" textFill="WHITE" AnchorPane.leftAnchor="195.0" AnchorPane.rightAnchor="195.0" />
+                  <Label alignment="CENTER" layoutX="56.0" layoutY="14.0" prefHeight="36.0" prefWidth="175.0" text="Importar Banco" textFill="#4e9750">
                      <font>
                         <Font size="25.0" />
                      </font>
