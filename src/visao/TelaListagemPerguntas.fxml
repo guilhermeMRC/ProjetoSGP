@@ -48,7 +48,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="15" wrappingWidth="12.928571701049805" />
+            <FontAwesomeIconView fill="WHITE" glyphName="OBJECT_GROUP" size="15" wrappingWidth="12.928571701049805" />
          </graphic>
       </JFXButton>
       <JFXComboBox fx:id="comboListagem" layoutX="358.0" layoutY="42.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="248.0" />
