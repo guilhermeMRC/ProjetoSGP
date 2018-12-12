@@ -11,8 +11,6 @@ import com.jfoenix.controls.JFXComboBox;
 import dao.DisciplinaDAO;
 import dao.PerguntaDAO;
 import dao.SalaDAO;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -38,8 +35,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.Dificuldade;
@@ -229,7 +224,6 @@ public class TelaListagemPerguntasController implements Initializable {
         
         int contador = 0;
         ObservableList<Pergunta> perguntas = FXCollections.observableArrayList();
-        SalaDAO salaDAO = new SalaDAO();
         
         //Varre as perguntas atrás de qual está marcada pelo checkbox
         for (Pergunta p : obsPergunta) {
@@ -244,68 +238,55 @@ public class TelaListagemPerguntasController implements Initializable {
         inputDialog.setContentText("Informe o nome da sala: ");
 
         Optional<String> resultado = inputDialog.showAndWait();
-        
-        if(resultado.get().isEmpty()){
+        if (resultado.isPresent()) {
             
-            menssagem(Alert.AlertType.ERROR, 
-                      "Sala", 
-                      "Cadastrar sala", 
-                      "Não é possível cadastrar sala sem nome!");
-            
-        }else {
-            
-            boolean validacao = false;
-            
-             for(Sala s : salaDAO.listar()){
-                
-                if(s.getDescricao().equalsIgnoreCase(resultado.get())) validacao = true;
-                break;
-                
+            for(Pergunta pd : perguntas) {
+                if(pd.getDificuldade().equals(Dificuldade.DIFICIL)) contador++;
             }
             
-            for(Pergunta per : perguntas){
+            /*Aqui checa se a sala tem nome e checa também se o usuário 
+            marcou alguma pergunta... ou seja não é possivel cadastrar 
+            sala sem pergunta e nem sem nome nessa tela*/
+            if(resultado.get().equals("") || perguntas.size() < 5 || contador < 3){
                 
-                if(per.getDificuldade().equals(Dificuldade.DIFICIL)) {
-                    contador ++;
-                }
-                  
-            }
-            
-            if((perguntas.size() < 5) || (contador < 3) || validacao == true){
-                
-                menssagem(Alert.AlertType.ERROR, 
-                          "Sala", 
-                          "Cadastrar sala", 
-                          "Não é possivel cadastrar! A sala deve conter um nome diferente das outras "
-                          + "já cadastradas e no minimo 5 perguntas das quais 3 devem ser Dificeis.");
+                Alert mensagem = new Alert(Alert.AlertType.ERROR);
+                mensagem.setTitle("Sala");
+                mensagem.setHeaderText("Cadastro de Sala");
+                mensagem.setContentText("Não é possivel cadastrar uma sala! Sala deve conter "
+                                        + "ter um nome e no mínimo 5 perguntas das quais 3 difíceis.");
+                mensagem.show();
                 
             }else {
                 
-                try{
-                    
-                    salaDAO = new SalaDAO();
-                
+                try {
+
                     Sala novaSala = new Sala();
                     novaSala.setDescricao(resultado.get());
                     novaSala.setPerguntas(perguntas);
 
+                    SalaDAO salaDAO = new SalaDAO();
                     salaDAO.incluir(novaSala);
-                    
-                    menssagem(Alert.AlertType.NONE, "Sala", "Cadastrar sala", "Sala cadastrada com sucesso!");
-                    
-                }catch(Exception e){
-                    
+
+                    Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+                    mensagem.setTitle("Mensagem do sistema");
+                    mensagem.setHeaderText("Cadastrar sala");
+                    mensagem.setContentText("Sala cadastrada com sucesso!");
+                    mensagem.showAndWait();
+               
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-                
             }
-        
+            
+        } else {
+            
+            inputDialog.close();
         }
         
         checkboxSelecionarTodos.setSelected(false);
         voltarEmListarTodos();
-       
     }
-    
+
     /*Método para passar uma pergunta de uma tela para outra*/
     @FXML
     public void passarParametroTelaDisciplinaEdicao() {
@@ -343,12 +324,11 @@ public class TelaListagemPerguntasController implements Initializable {
             }
             
         } catch (NullPointerException ex) {
-            
-            menssagem(Alert.AlertType.INFORMATION, 
-                      "Pergunta", 
-                      "Selecionar pergunta", 
-                      "Nenhuma pergunta foi selecionada");
-            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aviso do sistema");
+            alert.setHeaderText("Erro ao tentar editar pergunta");
+            alert.setContentText("Nenhuma pergunta foi selecionada");
+            alert.show();
         }
         
     }
@@ -443,36 +423,4 @@ public class TelaListagemPerguntasController implements Initializable {
             
         }
     }
-    
-    public void menssagem(Alert.AlertType tipo, String title, String header, String Content){
-        
-        Alert mensagem = new Alert(tipo);
-        
-        if(tipo == Alert.AlertType.NONE){
-            
-            FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
-            icone.setGlyphSize(50);
-
-            Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
-            icone.setFill(paint);
-
-            mensagem.setGraphic(icone);
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.getOnCloseRequest();
-            mensagem.getButtonTypes().add(ButtonType.OK);
-            mensagem.showAndWait();
-            
-            
-        }else {
-            
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.showAndWait();
-        }
-        
-    }
-
 }

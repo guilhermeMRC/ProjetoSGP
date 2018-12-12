@@ -134,10 +134,11 @@ public class TelaCadastrarSalaController implements Initializable {
         porque depois vamos ter que verificar o numero de questões mínimas*/
         if(campoNomeSala.getText().isEmpty()){
             
-            menssagem(Alert.AlertType.ERROR, 
-                      "Sala", 
-                      "Cadastrar sala", 
-                      "Não é possível cadastrar sala sem nome!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aviso do sistema");
+            alert.setHeaderText("Cadastro de Sala!");
+            alert.setContentText("Não é possivel cadastrar sala sem nome!");
+            alert.showAndWait();
             
         }else {
             
@@ -160,11 +161,12 @@ public class TelaCadastrarSalaController implements Initializable {
             
             if((perguntas.size() < 5) || (contador < 3) || validacao == true){
                 
-                menssagem(Alert.AlertType.ERROR, 
-                          "Sala", 
-                          "Cadastrar sala", 
-                          "Não é possivel cadastrar! A sala deve conter um nome diferente das outras "
-                          + "já cadastradas e no minimo 5 perguntas das quais 3 devem ser Dificeis.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Aviso do sistema");
+                alert.setHeaderText("Cadastro de Sala!");
+                alert.setContentText("Não é possivel cadastrar! A sala deve conter um nome diferente das outras "
+                                    + "já cadastradas e no minimo 5 perguntas das quais 3 devem ser Dificeis.");
+                alert.showAndWait();
                 
             }else {
                 
@@ -176,21 +178,31 @@ public class TelaCadastrarSalaController implements Initializable {
                 try {
                     
                     salaDAO.incluir(novaSala);
-                    
-                    menssagem(Alert.AlertType.NONE, 
-                              "Sala", 
-                              "Cadastrar sala", 
-                              "Sala cadastrada com sucesso!");
+
+                    Alert mensagem = new Alert(Alert.AlertType.NONE);
+
+                    FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+                    icone.setGlyphSize(50);
+
+                    Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+                    icone.setFill(paint);
+
+                    mensagem.setGraphic(icone);
+                    mensagem.setTitle("Mensagem do sistema");
+                    mensagem.setHeaderText("Cadastrar sala");
+                    mensagem.setContentText("Sala cadastrada com sucesso!");
+                    mensagem.getOnCloseRequest();
+                    mensagem.getButtonTypes().add(ButtonType.OK);
+                    mensagem.showAndWait();
                     
                     limparCampos();
 
                 } catch (Exception ex) {
-                    
-                    menssagem(Alert.AlertType.ERROR, 
-                              "Sala", 
-                              "Cadastrar sala", 
-                              ex.getLocalizedMessage());
-                    
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Aviso do sistema");
+                    alert.setHeaderText("Erro ao tentar cadastrar sala");
+                    alert.setContentText(ex.getLocalizedMessage());
+                    alert.showAndWait();
                 }
             
             }
@@ -245,7 +257,6 @@ public class TelaCadastrarSalaController implements Initializable {
                 p.getCheckbox().setSelected(false);
             }
         }
-        checkboxSelecionarTodos.setSelected(false);
     }
     
     public void trazerPesquisa(String filtro){
@@ -294,36 +305,5 @@ public class TelaCadastrarSalaController implements Initializable {
             cont = 0;
             labelNumero.setText("N = " + cont);
         }
-    }
-    
-    public void menssagem(Alert.AlertType tipo, String title, String header, String Content){
-        
-        Alert mensagem = new Alert(tipo);
-        
-        if(tipo == Alert.AlertType.NONE){
-            
-            FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
-            icone.setGlyphSize(50);
-
-            Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
-            icone.setFill(paint);
-
-            mensagem.setGraphic(icone);
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.getOnCloseRequest();
-            mensagem.getButtonTypes().add(ButtonType.OK);
-            mensagem.showAndWait();
-            
-            
-        }else {
-            
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.showAndWait();
-        }
-        
     }
 }

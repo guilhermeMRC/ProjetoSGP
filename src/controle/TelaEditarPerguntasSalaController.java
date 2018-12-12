@@ -18,16 +18,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import static javafx.scene.paint.Color.color;
+import static javafx.scene.paint.Color.color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import modelo.Dificuldade;
@@ -195,71 +201,69 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         /*Chamo uma conexão com o banco de dados 
         para poder atualizar a sala*/
         SalaDAO salaDAO = new SalaDAO();
-        int contador = 0;
         
         //seta os valores que eu preciso para editar a Sala
         novaSala.setDescricao(campoNomeSala.getText());
         novaSala.setPerguntas(perguntas);
         
-        if(campoNomeSala.getText().isEmpty()){
-            
-            menssagem(Alert.AlertType.ERROR, 
-                      "Sala", 
-                      "Alterar sala", 
-                      "Não é possível Alterar sala sem nome!");
-            
-        }else {
-            
-            boolean validacao = false;
-            for(Sala s : salaDAO.listar()){
-                
-                if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())) validacao = true;
-                break;
-                
-            }
-            
-            for(Pergunta p : novaSala.getPerguntas()){
+        /*Daqui para baixo checa se a Sala tem a 
+        quantidade ideal Peguntas, quantas delas 
+        devem ser dificeis (que ainda será 
+        definido ao certo) e se o campo para preenchimento 
+        do nome está preenchido*/
+        int contador = 0;
 
-                if(p.getDificuldade().equals(Dificuldade.DIFICIL))contador ++;
+        for(Pergunta p : novaSala.getPerguntas()){
 
-            }
-            
-            if(novaSala.getPerguntas().size() < 5 || contador < 3 || validacao == true){
+            if(p.getDificuldade().equals(Dificuldade.DIFICIL))contador ++;
 
-                menssagem(Alert.AlertType.ERROR, 
-                          "Sala", 
-                          "Alterar sala", 
-                          "Não é possivel alterar sala! A sala deve conter um nome diferente das outras "
-                          + "já cadastradas e no minimo 5 perguntas das quais 3 devem ser Dificeis.");
-
-            }else {
-
-                try {
-
-                    salaDAO = new SalaDAO();
-                    salaDAO.atualizar(novaSala);
-
-                    menssagem(Alert.AlertType.NONE, 
-                              "Sala", 
-                              "Alterar sala", 
-                              "Sala alterada com sucesso!");
-
-                    /*Seta um stage e com o getWindow pega a sena da tela
-                    ai é só chamar o close() para fechar a tela*/
-                    Stage stage = (Stage) borderPanePrincipal.getScene().getWindow();
-                    stage.close();
-
-                } catch (Exception e) { //acho que não precisa desse try Catch
-
-                        e.printStackTrace();
-                }
-            
-            }
-            
         }
-      
-    }
+
+        if(novaSala.getPerguntas().size() < 5 || contador < 3 || campoNomeSala.getText().isEmpty()){
+
+            Alert mensagem = new Alert(Alert.AlertType.ERROR);
+            mensagem.setTitle("Mensagem do sistema");
+            mensagem.setHeaderText("Atualizar sala");
+            mensagem.setContentText("confira o campo de nome da sala se ele está preenchido! Sala deve conter um mínimo de 5 perguntas com 3 "
+                                    + "delas sendo de nível Dificil!");
+            mensagem.show();
+
+        }else {
+
+            try {
+
+                salaDAO.atualizar(novaSala);
+
+                //Editando a mensagem usando o FontAwesomeIconView
+                Alert mensagem = new Alert(Alert.AlertType.NONE);
+
+                FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+                icone.setGlyphSize(50);
+
+                Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+                icone.setFill(paint);
+
+                mensagem.setGraphic(icone);
+                mensagem.setTitle("Mensagem do sistema");
+                mensagem.setHeaderText("Atualizar sala");
+                mensagem.setContentText("sala Editada com sucesso!");
+                mensagem.getOnCloseRequest();
+                mensagem.getButtonTypes().add(ButtonType.OK);
+                mensagem.showAndWait();
+
+                /*Seta um stage e com o getWindow pega a sena da tela
+                ai é só chamar o close() para fechar a tela*/
+                Stage stage = (Stage) borderPanePrincipal.getScene().getWindow();
+                stage.close();
+
+            } catch (Exception e) { //acho que não precisa desse try Catch
+
+                e.printStackTrace();
+            }
+        }
          
+    }
+    
     /*Esse método é o evento do botão que adiciona perguntas 
     a tabela da esquerda (perguntas na sala). Basicamente, o usuário 
     seleciona as perguntas que ele quer na tabela da direita e 
@@ -291,11 +295,11 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         quer dizer que não houve nenhum checbox marcado*/
         if(contador == tabelaPerguntasNaoEscolhidas.getItems().size()){
             
-            menssagem(Alert.AlertType.INFORMATION, 
-                    "Sala", 
-                    "Selecionar perguntas", 
-                    "Por favor marque as perguntas!");
-            
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Mensagem do sistema");
+            mensagem.setHeaderText("Atualizar sala");
+            mensagem.setContentText("Por favor marque as perguntas!");
+            mensagem.show();
         }
         
         //Daqui para baixo atualiza as tabelas
@@ -329,11 +333,11 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         
         if(contador == perguntasAuxiliar.size()){
             
-            menssagem(Alert.AlertType.INFORMATION, 
-                      "Sala", 
-                      "Selecionar pergunta", 
-                      "Por favor marque as perguntas!");
-            
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Mensagem do sistema");
+            mensagem.setHeaderText("Atualizar sala");
+            mensagem.setContentText("Por favor marque as perguntas!");
+            mensagem.show();
         }
         
         atualizarTabelas();
@@ -439,36 +443,6 @@ public class TelaEditarPerguntasSalaController implements Initializable{
             }
         }
     }
-    
-    public void menssagem(Alert.AlertType tipo, String title, String header, String Content){
-        
-        Alert mensagem = new Alert(tipo);
-        
-        if(tipo == Alert.AlertType.NONE){
-            
-            FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
-            icone.setGlyphSize(50);
 
-            Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
-            icone.setFill(paint);
-
-            mensagem.setGraphic(icone);
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.getOnCloseRequest();
-            mensagem.getButtonTypes().add(ButtonType.OK);
-            mensagem.showAndWait();
-            
-            
-        }else {
-            
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.showAndWait();
-        }
-        
-    }
 
 }

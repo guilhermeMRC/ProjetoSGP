@@ -8,8 +8,6 @@ package controle;
 import dao.DisciplinaDAO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +16,20 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import modelo.Disciplina;
 
 /**
@@ -168,9 +166,11 @@ public class TelaCadastroDisciplinasController implements Initializable {
             é possível salvar vazio*/
             if (resultado.get().equals("")) {
 
-                menssagem(Alert.AlertType.ERROR, "Disciplina", 
-                          "Cadastrar Disciplina", 
-                          "Não foi póssivel cadastrar disciplina sem nome!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Disciplina");
+                alert.setHeaderText("Cadastro de disciplina");
+                alert.setContentText("Não é possivel cadastrar uma disciplina sem nome!");
+                alert.show();
 
             } else {
                 
@@ -181,10 +181,12 @@ public class TelaCadastroDisciplinasController implements Initializable {
                     DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 
                     disciplinaDAO.incluir(disciplina);
-                    
-                    menssagem(Alert.AlertType.NONE, "Disciplina", 
-                              "Cadastrar Disciplina", 
-                              "Disciplina cadastrada com sucesso!");
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Disciplina");
+                    alert.setHeaderText("Cadastro de disciplina");
+                    alert.setContentText("Disciplina cadastrada com sucesso!");
+                    alert.show();
 
                     dialog.close();
                     
@@ -206,7 +208,7 @@ public class TelaCadastroDisciplinasController implements Initializable {
             disciplina = tabelaDisciplinas.getSelectionModel().getSelectedItem();
 
             TextInputDialog dialogAlteracao = new TextInputDialog(disciplina.getDescricao());
-            dialogAlteracao.setTitle("Disciplina");
+            dialogAlteracao.setTitle("Alterar disciplina");
             dialogAlteracao.setHeaderText("Alterar disciplina");
             dialogAlteracao.setContentText("Informe o novo nome da disciplina");
 
@@ -215,11 +217,12 @@ public class TelaCadastroDisciplinasController implements Initializable {
 
                 if (resultado.get().equals("")) {
 
-                    menssagem(Alert.AlertType.ERROR, "Disciplina", 
-                            "Alterar disciplina", 
-                            "Não é possivel alterar uma disciplina sem nome!");
-                    
-                    
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Disciplina");
+                    alert.setHeaderText("Alterar disciplina");
+                    alert.setContentText("Não é possivel alterar uma disciplina sem nome!");
+                    alert.show();
+
                 } else {
 
                     disciplina.setDescricao(resultado.get());
@@ -229,10 +232,12 @@ public class TelaCadastroDisciplinasController implements Initializable {
                         DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
                         disciplinaDAO.atualizar(disciplina);
 
-                        menssagem(Alert.AlertType.NONE, "Disciplina", 
-                                    "Alterar disciplina", 
-                                    "Disciplina alterada com sucesso!");
-                        
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Disciplina");
+                        alert.setHeaderText("Alterar disciplina");
+                        alert.setContentText("Disciplina alterada com sucesso!");
+                        alert.show();
+
                         //carregarTabelaComTodos();
                         voltarEmListarTodos();
 
@@ -246,12 +251,11 @@ public class TelaCadastroDisciplinasController implements Initializable {
                 dialogAlteracao.close();
             }
         } catch (NullPointerException ex) {
-            
-            menssagem(Alert.AlertType.INFORMATION, 
-                    "Disciplina", 
-                    "Alterar disciplina", 
-                    "Nenhuma disciplina foi selecionada");
-            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Aviso do sistema");
+            alert.setHeaderText("Erro ao tentar editar disciplina");
+            alert.setContentText("Nenhuma disciplina foi selecionada");
+            alert.show();
         }
     }
 
@@ -358,37 +362,6 @@ public class TelaCadastroDisciplinasController implements Initializable {
         
         //chama o evento do comboBox para checar qual é a escolha
         escolherOpcao(event);
-        
-    }
-    
-    public void menssagem(Alert.AlertType tipo, String title, String header, String Content){
-        
-        Alert mensagem = new Alert(tipo);
-        
-        if(tipo == Alert.AlertType.NONE){
-            
-            FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
-            icone.setGlyphSize(50);
-
-            Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
-            icone.setFill(paint);
-
-            mensagem.setGraphic(icone);
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.getOnCloseRequest();
-            mensagem.getButtonTypes().add(ButtonType.OK);
-            mensagem.showAndWait();
-            
-            
-        }else {
-            
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.showAndWait();
-        }
         
     }
 

@@ -13,8 +13,6 @@ import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import dao.DisciplinaDAO;
 import dao.PerguntaDAO;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import modelo.Dificuldade;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,14 +27,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import modelo.Alternativa;
 import modelo.Disciplina;
 import modelo.Pergunta;
@@ -124,24 +119,26 @@ public class TelaCadastraPerguntas implements Initializable {
             é possível salvar vazio*/
             if (resultado.get().equals("")) {
 
-                menssagem(Alert.AlertType.ERROR, "Disciplina", 
-                          "Cadastrar Disciplina", 
-                          "Não foi póssivel cadastrar disciplina sem nome!");
-                
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Disciplina");
+                alert.setHeaderText("Cadastro de disciplina");
+                alert.setContentText("Não é possivel cadastrar uma disciplina sem nome!");
+                alert.show();
+
             } else {
-                
                 disciplina.setDescricao(resultado.get());
-                
                 try {
 
                     DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 
                     disciplinaDAO.incluir(disciplina);
 
-                    menssagem(Alert.AlertType.NONE, "Disciplina", 
-                              "Cadastrar Disciplina", 
-                              "Disciplina cadastrada com sucesso!");
-                    
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Disciplina");
+                    alert.setHeaderText("Cadastro de disciplina");
+                    alert.setContentText("Disciplina cadastrada com sucesso!");
+                    alert.show();
+
                     dialog.close();
                     carregarDisciplinas();
 
@@ -188,25 +185,20 @@ public class TelaCadastraPerguntas implements Initializable {
                 || campoAlternativaC.getText().isEmpty()
                 || campoAlternativaD.getText().isEmpty())) {
 
-            menssagem(Alert.AlertType.ERROR, 
-                     "Pergunta", 
-                     "Cadastrar pergunta", 
-                     "Não foi possível cadastrar a pergunta! Por favor, "
-                     + "verifique se todos os campos estão preenchidos.");
-            
-            /*Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Pergunta");
             alert.setHeaderText("Cadastro de pergunta");
             alert.setContentText("Não foi possível cadastrar a pergunta. Por favor, verifique se todos os campos estão preenchidos");
-            alert.show();*/
+            alert.show();
 
         } else {
 
-            menssagem(Alert.AlertType.NONE, 
-                    "Pergunta", 
-                    "Cadastrar pergunta", 
-                    "Pergunta cadastrada com sucesso!");
-            
+            perguntaDAO.incluirComAlternativas(pergunta);
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Cadastro de pergunta");
+            mensagem.setContentText("Pergunta cadastrada com sucesso!");
+            mensagem.showAndWait();
+
             limparCampos();
 
         }
@@ -241,7 +233,6 @@ public class TelaCadastraPerguntas implements Initializable {
     }
 
     public void carregarDificuldades() {
-        
         dificuldades.add(Dificuldade.FACIL);
         dificuldades.add(Dificuldade.MEDIO);
         dificuldades.add(Dificuldade.DIFICIL);
@@ -282,36 +273,5 @@ public class TelaCadastraPerguntas implements Initializable {
             }
             
         });
-    }
-    
-    public void menssagem(Alert.AlertType tipo, String title, String header, String Content){
-        
-        Alert mensagem = new Alert(tipo);
-        
-        if(tipo == Alert.AlertType.NONE){
-            
-            FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
-            icone.setGlyphSize(50);
-
-            Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
-            icone.setFill(paint);
-
-            mensagem.setGraphic(icone);
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.getOnCloseRequest();
-            mensagem.getButtonTypes().add(ButtonType.OK);
-            mensagem.showAndWait();
-            
-            
-        }else {
-            
-            mensagem.setTitle(title);
-            mensagem.setHeaderText(header);
-            mensagem.setContentText(Content);
-            mensagem.showAndWait();
-        }
-        
     }
 }
