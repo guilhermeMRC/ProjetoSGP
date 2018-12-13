@@ -213,7 +213,23 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         }else {
             
             boolean validacao = false;
-            for(Sala s : salaDAO.listar()){
+            if(campoNomeSala.getText().equalsIgnoreCase(nomeSalaAtual)){
+                
+                validacao = false;
+                
+            }else {
+                
+                for(Sala s : salaDAO.listar()){
+                    
+                    if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())){
+                        validacao = true;
+                        break;
+                    }
+                }
+                
+            }
+            
+            /*for(Sala s : salaDAO.listar()){
                 
                 //if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())) validacao = true;
                 if(campoNomeSala.getText().equalsIgnoreCase(nomeSalaAtual)){
@@ -221,8 +237,9 @@ public class TelaEditarPerguntasSalaController implements Initializable{
                     if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())){
                         
                         validacao = false;
+                        break;
                     }
-                    break;
+                    
                     
                 }else {
                     
@@ -230,7 +247,7 @@ public class TelaEditarPerguntasSalaController implements Initializable{
                     
                 }
                 
-            }
+            }*/
             
             for(Pergunta p : novaSala.getPerguntas()){
 

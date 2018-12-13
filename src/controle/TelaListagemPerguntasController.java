@@ -258,8 +258,11 @@ public class TelaListagemPerguntasController implements Initializable {
             
              for(Sala s : salaDAO.listar()){
                 
-                if(s.getDescricao().equalsIgnoreCase(resultado.get())) validacao = true;
-                break;
+                if(s.getDescricao().equalsIgnoreCase(resultado.get())){
+                    validacao = true;
+                    break;
+                }
+                
                 
             }
             

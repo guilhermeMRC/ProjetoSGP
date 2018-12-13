@@ -145,8 +145,10 @@ public class TelaCadastrarSalaController implements Initializable {
             
             for(Sala s : salaDAO.listar()){
                 
-                if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())) validacao = true;
-                break;
+                if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())){
+                    validacao = true;
+                    break;
+                }
                 
             }
             
