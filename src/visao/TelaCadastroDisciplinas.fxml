@@ -26,12 +26,12 @@
       </TableView>
       <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="772.0" layoutY="39.0" onAction="#inserirDisciplina" prefHeight="31.0" prefWidth="75.0" style="-fx-background-color: #6bb133;;" styleClass="jfx-button-adcionar" text="Button">
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15" />
          </graphic>
       </JFXButton>
       <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="869.0" layoutY="39.0" onAction="#alterarDisciplina" prefHeight="31.0" prefWidth="75.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css">
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
+            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" size="15" />
          </graphic>
       </JFXButton>
       <TextField fx:id="campoPesquisar" layoutX="20.0" layoutY="39.0" prefHeight="31.0" prefWidth="281.0" promptText="Pesquisar..." AnchorPane.topAnchor="42.0" />

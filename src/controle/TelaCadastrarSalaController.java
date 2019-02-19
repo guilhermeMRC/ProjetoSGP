@@ -25,7 +25,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.stage.Stage;
 import modelo.Dificuldade;
 import modelo.Pergunta;
 import modelo.Sala;
@@ -160,13 +159,13 @@ public class TelaCadastrarSalaController implements Initializable {
                   
             }
             
-            if((perguntas.size() < 5) || (contador < 3) || validacao == true){
+            if((perguntas.size() < 90) || (contador < 25) || validacao == true){
                 
                 menssagem(Alert.AlertType.ERROR, 
                           "Sala", 
                           "Cadastrar sala", 
                           "Não é possivel cadastrar! A sala deve conter um nome diferente das outras "
-                          + "já cadastradas e no minimo 5 perguntas das quais 3 devem ser Dificeis.");
+                          + "já cadastradas e no minimo 90 perguntas das quais 25 devem ser Dificeis.");
                 
             }else {
                 

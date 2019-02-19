@@ -25,25 +25,25 @@
             <TableColumn fx:id="colunaIHabilitarDesabilitar" prefWidth="142.0" text="HABILITAR" />
          </columns>
       </TableView>
-      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="784.0" layoutY="42.0" onAction="#inserirSala" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Button">
-         <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="876.0" layoutY="42.0" onAction="#alterarSala" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" text="asdas">
-         <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" />
-         </graphic>
-      </JFXButton>
       <TextField fx:id="campoPesquisar" layoutX="15.0" layoutY="42.0" prefHeight="31.0" prefWidth="267.0" promptText="Pesquisar..." />
+      <JFXComboBox fx:id="comboListagem" layoutX="360.0" layoutY="42.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="244.0" />
+      <JFXButton fx:id="botaoAlterar" contentDisplay="GRAPHIC_ONLY" layoutX="875.0" layoutY="43.0" onAction="#alterarSala" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-alterar" stylesheets="@../css/estilo.css" text="Button">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" size="15" />
+         </graphic>
+      </JFXButton>
       <JFXButton fx:id="botaoVisualizarSala" contentDisplay="GRAPHIC_ONLY" layoutX="691.0" layoutY="42.0" onAction="#visualizarSala" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-gerar" stylesheets="@../css/estilo.css" text="Button" textFill="WHITE">
          <font>
             <Font name="Century Gothic Bold" size="12.0" />
          </font>
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="EYE" />
+            <FontAwesomeIconView fill="WHITE" glyphName="EYE" size="15" />
          </graphic>
       </JFXButton>
-      <JFXComboBox fx:id="comboListagem" layoutX="360.0" layoutY="42.0" onAction="#escolherOpcao" prefHeight="31.0" prefWidth="244.0" />
+      <JFXButton fx:id="botaoIncluir" contentDisplay="GRAPHIC_ONLY" layoutX="782.0" layoutY="43.0" onAction="#inserirSala" prefHeight="31.0" prefWidth="73.0" styleClass="jfx-button-adcionar" stylesheets="@../css/estilo.css" text="Button" textFill="WHITE">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15" />
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>

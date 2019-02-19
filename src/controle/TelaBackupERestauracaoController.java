@@ -141,30 +141,18 @@ public class TelaBackupERestauracaoController implements Initializable {
 
             if(procCom == 0){
                 
-                Alert mensagem = new Alert(Alert.AlertType.NONE);
-
-                FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
-                icone.setGlyphSize(50);
-
-                Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
-                icone.setFill(paint);
-
-                mensagem.setGraphic(icone);
-                mensagem.setTitle("Mensagem do sistema");
-                mensagem.setHeaderText("Importar banco de dados");
-                mensagem.setContentText("Banco de dados importado com sucesso! ");
-                mensagem.getOnCloseRequest();
-                mensagem.getButtonTypes().add(ButtonType.OK);
-                mensagem.showAndWait();
-                
+                menssagem(Alert.AlertType.NONE, 
+                          "Importar", 
+                          "Importar banco de dados", 
+                          "Banco de dados importado com sucesso!");
                 
             }else {
 
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Mensagem do sistema");
-                alert.setHeaderText("Importar banco de dados");
-                alert.setContentText("Erro! Não foi possível importar o banco.");
-                alert.show();
+                menssagem(Alert.AlertType.ERROR,
+                          "Importar" ,
+                          "Importar banco de dados", 
+                          "Erro! Não foi possível importar o banco.");
+                
             }
             
         } catch (Exception e) {
@@ -172,5 +160,37 @@ public class TelaBackupERestauracaoController implements Initializable {
         }
 
     }
+    
+    public void menssagem(Alert.AlertType tipo, String title, String header, String Content){
+        
+        Alert mensagem = new Alert(tipo);
+        
+        if(tipo == Alert.AlertType.NONE){
+            
+            FontAwesomeIconView icone = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+            icone.setGlyphSize(50);
+
+            Paint paint = new Color(0.0, 0.7, 0.0, 1.0);
+            icone.setFill(paint);
+
+            mensagem.setGraphic(icone);
+            mensagem.setTitle(title);
+            mensagem.setHeaderText(header);
+            mensagem.setContentText(Content);
+            mensagem.getOnCloseRequest();
+            mensagem.getButtonTypes().add(ButtonType.OK);
+            mensagem.showAndWait();
+            
+            
+        }else {
+            
+            mensagem.setTitle(title);
+            mensagem.setHeaderText(header);
+            mensagem.setContentText(Content);
+            mensagem.showAndWait();
+        }
+        
+    }
+
 
 }

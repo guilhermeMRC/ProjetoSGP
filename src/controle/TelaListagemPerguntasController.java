@@ -274,13 +274,13 @@ public class TelaListagemPerguntasController implements Initializable {
                   
             }
             
-            if((perguntas.size() < 5) || (contador < 3) || validacao == true){
+            if((perguntas.size() < 90) || (contador < 25) || validacao == true){
                 
                 menssagem(Alert.AlertType.ERROR, 
                           "Sala", 
                           "Cadastrar sala", 
                           "Não é possivel cadastrar! A sala deve conter um nome diferente das outras "
-                          + "já cadastradas e no minimo 5 perguntas das quais 3 devem ser Dificeis.");
+                          + "já cadastradas e no minimo 90 perguntas das quais 25 devem ser Dificeis.");
                 
             }else {
                 

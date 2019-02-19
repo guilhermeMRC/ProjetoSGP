@@ -133,8 +133,8 @@ public class TelaEditarPerguntasSalaController implements Initializable{
         //escolherOpcao(event);
     }
 
-    /*Método que faz o togglebuttons aparecerem na
-    tabela ele pega e faz um for no obsrvablelist e 
+    /*Método que faz os togglebuttons aparecerem na
+    tabela. Ele pega e faz um for no obsrvablelist e 
     depois seta um evento em cada togglebutton*/
     public void habilitarDesabilitarPergunta() {
 
@@ -229,39 +229,19 @@ public class TelaEditarPerguntasSalaController implements Initializable{
                 
             }
             
-            /*for(Sala s : salaDAO.listar()){
-                
-                //if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())) validacao = true;
-                if(campoNomeSala.getText().equalsIgnoreCase(nomeSalaAtual)){
-                    
-                    if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())){
-                        
-                        validacao = false;
-                        break;
-                    }
-                    
-                    
-                }else {
-                    
-                    if(s.getDescricao().equalsIgnoreCase(campoNomeSala.getText())) validacao = true;
-                    
-                }
-                
-            }*/
-            
             for(Pergunta p : novaSala.getPerguntas()){
 
                 if(p.getDificuldade().equals(Dificuldade.DIFICIL))contador ++;
 
             }
             
-            if(novaSala.getPerguntas().size() < 5 || contador < 3 || validacao == true){
+            if(novaSala.getPerguntas().size() < 90 || contador < 25 || validacao == true){
 
                 menssagem(Alert.AlertType.ERROR, 
                           "Sala", 
                           "Alterar sala", 
                           "Não é possivel alterar sala! A sala deve conter um nome diferente das outras "
-                          + "já cadastradas e no minimo 5 perguntas das quais 3 devem ser Dificeis.");
+                          + "já cadastradas e no minimo 90 perguntas das quais 25 devem ser Dificeis.");
 
             }else {
 
@@ -282,7 +262,7 @@ public class TelaEditarPerguntasSalaController implements Initializable{
 
                 } catch (Exception e) { //acho que não precisa desse try Catch
 
-                        e.printStackTrace();
+                        
                 }
             
             }
