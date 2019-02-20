@@ -114,10 +114,10 @@ public class TelaEditarPerguntasController implements Initializable {
         carregarDisciplinas();
         
         labelCaracteres.setText("Caracteres: 700");
-        limitarCampos(campoAlternativaA, 100);
-        limitarCampos(campoAlternativaB, 100);
-        limitarCampos(campoAlternativaC, 100);
-        limitarCampos(campoAlternativaD, 100);
+        limitarCampos(campoAlternativaA, 200);
+        limitarCampos(campoAlternativaB, 200);
+        limitarCampos(campoAlternativaC, 200);
+        limitarCampos(campoAlternativaD, 200);
         limitarCampos(campoPergunta, 700);
     }
 
